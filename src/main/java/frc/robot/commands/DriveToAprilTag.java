@@ -5,9 +5,9 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.util.Constants.LimelightPipeline;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class DriveToAprilTag extends CommandBase {
+public class DriveToAprilTag extends Command {
 
 	Drivetrain drivetrain;
 	Limelight limelight;
@@ -30,7 +30,7 @@ public class DriveToAprilTag extends CommandBase {
 	@Override
 	public void execute() {
 		drivetrain.drive(
-				// TODO: adjust
+				
 				new ChassisSpeeds(-drivetrain.getXController().calculate(limelight.getZ(), -3),
 						drivetrain.getYController().calculate(limelight.getX(), 0),
 						-drivetrain.getThetaController().calculate(limelight.getYaw(), 0)));

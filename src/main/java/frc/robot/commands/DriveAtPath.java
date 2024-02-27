@@ -10,9 +10,9 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class DriveAtPath extends CommandBase {
+public class DriveAtPath extends Command {
 	private Drivetrain drivetrain;
 	private Trajectory trajectory;
 	private HolonomicDriveController holonomicController;

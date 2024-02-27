@@ -67,7 +67,14 @@ public class Drivetrain extends SubsystemBase {
 
 	private static Drivetrain drivetrain;
 
+	private double fieldOrientationOffset;
+
+	
+	public void zeroGyroscope(double angle) {
+		fieldOrientationOffset = navX.getAngle()+angle;
+	}
 	public Drivetrain() {
+		
 		navX = new AHRS(SerialPort.Port.kMXP);
 		driveKinematics = new SwerveDriveKinematics(
 				// Front left
@@ -168,9 +175,6 @@ public class Drivetrain extends SubsystemBase {
 		chargeStationController.setSetpoint(0);
 	}
 
-	public PIDController getChargeStationController() {
-		return chargeStationController;
-	}
 
 	/** Sets the gyroscope angle to zero. */
 	public void zeroGyroscope() {
@@ -183,13 +187,13 @@ public class Drivetrain extends SubsystemBase {
 	public Rotation2d getGyroscopeRotation() {
 		if (navX.isMagnetometerCalibrated()) {
 			// We will only get valid fused headings if the magnetometer is calibrated
-			return Rotation2d.fromDegrees(navX.getFusedHeading());
+			// return Rotation2d.fromDegrees(navX.getFusedHeading());
 		}
 
 		// We have to invert the angle of the NavX so that rotating the robot
 		// counter-clockwise
 		// makes the angle increase.
-		return Rotation2d.fromDegrees(360.0 - navX.getYaw());
+		return Rotation2d.fromDegrees(-navX.getYaw());
 	}
 
 	public double getAngle() {
@@ -240,14 +244,25 @@ public class Drivetrain extends SubsystemBase {
 	public void setModuleStates(SwerveModuleState[] states) {
 		SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
 
+		/*
 		frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[0].angle.getRadians());
+				states[2].angle.getRadians() + Math.toRadians(180));
 		frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[1].angle.getRadians());
+				states[0].angle.getRadians());
 		backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[2].angle.getRadians());
+				states[3].angle.getRadians() + Math.toRadians(180));
 		backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+				states[1].angle.getRadians());
+ */
+
+		frontLeftModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+				states[1].angle.getRadians() + Math.toRadians(180));
+		frontRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
 				states[3].angle.getRadians());
+		backLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+				states[0].angle.getRadians() + Math.toRadians(180));
+		backRightModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+				states[2].angle.getRadians());
 	}
 
 	public double getCompass() {
@@ -284,12 +299,14 @@ public class Drivetrain extends SubsystemBase {
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);
 
-		Shuffleboard.getTab("dt").add(drivetrain);
+				ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+
 	}
 
 	public static Drivetrain getInstance() {
 		if (drivetrain == null) {
 			drivetrain = new Drivetrain();
+			
 		}
 		return drivetrain;
 	}

@@ -3,9 +3,9 @@ package frc.robot.commands;
 import frc.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class RotateToAngle extends CommandBase {
+public class RotateToAngle extends Command {
 	private Drivetrain drivetrain;
 	private double angle;
 	private boolean relative;

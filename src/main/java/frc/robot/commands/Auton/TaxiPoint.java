@@ -1,0 +1,23 @@
+package frc.robot.commands;
+
+
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.TimedDrive;
+
+
+
+
+
+
+public class TaxiPoint extends SequentialCommandGroup {
+
+    public TaxiPoint(){
+        
+        addCommands(new TimedDrive(5, 0, 0.7, 0));
+    }
+    
+}
+
+
+
+//IMPORTANT all of the auton stuf fin robot container is commented out make sure to find it line 29, 38, 38 and 68 i nrobot 

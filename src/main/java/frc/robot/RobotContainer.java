@@ -1,56 +1,80 @@
 package frc.robot;
 
-import com.pathplanner.lib.*;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.path.PathPlannerTrajectory;
-import com.pathplanner.lib.util.PIDConstants;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static frc.robot.util.Constants.DrivetrainSpecs.*;
 import static frc.robot.util.Constants.OperatorConstants.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import com.swervedrivespecialties.swervelib.*;
 
-import frc.robot.commands.BalanceStation;
 import frc.robot.commands.DriveControl;
 import frc.robot.commands.DriveToAprilTag;
+import frc.robot.commands.ShooterControl;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.IntakeLifter;
 import frc.robot.subsystems.Limelight;
-
+import frc.robot.subsystems.Shooter;
+import frc.robot.commands.IntakeRollerControl;
+import frc.robot.subsystems.IntakeRoller;
+import frc.robot.commands.IntakeLifterControl;
+// //Comment this out because taxi auton wont work
+import frc.robot.commands.TaxiPoint;
 public class RobotContainer {
 	private final Drivetrain drivetrain = Drivetrain.getInstance();
+	private final Shooter shooter = Shooter.getInstance();
+	private final IntakeRoller intakeRoller = IntakeRoller.getInstance();
+	private final IntakeLifter intakeLifter = IntakeLifter.getInstance();
 	// private final Auto auto = Auto.getInstance();
 	private final Limelight limelight = Limelight.getInstance();
-
+	//shuffle board thing for auton
+	//Comment this out because taxi auton wont work
+	 private static SendableChooser<Command> autoChooser = new SendableChooser<Command>();
+	
 	// private final XboxController xboxController = new
 	// XboxController(CONTROLLER_PORT);
-	private final Joystick joystick = new Joystick(JOYSTICK_PORT);
+	private Joystick joystick = new Joystick(JOYSTICK_PORT);
+	private XboxController controller = new XboxController(2);
 
 	private DigitalInput sensor;
 
 	public RobotContainer() {
 		drivetrain.setDefaultCommand(new DriveControl(
 				() -> -modifyAxis(joystick.getX(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND,
-				() -> -modifyAxis(joystick.getY(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND,
-				() -> -modifyAxis(joystick.getTwist(), joystick.getThrottle())
-						* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
+				() -> -modifyAxis(-joystick.getY(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND,
+				() -> -modifyAxis(-joystick.getTwist(), joystick.getThrottle())
+						* -MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
+						true));
+		shooter.setDefaultCommand(new ShooterControl());
+		intakeRoller.setDefaultCommand(new IntakeRollerControl());
+		intakeLifter.setDefaultCommand(new IntakeLifterControl());
+				
 
 		configureButtonBindings();
 		drivetrain.resetPose(new Pose2d(0, 0, new Rotation2d(0, 0)));
 
 		sensor = new DigitalInput(0);
-		// drivetrain.zeroGyroscope();
+		//Uncommented might wanna recommt if build fails
+		drivetrain.zeroGyroscope();
+		
+		// //comment these two out because taxi auton wont work
+		 autoChooser.setDefaultOption("nothing", null);
+		 autoChooser.addOption("TaxiPoint", new TaxiPoint());
+		SmartDashboard.putData(autoChooser);
+
+
+
+
 	}
 
 	public void displaySmartDashboard() {
@@ -71,7 +95,6 @@ public class RobotContainer {
 		// new Button(joystick::getTrigger).whenPressed(new
 		// InstantCommand(drivetrain::zeroGyroscope));
 		new Trigger(joystick::getTrigger).whileTrue(new InstantCommand(drivetrain::zeroGyroscope));
-		new Trigger(() -> joystick.getRawButton(2)).whileTrue(new BalanceStation());
 		new Trigger(() -> joystick.getRawButton(3)).whileTrue(
 				new InstantCommand(() -> drivetrain.drive(new ChassisSpeeds(SmartDashboard.getNumber("vx", 0),
 						SmartDashboard.getNumber("vy", 0), SmartDashboard.getNumber("omega", 0)))));
@@ -90,7 +113,6 @@ public class RobotContainer {
 		// // in your code that will be used by all path following commands.
 		HashMap<String, Command> eventMap = new HashMap<>();
 		eventMap.put("tag", new DriveToAprilTag(0));
-		eventMap.put("balance", new BalanceStation());
 
 		// // Create the AutoBuilder. This only needs to be created once when robot code
 		// // starts, not every time you want to create an auto command. A good place to
@@ -109,7 +131,7 @@ public class RobotContainer {
 		// 					// commands
 		// );
 
-		return null;
+		return autoChooser.getSelected();
 
 		// todo: zero gyro??
 
@@ -141,4 +163,5 @@ public class RobotContainer {
 		return value * (throttleValue * -0.4 + 0.6);
 	}
 
+	
 }
