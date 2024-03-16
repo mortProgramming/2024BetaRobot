@@ -40,15 +40,29 @@ public final class Constants {
         public static final int LEFT_SHOOTER = 16;
         public static final int RIGHT_SHOOTER = 17;
         public static final int CONVEYOR_MOTOR = 18;
-        public static final int LEFT_CLIMBER = 0;
-        public static final int RIGHT_CLIMBER = 0;
+        //might need to swap climber constants
+        public static final int LEFT_CLIMBER = 15;
+        public static final int RIGHT_CLIMBER = 14;
         // 0 until you make the number something
         public static final double LIFTER_PID_P = 0.0001;
         public static final double LIFTER_PID_I = 0;
         public static final double LIFTER_PID_D = 0;
-        public static final double LIFTER_UP = 0;
+        public static final double LIFTER_UP = -23;
         public static final double LIFTER_DOWN = 0;
+
+        public static final double RIGHT_CLIMBER_PID_P = 0.0001;
+        public static final double RIGHT_CLIMBER_PID_I = 0;
+        public static final double RIGHT_CLIMBER_PID_D = 0;
+       
+        public static final double LEFT_CLIMBER_PID_P = 0.0001;
+        public static final double LEFT_CLIMBER_PID_I = 0;
+        public static final double LEFT_CLIMBER_PID_D = 0;
     
+        // These values are being ignored for now
+        public static final double LEFT_CLIMBER_MAX = 83;
+        public static final double LEFT_CLIMBER_MIN = 0;
+        public static final double RIGHT_CLIMBER_MAX = 107;
+        public static final double RIGHT_CLIMBER_MIN = 185;
     }
 
     public static final class DrivetrainSpecs {

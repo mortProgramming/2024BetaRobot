@@ -7,6 +7,7 @@ import frc.robot.util.Operator;
 import edu.wpi.first.math.controller.PIDController;
 import static frc.robot.util.Constants.DrivetrainMotors.LIFTER_UP;
 import static frc.robot.util.Constants.DrivetrainMotors.LIFTER_DOWN;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -43,14 +44,26 @@ targetAngle =LIFTER_UP;
         oldButton = newButton;
         newButton = Operator.aButton();
         if(oldButton == false && newButton == true && targetAngle == LIFTER_DOWN){
-        targetAngle = LIFTER_UP;
+            targetAngle = LIFTER_UP;
+        } else if(oldButton == false && newButton == true && targetAngle == LIFTER_UP){
+            targetAngle = LIFTER_DOWN;
         }
-        else if(oldButton == false && newButton == true && targetAngle == LIFTER_UP){
-        targetAngle = LIFTER_DOWN;
-        }
-        intakeLifter.setMotor(intakeLifter.getLifterPid().calculate(intakeLifter.getMotor().getEncoder().getPosition(), targetAngle));
-        // intakeLifter.setMotor(0.35 * -Operator.leftJoyStick());
 
+        if (targetAngle == LIFTER_DOWN && intakeLifter.getMotor().getEncoder().getPosition() < targetAngle) {
+            intakeLifter.setMotor(0.5);
+
+        } else if (targetAngle == LIFTER_UP && intakeLifter.getMotor().getEncoder().getPosition() > targetAngle) {
+            intakeLifter.setMotor(-0.5);
+
+        } else {
+            intakeLifter.setMotor(0);
+        }
+
+        // intakeLifter.setMotor(0.3 * intakeLifter.getLifterPid().calculate(intakeLifter.getMotor().getEncoder().getPosition(), targetAngle));
+        // intakeLifter.setMotor(0.35 * -Operator.leftJoyStick());
+    // SmartDashboard.putNumber("liftercalculation", intakeLifter.getLifterPid().calculate(intakeLifter.getMotor().getEncoder().getPosition()));
+    SmartDashboard.putNumber("lifterpid", intakeLifter.getMotor().getEncoder().getPosition());
+ 
 
 
 //commented out for other stuff kanav s good at being a coder

@@ -35,6 +35,8 @@ import frc.robot.commands.IntakeConveyorControl;
 // //Comment this out because taxi auton wont work
 import frc.robot.commands.TaxiPoint;
 import frc.robot.commands.ShooterAut;
+import frc.robot.subsystems.Climber;
+import frc.robot.commands.ClimberControl;
 
 public class RobotContainer {
     private final Drivetrain drivetrain = Drivetrain.getInstance();
@@ -42,6 +44,7 @@ public class RobotContainer {
     private final IntakeRoller intakeRoller = IntakeRoller.getInstance();
     private final IntakeLifter intakeLifter = IntakeLifter.getInstance();
     private final IntakeConveyor intakeConveyor = IntakeConveyor.getInstance();
+    private final Climber climber = Climber.getInstance();
     // private final Auto auto = Auto.getInstance();
     private final Limelight limelight = Limelight.getInstance();
     // shuffle board thing for auton
@@ -66,7 +69,7 @@ public class RobotContainer {
         intakeRoller.setDefaultCommand(new IntakeRollerControl());
         intakeLifter.setDefaultCommand(new IntakeLifterControl());
         intakeConveyor.setDefaultCommand(new IntakeConveyorControl());
-
+        climber.setDefaultCommand(new ClimberControl());
         configureButtonBindings();
         drivetrain.resetPose(new Pose2d(0, 0, new Rotation2d(0, 0)));
 

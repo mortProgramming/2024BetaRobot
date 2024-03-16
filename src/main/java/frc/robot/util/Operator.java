@@ -10,8 +10,7 @@ import frc.robot.subsystems.IntakeLifter;
 import frc.robot.subsystems.IntakeRoller;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.IntakeConveyor;
-import frc.robot.subsystems.LeftClimber;
-import frc.robot.subsystems.RightClimber;
+import frc.robot.subsystems.Climber;
 
 /** Add your docs here. */
 public class Operator {
@@ -24,8 +23,7 @@ public class Operator {
     private static IntakeRoller intakeRoller;
     private static Shooter shooter;
     private static IntakeConveyor intakeConveyor;
-    private static LeftClimber leftClimber;
-    private static RightClimber rightClimber;
+    private static Climber climber;
 
     public static boolean aButton() {
         return controller.getAButton();
@@ -40,7 +38,7 @@ public class Operator {
     }
 
     public static double rightJoyStick() {
-        return controller.getLeftY();
+        return controller.getRightY();
     }
 
     public static boolean bButton() {
@@ -63,7 +61,7 @@ public class Operator {
         return controller.getStartButton();
     }
 
-    public static boolean getBackButton(){
+    public static boolean backButton(){
         return controller.getBackButton();
     }
 

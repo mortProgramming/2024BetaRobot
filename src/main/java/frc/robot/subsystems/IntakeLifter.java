@@ -54,8 +54,5 @@ public class IntakeLifter extends SubsystemBase {
         return liftMotor;
     }
 
-    public void periodic(){
-        SmartDashboard.putNumber("hiii", liftMotor.getEncoder().getPosition());
-    }
 
 }
