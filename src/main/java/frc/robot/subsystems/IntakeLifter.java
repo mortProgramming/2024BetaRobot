@@ -13,41 +13,32 @@ import static frc.robot.util.Constants.DrivetrainMotors.INTAKE_LIFTER_MOTOR;
 import static frc.robot.util.Constants.DrivetrainMotors.INTAKE_ROLLER_MOTOR;
 import static frc.robot.util.Constants.Intake.*;
 
-public class IntakeLifter extends SubsystemBase{
+public class IntakeLifter extends SubsystemBase {
 
-
-	
-private PIDController xController;
-	private PIDController yController;
-	private PIDController thetaController;
-	private PIDController rotateToAngleController;
+    private PIDController xController;
+    private PIDController yController;
+    private PIDController thetaController;
+    private PIDController rotateToAngleController;
     private static CANSparkMax liftMotor;
 
-	private static IntakeLifter intakeLifter;
-	
-	private IntakeLifter() {
-		
-        liftMotor = new CANSparkMax(INTAKE_LIFTER_MOTOR, MotorType.kBrushless); 
-	}
+    private static IntakeLifter intakeLifter;
 
-	public static void setMotor(double setValue) {
-		liftMotor.set(setValue);
-	}
+    private IntakeLifter() {
 
-	public static IntakeLifter getInstance() {
-		if (intakeLifter == null) {
-			intakeLifter = new IntakeLifter();
-			
-		}
-		return intakeLifter;
-	}
+        liftMotor = new CANSparkMax(INTAKE_LIFTER_MOTOR, MotorType.kBrushless);
+    }
 
-	
+    
+    public static void setMotor(double setValue) {
+        liftMotor.set(setValue);
+    }
+
+    public static IntakeLifter getInstance() {
+        if (intakeLifter == null) {
+            intakeLifter = new IntakeLifter();
+
+        }
+        return intakeLifter;
+    }
+
 }
-
-	
-
-
-
-
-

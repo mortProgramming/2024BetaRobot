@@ -6,66 +6,45 @@ import java.util.function.DoubleSupplier;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriveControl extends Command {
-	private final Drivetrain drivetrain;
+    private final Drivetrain drivetrain;
 
-	private final DoubleSupplier translationXSupplier;
-	private final DoubleSupplier translationYSupplier;
-	private final DoubleSupplier rotationSupplier;
+    private final DoubleSupplier translationXSupplier;
+    private final DoubleSupplier translationYSupplier;
+    private final DoubleSupplier rotationSupplier;
 
-	private boolean fieldOriented;
+    private boolean isFieldOriented;
 
+    public DriveControl(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
+            DoubleSupplier rotationSupplier, boolean isFieldOriented) {
+        drivetrain = Drivetrain.getInstance();
 
-	public DriveControl(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
-			DoubleSupplier rotationSupplier, boolean fieldOriented) {
-		drivetrain = Drivetrain.getInstance();
-		this.translationXSupplier = translationXSupplier;
-		this.translationYSupplier = translationYSupplier;
-		this.rotationSupplier = rotationSupplier;
-		this.fieldOriented = fieldOriented;
-		addRequirements(drivetrain);
-	}
+        this.translationXSupplier = translationXSupplier;
+        this.translationYSupplier = translationYSupplier;
+        this.rotationSupplier = rotationSupplier;
+        this.isFieldOriented = isFieldOriented;
 
-
-	
-
-    
-
-
-
+        addRequirements(drivetrain);
+    }
 
     @Override
-	public void execute() {
+    public void execute() {
+        if (isFieldOriented) {
+            drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(translationXSupplier.getAsDouble(),
+                    translationYSupplier.getAsDouble(), rotationSupplier.getAsDouble(),
+                    drivetrain.getGyroscopeRotation()));
+        } else {
+            drivetrain.drive(new ChassisSpeeds(translationXSupplier.getAsDouble(), translationYSupplier.getAsDouble(),
+                    rotationSupplier.getAsDouble()));
+        }
+    }
 
-		// // robot-oriented drive
-		//drivetrain.drive(new ChassisSpeeds(translationXSupplier.getAsDouble(), translationYSupplier.getAsDouble(),
-				//rotationSupplier.getAsDouble()));
-		// drivetrain.drive(
-		// ChassisSpeeds.fromFieldRelativeSpeeds(
-		// translationXSupplier.getAsDouble(),
-		// translationYSupplier.getAsDouble(),
-		// rotationSupplier.getAsDouble(),
-		// drivetrain.getGyroscopeRotation())
-		// );
-		if (fieldOriented) {
-			drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(translationXSupplier.getAsDouble(),
-					translationYSupplier.getAsDouble(), rotationSupplier.getAsDouble(),
-					drivetrain.getGyroscopeRotation()));
-		} else {
-			drivetrain.drive(new ChassisSpeeds(translationXSupplier.getAsDouble(), translationYSupplier.getAsDouble(),
-					rotationSupplier.getAsDouble()));
-		}
+    @Override
+    public void end(boolean interrupted) {
+        drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
+    }
 
-	}
-	
-@Override
-	public boolean isFinished() {
-		return false;
-	}
-	
-	@Override
-	public void end(boolean interrupted) {
-		drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
-	}
-
-
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

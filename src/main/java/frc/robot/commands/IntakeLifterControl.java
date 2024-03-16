@@ -5,32 +5,27 @@ import frc.robot.subsystems.IntakeLifter;
 import frc.robot.util.Operator;
 
 public class IntakeLifterControl extends Command {
+    private static IntakeLifter intakeLifter;
 
-  private static IntakeLifter intakeLifter;
-  /** Creates a new IntakeLifterControl. */
-  public IntakeLifterControl() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    intakeLifter = IntakeLifter.getInstance();  
-    addRequirements(intakeLifter);
- 
-  }
+    public IntakeLifterControl() {
+        intakeLifter = IntakeLifter.getInstance();
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+        addRequirements(intakeLifter);
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public  void execute() {
-    // if (Operator.xButton() == true){
-    //   IntakeLifter.setMotor(1);
-    // }
-    // else {
-    //   IntakeLifter.setMotor(0);
-    // }
-     IntakeLifter.setMotor(0.15* Operator.leftJoyStick());
+    @Override
+    public void initialize() {
+    }
 
-  }
+    @Override
+    public void execute() {
+        // if (Operator.xButton() == true){
+        // IntakeLifter.setMotor(1);
+        // }
+        // else {
+        // IntakeLifter.setMotor(0);
+        // }
+        
+        IntakeLifter.setMotor(0.35 * -Operator.leftJoyStick());
+    }
 }
-
-//commentedf out excecute for the lifter button

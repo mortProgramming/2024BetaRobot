@@ -4,42 +4,43 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Timer;
+import frc.robot.subsystems.Shooter;
 
-public class TimedDrive extends Command {
-    private Drivetrain drivetrain;
+public class TimedShooter extends Command {
+    private Shooter shooter;
     private Timer timer;
 
+    private double shooterMotor;
     private double time;
-    private double x;
-    private double y;
-    private double omega;
 
-    public TimedDrive(double time, double x, double y, double omega) {
-        drivetrain = Drivetrain.getInstance();
+    public TimedShooter(double time, double shooterMotor) {
+        shooter = Shooter.getInstance();
         timer = new Timer();
 
         this.time = time;
-        this.x = x;
-        this.y = -y;
-        this.omega = omega;
+        this.shooterMotor = shooterMotor;
 
-        addRequirements(drivetrain);
+        addRequirements(shooter);
     }
 
+
+
     @Override
-    public void initialize() {
+    public void initialize(){
         timer.reset();
         timer.start();
     }
 
     @Override
     public void execute() {
-        drivetrain.drive(new ChassisSpeeds(x, y, omega));
+        shooter.setMotor(shooterMotor);
+
     }
 
     @Override
     public void end(boolean interrupted) {
-        drivetrain.drive(new ChassisSpeeds(0, 0, 0));
+       shooter.setMotor(0);
+       System.out.println("athony is cute");
     }
 
     @Override

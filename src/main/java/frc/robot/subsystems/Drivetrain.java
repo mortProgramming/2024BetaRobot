@@ -45,269 +45,272 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
-	private final AHRS navX;
+    private final AHRS navX;
 
-	public final SwerveDriveKinematics driveKinematics;
-	private SwerveDriveOdometry driveOdometry;
+    public final SwerveDriveKinematics driveKinematics;
+    private SwerveDriveOdometry driveOdometry;
 
-	private final SwerveModule frontLeftModule;
-	private final SwerveModule frontRightModule;
-	private final SwerveModule backLeftModule;
-	private final SwerveModule backRightModule;
+    private final SwerveModule frontLeftModule;
+    private final SwerveModule frontRightModule;
+    private final SwerveModule backLeftModule;
+    private final SwerveModule backRightModule;
 
-	private ChassisSpeeds chassisSpeeds;
+    private ChassisSpeeds chassisSpeeds;
 
-	private PIDController xController;
-	private PIDController yController;
-	private PIDController thetaController;
+    private PIDController xController;
+    private PIDController yController;
+    private PIDController thetaController;
 
-	private PIDController rotateToAngleController;
+    private PIDController rotateToAngleController;
 
-	private PIDController chargeStationController;
+    private PIDController chargeStationController;
 
-	private static Drivetrain drivetrain;
+    private static Drivetrain drivetrain;
 
-	private double fieldOrientationOffset;
+    private double fieldOrientationOffset;
 
-	
-	public void zeroGyroscope(double angle) {
-		fieldOrientationOffset = navX.getAngle()+angle;
-	}
-	public Drivetrain() {
-		
-		navX = new AHRS(SerialPort.Port.kMXP);
-		driveKinematics = new SwerveDriveKinematics(
-				// Front left
-				new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
-				// Front right
-				new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0),
-				// Back left
-				new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
-				// Back right
-				new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0));
+    public void zeroGyroscope(double angle) {
+        fieldOrientationOffset = navX.getAngle() + angle;
+    }
 
-		chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
+    public Drivetrain() {
 
-		ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+        navX = new AHRS(SerialPort.Port.kMXP);
+        driveKinematics = new SwerveDriveKinematics(
+                // Front left
+                new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
+                // Front right
+                new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0),
+                // Back left
+                new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
+                // Back right
+                new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0));
 
-		frontLeftModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
-				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
-				.withDriveMotor(MotorType.FALCON, FRONT_LEFT_MODULE_DRIVE_MOTOR)
-				.withSteerMotor(MotorType.FALCON, FRONT_LEFT_MODULE_STEER_MOTOR)
-				.withSteerEncoderPort(FRONT_LEFT_MODULE_STEER_ENCODER).withSteerOffset(FRONT_LEFT_MODULE_STEER_OFFSET)
-				.build();
-		frontRightModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
-				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
-				.withDriveMotor(MotorType.FALCON, FRONT_RIGHT_MODULE_DRIVE_MOTOR)
-				.withSteerMotor(MotorType.FALCON, FRONT_RIGHT_MODULE_STEER_MOTOR)
-				.withSteerEncoderPort(FRONT_RIGHT_MODULE_STEER_ENCODER).withSteerOffset(FRONT_RIGHT_MODULE_STEER_OFFSET)
-				.build();
-		backLeftModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0))
-				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
-				.withDriveMotor(MotorType.FALCON, BACK_LEFT_MODULE_DRIVE_MOTOR)
-				.withSteerMotor(MotorType.FALCON, BACK_LEFT_MODULE_STEER_MOTOR)
-				.withSteerEncoderPort(BACK_LEFT_MODULE_STEER_ENCODER).withSteerOffset(BACK_LEFT_MODULE_STEER_OFFSET)
-				.build();
-		backRightModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
-				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
-				.withDriveMotor(MotorType.FALCON, BACK_RIGHT_MODULE_DRIVE_MOTOR)
-				.withSteerMotor(MotorType.FALCON, BACK_RIGHT_MODULE_STEER_MOTOR)
-				.withSteerEncoderPort(BACK_RIGHT_MODULE_STEER_ENCODER).withSteerOffset(BACK_RIGHT_MODULE_STEER_OFFSET)
-				.build();
+        chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
-		// frontLeftModule = Mk4iSwerveModuleHelper.createFalcon500(
-		// tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2,
-		// 4).withPosition(0, 0),
-		// Mk4iSwerveModuleHelper.GearRatio.L2, FRONT_LEFT_MODULE_DRIVE_MOTOR,
-		// FRONT_LEFT_MODULE_STEER_MOTOR,
-		// FRONT_LEFT_MODULE_STEER_ENCODER, FRONT_LEFT_MODULE_STEER_OFFSET);
+        ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
-		// frontRightModule = Mk4iSwerveModuleHelper.createFalcon500(
-		// tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2,
-		// 4).withPosition(2, 0),
-		// Mk4iSwerveModuleHelper.GearRatio.L2, FRONT_RIGHT_MODULE_DRIVE_MOTOR,
-		// FRONT_RIGHT_MODULE_STEER_MOTOR,
-		// FRONT_RIGHT_MODULE_STEER_ENCODER, FRONT_RIGHT_MODULE_STEER_OFFSET);
+        frontLeftModule = new MkSwerveModuleBuilder()
+                .withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
+                .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+                .withDriveMotor(MotorType.FALCON, FRONT_LEFT_MODULE_DRIVE_MOTOR)
+                .withSteerMotor(MotorType.FALCON, FRONT_LEFT_MODULE_STEER_MOTOR)
+                .withSteerEncoderPort(FRONT_LEFT_MODULE_STEER_ENCODER).withSteerOffset(FRONT_LEFT_MODULE_STEER_OFFSET)
+                .build();
+        frontRightModule = new MkSwerveModuleBuilder()
+                .withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
+                .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+                .withDriveMotor(MotorType.FALCON, FRONT_RIGHT_MODULE_DRIVE_MOTOR)
+                .withSteerMotor(MotorType.FALCON, FRONT_RIGHT_MODULE_STEER_MOTOR)
+                .withSteerEncoderPort(FRONT_RIGHT_MODULE_STEER_ENCODER).withSteerOffset(FRONT_RIGHT_MODULE_STEER_OFFSET)
+                .build();
+        backLeftModule = new MkSwerveModuleBuilder()
+                .withLayout(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0))
+                .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+                .withDriveMotor(MotorType.FALCON, BACK_LEFT_MODULE_DRIVE_MOTOR)
+                .withSteerMotor(MotorType.FALCON, BACK_LEFT_MODULE_STEER_MOTOR)
+                .withSteerEncoderPort(BACK_LEFT_MODULE_STEER_ENCODER).withSteerOffset(BACK_LEFT_MODULE_STEER_OFFSET)
+                .build();
+        backRightModule = new MkSwerveModuleBuilder()
+                .withLayout(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
+                .withGearRatio(SdsModuleConfigurations.MK4I_L2)
+                .withDriveMotor(MotorType.FALCON, BACK_RIGHT_MODULE_DRIVE_MOTOR)
+                .withSteerMotor(MotorType.FALCON, BACK_RIGHT_MODULE_STEER_MOTOR)
+                .withSteerEncoderPort(BACK_RIGHT_MODULE_STEER_ENCODER).withSteerOffset(BACK_RIGHT_MODULE_STEER_OFFSET)
+                .build();
 
-		// backLeftModule = Mk4iSwerveModuleHelper.createFalcon500(
-		// tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2,
-		// 4).withPosition(4, 0),
-		// Mk4iSwerveModuleHelper.GearRatio.L2, BACK_LEFT_MODULE_DRIVE_MOTOR,
-		// BACK_LEFT_MODULE_STEER_MOTOR,
-		// BACK_LEFT_MODULE_STEER_ENCODER, BACK_LEFT_MODULE_STEER_OFFSET);
+        // frontLeftModule = Mk4iSwerveModuleHelper.createFalcon500(
+        // tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2,
+        // 4).withPosition(0, 0),
+        // Mk4iSwerveModuleHelper.GearRatio.L2, FRONT_LEFT_MODULE_DRIVE_MOTOR,
+        // FRONT_LEFT_MODULE_STEER_MOTOR,
+        // FRONT_LEFT_MODULE_STEER_ENCODER, FRONT_LEFT_MODULE_STEER_OFFSET);
 
-		// backRightModule = Mk4iSwerveModuleHelper.createFalcon500(
-		// tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2,
-		// 4).withPosition(6, 0),
-		// Mk4iSwerveModuleHelper.GearRatio.L2, BACK_RIGHT_MODULE_DRIVE_MOTOR,
-		// BACK_RIGHT_MODULE_STEER_MOTOR,
-		// BACK_RIGHT_MODULE_STEER_ENCODER, BACK_RIGHT_MODULE_STEER_OFFSET);
+        // frontRightModule = Mk4iSwerveModuleHelper.createFalcon500(
+        // tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2,
+        // 4).withPosition(2, 0),
+        // Mk4iSwerveModuleHelper.GearRatio.L2, FRONT_RIGHT_MODULE_DRIVE_MOTOR,
+        // FRONT_RIGHT_MODULE_STEER_MOTOR,
+        // FRONT_RIGHT_MODULE_STEER_ENCODER, FRONT_RIGHT_MODULE_STEER_OFFSET);
 
-		// todo: wait, try the other
-		// driveOdometry = new SwerveDriveOdometry(driveKinematics,
-		// Rotation2d.fromDegrees(navX.getFusedHeading()),
-		// getModulePositions());
+        // backLeftModule = Mk4iSwerveModuleHelper.createFalcon500(
+        // tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2,
+        // 4).withPosition(4, 0),
+        // Mk4iSwerveModuleHelper.GearRatio.L2, BACK_LEFT_MODULE_DRIVE_MOTOR,
+        // BACK_LEFT_MODULE_STEER_MOTOR,
+        // BACK_LEFT_MODULE_STEER_ENCODER, BACK_LEFT_MODULE_STEER_OFFSET);
 
-		driveOdometry = new SwerveDriveOdometry(driveKinematics, getGyroscopeRotation(), getModulePositions());
+        // backRightModule = Mk4iSwerveModuleHelper.createFalcon500(
+        // tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2,
+        // 4).withPosition(6, 0),
+        // Mk4iSwerveModuleHelper.GearRatio.L2, BACK_RIGHT_MODULE_DRIVE_MOTOR,
+        // BACK_RIGHT_MODULE_STEER_MOTOR,
+        // BACK_RIGHT_MODULE_STEER_ENCODER, BACK_RIGHT_MODULE_STEER_OFFSET);
 
-		xController = new PIDController(0.8, 0, 0);
-		xController.setSetpoint(-3);
-		xController.setTolerance(0.1);
+        // todo: wait, try the other
+        // driveOdometry = new SwerveDriveOdometry(driveKinematics,
+        // Rotation2d.fromDegrees(navX.getFusedHeading()),
+        // getModulePositions());
 
-		yController = new PIDController(.41, 0, 0);
-		yController.setSetpoint(0);
-		yController.setTolerance(0.1);
+        driveOdometry = new SwerveDriveOdometry(driveKinematics, getGyroscopeRotation(), getModulePositions());
 
-		thetaController = new PIDController(0.04, 0, 0);
-		thetaController.setSetpoint(0);
-		thetaController.setTolerance(0.5);
+        xController = new PIDController(0.8, 0, 0);
+        xController.setSetpoint(-3);
+        xController.setTolerance(0.1);
 
-		rotateToAngleController = new PIDController(0.07, 0, 0.001);
-		rotateToAngleController.setTolerance(0.5);
-		rotateToAngleController.enableContinuousInput(-180, 180);
+        yController = new PIDController(.41, 0, 0);
+        yController.setSetpoint(0);
+        yController.setTolerance(0.1);
 
-		chargeStationController = new PIDController(0.03, 0, 0);
-		chargeStationController.setTolerance(0.5);
-		chargeStationController.setSetpoint(0);
-	}
+        thetaController = new PIDController(0.04, 0, 0);
+        thetaController.setSetpoint(0);
+        thetaController.setTolerance(0.5);
 
+        rotateToAngleController = new PIDController(0.07, 0, 0.001);
+        rotateToAngleController.setTolerance(0.5);
+        rotateToAngleController.enableContinuousInput(-180, 180);
 
-	/** Sets the gyroscope angle to zero. */
-	public void zeroGyroscope() {
-		navX.zeroYaw();
-	}
+        chargeStationController = new PIDController(0.03, 0, 0);
+        chargeStationController.setTolerance(0.5);
+        chargeStationController.setSetpoint(0);
+    }
 
-	/**
-	 * @return Rotation2d
-	 */
-	public Rotation2d getGyroscopeRotation() {
-		if (navX.isMagnetometerCalibrated()) {
-			// We will only get valid fused headings if the magnetometer is calibrated
-			// return Rotation2d.fromDegrees(navX.getFusedHeading());
-		}
+    /** Sets the gyroscope angle to zero. */
+    public void zeroGyroscope() {
+        navX.zeroYaw();
+    }
 
-		// We have to invert the angle of the NavX so that rotating the robot
-		// counter-clockwise
-		// makes the angle increase.
-		return Rotation2d.fromDegrees(-navX.getYaw());
-	}
+    /**
+     * @return Rotation2d
+     */
+    public Rotation2d getGyroscopeRotation() {
+        if (navX.isMagnetometerCalibrated()) {
+            // We will only get valid fused headings if the magnetometer is calibrated
+            // return Rotation2d.fromDegrees(navX.getFusedHeading());
+        }
 
-	public double getAngle() {
-		return navX.getAngle();
-	}
+        // We have to invert the angle of the NavX so that rotating the robot
+        // counter-clockwise
+        // makes the angle increase.
+        return Rotation2d.fromDegrees(-navX.getYaw());
+    }
 
-	/**
-	 * @return SwerveDriveKinematics
-	 */
-	public SwerveDriveKinematics getDriveKinematics() {
-		return driveKinematics;
-	}
+    public double getAngle() {
+        return navX.getAngle();
+    }
 
-	/**
-	 * @return Pose2d
-	 */
-	public Pose2d getPose() {
-		return driveOdometry.getPoseMeters();
-	}
+    /**
+     * @return SwerveDriveKinematics
+     */
+    public SwerveDriveKinematics getDriveKinematics() {
+        return driveKinematics;
+    }
 
-	/**
-	 * @param pose
-	 */
-	public void resetPose(Pose2d pose) {
-		// driveOdometry.resetPosition(Rotation2d.fromDegrees(navX.getFusedHeading()),
-		// getModulePositions(),
-		// pose);
+    /**
+     * @return Pose2d
+     */
+    public Pose2d getPose() {
+        return driveOdometry.getPoseMeters();
+    }
 
-		// //todo: try this
-		// /*
-		driveOdometry.resetPosition(getGyroscopeRotation(), getModulePositions(), pose);
+    /**
+     * @param pose
+     */
+    public void resetPose(Pose2d pose) {
+        // driveOdometry.resetPosition(Rotation2d.fromDegrees(navX.getFusedHeading()),
+        // getModulePositions(),
+        // pose);
 
-		// */
-	}
+        // //todo: try this
+        // /*
+        driveOdometry.resetPosition(getGyroscopeRotation(), getModulePositions(), pose);
 
-	public SwerveModulePosition[] getModulePositions() {
-		return new SwerveModulePosition[]{frontLeftModule.getPosition(), frontRightModule.getPosition(),
-				backLeftModule.getPosition(), backRightModule.getPosition()};
-	}
+        // */
+    }
 
-	public AHRS getNavX() {
-		return navX;
-	}
+    public SwerveModulePosition[] getModulePositions() {
+        return new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
+                backLeftModule.getPosition(), backRightModule.getPosition() };
+    }
 
-	/**
-	 * @param states
-	 */
-	public void setModuleStates(SwerveModuleState[] states) {
-		SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
+    public AHRS getNavX() {
+        return navX;
+    }
 
-		/*
-		frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[2].angle.getRadians() + Math.toRadians(180));
-		frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[0].angle.getRadians());
-		backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[3].angle.getRadians() + Math.toRadians(180));
-		backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[1].angle.getRadians());
- */
+    /**
+     * @param states
+     */
+    public void setModuleStates(SwerveModuleState[] states) {
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
 
-		frontLeftModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[1].angle.getRadians() + Math.toRadians(180));
-		frontRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[3].angle.getRadians());
-		backLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[0].angle.getRadians() + Math.toRadians(180));
-		backRightModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-				states[2].angle.getRadians());
-	}
+        /*
+         * frontLeftModule.set(states[0].speedMetersPerSecond /
+         * MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+         * states[2].angle.getRadians() + Math.toRadians(180));
+         * frontRightModule.set(states[1].speedMetersPerSecond /
+         * MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+         * states[0].angle.getRadians());
+         * backLeftModule.set(states[2].speedMetersPerSecond /
+         * MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+         * states[3].angle.getRadians() + Math.toRadians(180));
+         * backRightModule.set(states[3].speedMetersPerSecond /
+         * MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+         * states[1].angle.getRadians());
+         */
 
-	public double getCompass() {
-		return navX.getCompassHeading();
-	}
+        frontLeftModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[1].angle.getRadians() + Math.toRadians(180));
+        frontRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[3].angle.getRadians());
+        backLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[0].angle.getRadians() + Math.toRadians(180));
+        backRightModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+                states[2].angle.getRadians());
+    }
 
-	/**
-	 * @param chassisSpeeds
-	 */
-	public void drive(ChassisSpeeds chassisSpeeds) {
-		this.chassisSpeeds = chassisSpeeds;
-	}
+    public double getCompass() {
+        return navX.getCompassHeading();
+    }
 
-	public PIDController getXController() {
-		return xController;
-	}
+    /**
+     * @param chassisSpeeds
+     */
+    public void drive(ChassisSpeeds chassisSpeeds) {
+        this.chassisSpeeds = chassisSpeeds;
+    }
 
-	public PIDController getYController() {
-		return yController;
-	}
+    public PIDController getXController() {
+        return xController;
+    }
 
-	public PIDController getThetaController() {
-		return thetaController;
-	}
+    public PIDController getYController() {
+        return yController;
+    }
 
-	public PIDController getRotateToAngleController() {
-		return rotateToAngleController;
-	}
+    public PIDController getThetaController() {
+        return thetaController;
+    }
 
-	@Override
-	public void periodic() {
-		driveOdometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()), getModulePositions());
+    public PIDController getRotateToAngleController() {
+        return rotateToAngleController;
+    }
 
-		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
-		setModuleStates(states);
+    @Override
+    public void periodic() {
+        driveOdometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()), getModulePositions());
 
-				ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+        SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
+        setModuleStates(states);
 
-	}
+        ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
-	public static Drivetrain getInstance() {
-		if (drivetrain == null) {
-			drivetrain = new Drivetrain();
-			
-		}
-		return drivetrain;
-	}
+    }
+
+    public static Drivetrain getInstance() {
+        if (drivetrain == null) {
+            drivetrain = new Drivetrain();
+
+        }
+        return drivetrain;
+    }
 }
