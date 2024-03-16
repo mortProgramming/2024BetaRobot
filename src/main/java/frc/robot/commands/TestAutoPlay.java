@@ -13,27 +13,27 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class TestAutoPlay extends SequentialCommandGroup {
-	private Drivetrain drivetrain;
+    private Drivetrain drivetrain;
 
-	public TestAutoPlay() {
-		drivetrain = Drivetrain.getInstance();
-		addRequirements(drivetrain);
+    public TestAutoPlay() {
+        drivetrain = Drivetrain.getInstance();
+        addRequirements(drivetrain);
 
-		Trajectory testTrajectory = openTrajectoryFile("Test4.wpilib.json");
-		addCommands(new DriveAtPath(testTrajectory, new Rotation2d(90))
-		// new RotateToAngle(90, true)
-		);
-	}
+        Trajectory testTrajectory = openTrajectoryFile("Test4.wpilib.json");
+        addCommands(new DriveAtPath(testTrajectory, new Rotation2d(90))
+        // new RotateToAngle(90, true)
+        );
+    }
 
-	public Trajectory openTrajectoryFile(String name) {
-		try {
-			Trajectory t = new Trajectory();
-			Path path = Filesystem.getDeployDirectory().toPath().resolve("pathplanner/generatedJSON/" + name);
-			t = TrajectoryUtil.fromPathweaverJson(path);
-			return t;
-		} catch (IOException ex) {
-			DriverStation.reportError("Unable to open trajectory: " + name, ex.getStackTrace());
-			return null;
-		}
-	}
+    public Trajectory openTrajectoryFile(String name) {
+        try {
+            Trajectory t = new Trajectory();
+            Path path = Filesystem.getDeployDirectory().toPath().resolve("pathplanner/generatedJSON/" + name);
+            t = TrajectoryUtil.fromPathweaverJson(path);
+            return t;
+        } catch (IOException ex) {
+            DriverStation.reportError("Unable to open trajectory: " + name, ex.getStackTrace());
+            return null;
+        }
+    }
 }

@@ -17,7 +17,6 @@ import static frc.robot.util.Constants.DrivetrainMotors.LIFTER_PID_P;
 import static frc.robot.util.Constants.DrivetrainMotors.LIFTER_PID_I;
 import static frc.robot.util.Constants.DrivetrainMotors.LIFTER_PID_D;
 
-
 public class IntakeLifter extends SubsystemBase {
 
     private PIDController lifterPid;
@@ -26,17 +25,16 @@ public class IntakeLifter extends SubsystemBase {
     private static IntakeLifter intakeLifter;
 
     private IntakeLifter() {
-        lifterPid = new PIDController(LIFTER_PID_P, LIFTER_PID_I, LIFTER_PID_D); 
+        lifterPid = new PIDController(LIFTER_PID_P, LIFTER_PID_I, LIFTER_PID_D);
 
         liftMotor = new CANSparkMax(INTAKE_LIFTER_MOTOR, MotorType.kBrushless);
     }
 
-    
     public void setMotor(double setValue) {
         liftMotor.set(setValue);
     }
 
-    public PIDController getLifterPid(){
+    public PIDController getLifterPid() {
 
         return lifterPid;
 
@@ -50,9 +48,8 @@ public class IntakeLifter extends SubsystemBase {
         return intakeLifter;
     }
 
-    public CANSparkMax getMotor(){
+    public CANSparkMax getMotor() {
         return liftMotor;
     }
-
 
 }

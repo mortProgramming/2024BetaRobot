@@ -1,4 +1,5 @@
 package frc.robot.commands;
+
 import edu.wpi.first.wpilibj2.command.Command;
 
 //All conveyor stuff in this command is commented out
@@ -13,7 +14,7 @@ public class IntakeRollerControl extends Command {
 
     public IntakeRollerControl() {
         intakeRoller = IntakeRoller.getInstance();
-       // intakeConveyor = IntakeConveyor.getInstance();
+        // intakeConveyor = IntakeConveyor.getInstance();
 
         //removed intake conveyor add requirement in this command only in conveyor ommand now
         addRequirements(intakeRoller);
@@ -31,7 +32,7 @@ public class IntakeRollerControl extends Command {
             //intakeConveyor.setMotor(-0.50);
         } else if (Operator.yButton()) {
             IntakeRoller.setMotor(0.50);
-           // intakeConveyor.setMotor(0.50);
+            // intakeConveyor.setMotor(0.50);
         } else {
             IntakeRoller.setMotor(0);
             //intakeConveyor.setMotor(0);
@@ -40,6 +41,6 @@ public class IntakeRollerControl extends Command {
 
     public void end() {
         IntakeRoller.setMotor(0);
-      //  intakeConveyor.setMotor(0);
+        //  intakeConveyor.setMotor(0);
     }
 }

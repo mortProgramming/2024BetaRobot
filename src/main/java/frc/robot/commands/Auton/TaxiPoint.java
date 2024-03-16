@@ -1,7 +1,8 @@
-package frc.robot.commands;
+package frc.robot.commands.Auton;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.TimedDrive;
+import frc.robot.commands.Auton.TimedDrive;
+
 public class TaxiPoint extends SequentialCommandGroup {
     public TaxiPoint() {
         addCommands(new TimedDrive(2.5, 0, 0.5, 0));

@@ -20,15 +20,14 @@ public class IntakeRoller extends SubsystemBase {
 
     private IntakeRoller() {
         rollMotor = new CANSparkMax(INTAKE_ROLLER_MOTOR, MotorType.kBrushless);
-//        intakeConveyor.follow(intakeRoller, true);
-        
+        // intakeConveyor.follow(intakeRoller, true);
+
     }
 
     public static void setMotor(double setValue) {
         rollMotor.set(setValue);
     }
 
-   
     public static IntakeRoller getInstance() {
         if (intakeRoller == null) {
             intakeRoller = new IntakeRoller();

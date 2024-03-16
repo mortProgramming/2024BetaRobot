@@ -1,73 +1,48 @@
-
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.util.Constants.DrivetrainMotors.RIGHT_CLIMBER;
-import static frc.robot.util.Constants.DrivetrainMotors.LEFT_CLIMBER;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.math.controller.PIDController;
 
-import static frc.robot.util.Constants.DrivetrainMotors.RIGHT_CLIMBER_PID_P;
-import static frc.robot.util.Constants.DrivetrainMotors.LEFT_CLIMBER_PID_P;
-import static frc.robot.util.Constants.DrivetrainMotors.RIGHT_CLIMBER_PID_I;
-import static frc.robot.util.Constants.DrivetrainMotors.LEFT_CLIMBER_PID_I;
-import static frc.robot.util.Constants.DrivetrainMotors.RIGHT_CLIMBER_PID_D;
-import static frc.robot.util.Constants.DrivetrainMotors.LEFT_CLIMBER_PID_D;
+import static frc.robot.util.Constants.DrivetrainMotors.RIGHT_CLIMBER;
+import static frc.robot.util.Constants.DrivetrainMotors.LEFT_CLIMBER;
 
 public class Climber extends SubsystemBase {
-    private PIDController leftClimberPid;
-    private PIDController rightClimberPid;
+    private static Climber climber;
 
-    public static Climber climber;
-    private TalonFX LeftClimber;
-    private TalonFX RightClimber;
+    private TalonFX leftClimber;
+    private TalonFX rightClimber;
 
-    private Climber(){
-
-        rightClimberPid = new PIDController(RIGHT_CLIMBER_PID_P, RIGHT_CLIMBER_PID_I, RIGHT_CLIMBER_PID_D); 
-        leftClimberPid = new PIDController(LEFT_CLIMBER_PID_P, LEFT_CLIMBER_PID_I, LEFT_CLIMBER_PID_D); 
-
-
-
-        RightClimber = new TalonFX(RIGHT_CLIMBER);
-        LeftClimber = new TalonFX(LEFT_CLIMBER);
+    private Climber() {
+        // Initialize the climber motors
+        rightClimber = new TalonFX(RIGHT_CLIMBER);
+        leftClimber = new TalonFX(LEFT_CLIMBER);
     }
-     
-    public void setMotor(double setLeftValue, double setRightValue){
-            LeftClimber.set(setLeftValue);
-            RightClimber.set(setRightValue); 
-    }
-    public PIDController getRightClimberPid(){
 
-        return rightClimberPid;
+    // Set both the left and the right climber motors to a specific value
+    public void setMotors(double setLeftValue, double setRightValue) {
+        leftClimber.set(setLeftValue);
+        rightClimber.set(setRightValue);
+    }
 
-    }
-    public PIDController getLeftClimberPid(){
+    // Get the current instance of the climber
+    public static Climber getInstance() {
+        // If the climber is equal to null, then an instance has not been created yet
+        // If this is the case, then create an instance
+        if (climber == null) {
+            climber = new Climber();
+        }
 
-        return leftClimberPid;
+        return climber;
     }
-     public static Climber getInstance(){
-             if (climber == null){
-             climber = new Climber();
-                }
-     return climber;
-            }
-public static Climber getClimber(){
-    return climber;
+
+    // Get a reference to the right climber motor
+    public TalonFX getRightClimberMotor() {
+        return rightClimber;
     }
-    public TalonFX getRightClimberMotor(){
-        return RightClimber;
+
+    // Get a reference to the left climber motor
+    public TalonFX getLeftClimberMotor() {
+        return leftClimber;
     }
-    public TalonFX getLeftClimberMotor(){
-        return LeftClimber;
-    }
-    
-    
 }
-
-  
-

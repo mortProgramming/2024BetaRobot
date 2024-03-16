@@ -25,7 +25,8 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setMotor(double setValue) {
-        LeftShooter.set(setValue);    }
+        LeftShooter.set(setValue);
+    }
 
     public static Shooter getInstance() {
         if (shooter == null) {

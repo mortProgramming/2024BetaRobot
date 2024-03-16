@@ -9,8 +9,6 @@ import static frc.robot.util.Constants.DrivetrainMotors.LIFTER_UP;
 import static frc.robot.util.Constants.DrivetrainMotors.LIFTER_DOWN;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
-
 public class IntakeLifterControl extends Command {
     private static IntakeLifter intakeLifter;
     private static boolean oldButton;
@@ -26,26 +24,21 @@ public class IntakeLifterControl extends Command {
     @Override
     public void initialize() {
 
-oldButton = false;
-newButton = false;
-targetAngle =LIFTER_UP;
+        oldButton = false;
+        newButton = false;
+        targetAngle = LIFTER_UP;
 
     }
 
-    
-
-    //pids for lifter
-
-
-
+    // pids for lifter
 
     @Override
     public void execute() {
         oldButton = newButton;
         newButton = Operator.aButton();
-        if(oldButton == false && newButton == true && targetAngle == LIFTER_DOWN){
+        if (oldButton == false && newButton == true && targetAngle == LIFTER_DOWN) {
             targetAngle = LIFTER_UP;
-        } else if(oldButton == false && newButton == true && targetAngle == LIFTER_UP){
+        } else if (oldButton == false && newButton == true && targetAngle == LIFTER_UP) {
             targetAngle = LIFTER_DOWN;
         }
 
@@ -59,23 +52,24 @@ targetAngle =LIFTER_UP;
             intakeLifter.setMotor(0);
         }
 
-        // intakeLifter.setMotor(0.3 * intakeLifter.getLifterPid().calculate(intakeLifter.getMotor().getEncoder().getPosition(), targetAngle));
+        // intakeLifter.setMotor(0.3 *
+        // intakeLifter.getLifterPid().calculate(intakeLifter.getMotor().getEncoder().getPosition(),
+        // targetAngle));
         // intakeLifter.setMotor(0.35 * -Operator.leftJoyStick());
-    // SmartDashboard.putNumber("liftercalculation", intakeLifter.getLifterPid().calculate(intakeLifter.getMotor().getEncoder().getPosition()));
-    SmartDashboard.putNumber("lifterpid", intakeLifter.getMotor().getEncoder().getPosition());
- 
+        // SmartDashboard.putNumber("liftercalculation",
+        // intakeLifter.getLifterPid().calculate(intakeLifter.getMotor().getEncoder().getPosition()));
+        SmartDashboard.putNumber("lifterpid", intakeLifter.getMotor().getEncoder().getPosition());
 
-
-//commented out for other stuff kanav s good at being a coder
+        // commented out for other stuff kanav s good at being a coder
         // intakeLifter.setMotor(intakeLifter.getLifterPid().calculate(intakeLifter.getMotor().getEncoder().getVelociy(),LIFTER_UP));
         // intakeLifter.setMotor(intakeLifter.getLifterPid().calculate(intakeLifter.getMotor().getEncoder().getVelociy(),LIFTER_DOWN));
 
-            if(Operator.startButton() == true){
-             intakeLifter.setMotor(0.35);
-            }
-    
-            if(Operator.backButton() == true){
-             intakeLifter.setMotor(-0.35);
-            }
+        if (Operator.startButton() == true) {
+            intakeLifter.setMotor(0.35);
         }
+
+        if (Operator.backButton() == true) {
+            intakeLifter.setMotor(-0.35);
+        }
+    }
 }

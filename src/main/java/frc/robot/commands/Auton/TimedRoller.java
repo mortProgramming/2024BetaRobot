@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Auton;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.subsystems.Drivetrain;
@@ -10,20 +10,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.IntakeRoller;
 
-
 public class TimedRoller extends Command {
     private IntakeRoller intakeRoller;
-   
 
     private double rollerMotorSpeed;
     private double time;
     private Timer timer;
 
-
-
-
-
-  /** Creates a new TimedRoller. */ 
+    /** Creates a new TimedRoller. */
     public TimedRoller(double time, double rollerMotorSpeed) {
         intakeRoller = IntakeRoller.getInstance();
         timer = new Timer();
@@ -31,40 +25,26 @@ public class TimedRoller extends Command {
         this.rollerMotorSpeed = rollerMotorSpeed;
         addRequirements(intakeRoller);
 
-  }
+    }
 
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+    }
 
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+    }
 
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {}
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

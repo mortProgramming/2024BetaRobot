@@ -18,8 +18,6 @@ import static frc.robot.util.Constants.OperatorConstants.*;
 
 import java.util.HashMap;
 
-
-
 import frc.robot.commands.DriveControl;
 import frc.robot.commands.DriveToAprilTag;
 import frc.robot.commands.ShooterControl;
@@ -33,8 +31,8 @@ import frc.robot.commands.IntakeLifterControl;
 import frc.robot.subsystems.IntakeConveyor;
 import frc.robot.commands.IntakeConveyorControl;
 // //Comment this out because taxi auton wont work
-import frc.robot.commands.TaxiPoint;
-import frc.robot.commands.ShooterAut;
+import frc.robot.commands.Auton.TaxiPoint;
+import frc.robot.commands.Auton.ShooterAut;
 import frc.robot.subsystems.Climber;
 import frc.robot.commands.ClimberControl;
 

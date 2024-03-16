@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.Auton;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.subsystems.Drivetrain;
@@ -8,17 +8,16 @@ import frc.robot.subsystems.IntakeConveyor;
 
 //change "ConveyorMotor" to "conveyorMotorSpeed"
 
-public class TimedConveyor extends Command{
+public class TimedConveyor extends Command {
     private IntakeConveyor intakeConveyor;
-    
 
     private double conveyorMotorSpeed;
     private double time;
     private Timer timer;
 
-    public TimedConveyor(double time, double conveyorMotorSpeed ){
+    public TimedConveyor(double time, double conveyorMotorSpeed) {
         intakeConveyor = IntakeConveyor.getInstance();
-        timer =  new Timer();
+        timer = new Timer();
         this.time = time;
         this.conveyorMotorSpeed = conveyorMotorSpeed;
         addRequirements(intakeConveyor);
@@ -35,7 +34,6 @@ public class TimedConveyor extends Command{
     public void execute() {
         intakeConveyor.setMotor(conveyorMotorSpeed);
     }
-
 
     @Override
     public void end(boolean interrupted) {

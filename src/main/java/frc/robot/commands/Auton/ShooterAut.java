@@ -1,28 +1,23 @@
-package frc.robot.commands;
+package frc.robot.commands.Auton;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
-import frc.robot.commands.TimedDrive;
-import frc.robot.commands.TimedShooter;
-import frc.robot.commands.TimedConveyor;
- 
+import frc.robot.commands.Auton.TimedDrive;
+import frc.robot.commands.Auton.TimedShooter;
+import frc.robot.commands.Auton.TimedConveyor;
+
 public class ShooterAut extends SequentialCommandGroup {
     public ShooterAut() {
         addCommands(
-            new SequentialCommandGroup(
-               
-    
-                new ParallelCommandGroup(
-                    new TimedDrive(1.1, 0, 1, 0),           
-                    new TimedShooter(3, -0.88)
-                ),
-                new ParallelCommandGroup(
-                    new TimedShooter(2, -1),
-                    new TimedConveyor(3, -0.5)
-                )
-            )
-        );
+                new SequentialCommandGroup(
+
+                        new ParallelCommandGroup(
+                                new TimedDrive(1.1, 0, 1, 0),
+                                new TimedShooter(3, -0.88)),
+                        new ParallelCommandGroup(
+                                new TimedShooter(2, -1),
+                                new TimedConveyor(3, -0.5))));
     }
 }
 

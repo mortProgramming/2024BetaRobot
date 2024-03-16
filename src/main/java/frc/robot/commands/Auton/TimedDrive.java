@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.Auton;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.subsystems.Drivetrain;

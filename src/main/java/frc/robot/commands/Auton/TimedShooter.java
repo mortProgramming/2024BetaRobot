@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.Auton;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.subsystems.Drivetrain;
@@ -23,10 +23,8 @@ public class TimedShooter extends Command {
         addRequirements(shooter);
     }
 
-
-
     @Override
-    public void initialize(){
+    public void initialize() {
         timer.reset();
         timer.start();
     }
@@ -39,8 +37,8 @@ public class TimedShooter extends Command {
 
     @Override
     public void end(boolean interrupted) {
-       shooter.setMotor(0);
-       System.out.println("athony is cute");
+        shooter.setMotor(0);
+        System.out.println("athony is cute");
     }
 
     @Override

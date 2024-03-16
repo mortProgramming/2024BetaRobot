@@ -9,6 +9,7 @@ import frc.robot.util.Operator;
 public class IntakeConveyorControl extends Command {
 
     private static IntakeConveyor intakeConveyor;
+
     public IntakeConveyorControl() {
         // Use addRequirements() here to declare subsystem dependencies.
 
@@ -24,14 +25,12 @@ public class IntakeConveyorControl extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-       if (Operator.bButton()){
-           intakeConveyor.setMotor(-0.50);
-         } 
-         else if(Operator.yButton()){
-                intakeConveyor.setMotor(0.4);
-            }
-         else {
-           intakeConveyor.setMotor(0);
-         }
-     }
-    }      
+        if (Operator.bButton()) {
+            intakeConveyor.setMotor(-0.50);
+        } else if (Operator.yButton()) {
+            intakeConveyor.setMotor(0.4);
+        } else {
+            intakeConveyor.setMotor(0);
+        }
+    }
+}

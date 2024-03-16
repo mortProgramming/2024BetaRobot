@@ -9,43 +9,43 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class DriveToAprilTag extends Command {
 
-	Drivetrain drivetrain;
-	Limelight limelight;
-	private double id;
+    Drivetrain drivetrain;
+    Limelight limelight;
+    private double id;
 
-	public DriveToAprilTag(double id) {
-		drivetrain = Drivetrain.getInstance();
-		limelight = Limelight.getInstance();
+    public DriveToAprilTag(double id) {
+        drivetrain = Drivetrain.getInstance();
+        limelight = Limelight.getInstance();
 
-		this.id = id;
+        this.id = id;
 
-		addRequirements(drivetrain, limelight);
-	}
+        addRequirements(drivetrain, limelight);
+    }
 
-	@Override
-	public void initialize() {
-		limelight.setPipeline(LimelightPipeline.APRILTAG);
-	}
+    @Override
+    public void initialize() {
+        limelight.setPipeline(LimelightPipeline.APRILTAG);
+    }
 
-	@Override
-	public void execute() {
-		drivetrain.drive(
-				
-				new ChassisSpeeds(-drivetrain.getXController().calculate(limelight.getZ(), -3),
-						drivetrain.getYController().calculate(limelight.getX(), 0),
-						-drivetrain.getThetaController().calculate(limelight.getYaw(), 0)));
+    @Override
+    public void execute() {
+        drivetrain.drive(
 
-	}
+                new ChassisSpeeds(-drivetrain.getXController().calculate(limelight.getZ(), -3),
+                        drivetrain.getYController().calculate(limelight.getX(), 0),
+                        -drivetrain.getThetaController().calculate(limelight.getYaw(), 0)));
 
-	@Override
-	public boolean isFinished() {
-		// return drivetrain.getYController().atSetpoint();
-		return !limelight.hasTarget() || (drivetrain.getYController().atSetpoint()
-				&& drivetrain.getXController().atSetpoint() && drivetrain.getThetaController().atSetpoint());
-	}
+    }
 
-	@Override
-	public void end(boolean interrupted) {
-		drivetrain.drive(new ChassisSpeeds(0, 0, 0));
-	}
+    @Override
+    public boolean isFinished() {
+        // return drivetrain.getYController().atSetpoint();
+        return !limelight.hasTarget() || (drivetrain.getYController().atSetpoint()
+                && drivetrain.getXController().atSetpoint() && drivetrain.getThetaController().atSetpoint());
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        drivetrain.drive(new ChassisSpeeds(0, 0, 0));
+    }
 }
