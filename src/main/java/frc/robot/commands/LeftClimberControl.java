@@ -1,18 +1,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.LeftClimber;
 import frc.robot.util.Operator;
 
-public class ClimberControl extends Command {
-    private static Climber climber;
+public class LeftClimberControl extends Command {
+    private static LeftClimber leftClimber;
 
     private double motorValue;
 
-    public ClimberControl() {
-        climber = Climber.getInstance();
+    public LeftClimberControl() {
+       leftClimber = LeftClimber.getInstance();
 
-        addRequirements(climber);
+        addRequirements(leftClimber);
     }
 
     // Called when the command is initially scheduled.
@@ -21,18 +21,11 @@ public class ClimberControl extends Command {
         motorValue = 0;
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (Operator.aButton() == true) {
-            motorValue = -100;
-        }
+      
 
-        if (Operator.xButton() == true) {
-            motorValue = 0;
-        }
-
-        Climber.setMotor(motorValue);
+      leftClimber.setMotor(0.35 * -Operator.leftJoyStick());
     }
 
     // Called when the command ends

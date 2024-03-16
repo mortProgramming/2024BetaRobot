@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+//import for camera (not limelight) check roboy init method
+import edu.wpi.first.cameraserver.CameraServer;
 
 public class Robot extends TimedRobot {
     private Command autonomousCommand;
@@ -14,7 +16,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         robotContainer = new RobotContainer();
         // PathPlannerServer.startServer(5811);
-
+        CameraServer.startAutomaticCapture();
         SmartDashboard.putNumber("vx", 0);
         SmartDashboard.putNumber("vy", 0);
         SmartDashboard.putNumber("omega", 0);

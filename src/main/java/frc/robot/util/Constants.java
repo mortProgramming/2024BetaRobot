@@ -22,12 +22,12 @@ public final class Constants {
         public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 4;
         public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 3;
         public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 10;
-        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(323.9 + 90); // 231.3+140+180+90
+        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(323.9 + 85); // 231.3+140+180+90
         // Back Left
         public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 8;
         public static final int BACK_LEFT_MODULE_STEER_MOTOR = 7;
         public static final int BACK_LEFT_MODULE_STEER_ENCODER = 9;
-        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(127.8 + 90); // 125.7-45
+        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(127.8 + 85); // 125.7-45
         // Back Right
         public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 6;
         public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 5;
@@ -42,6 +42,13 @@ public final class Constants {
         public static final int CONVEYOR_MOTOR = 18;
         public static final int LEFT_CLIMBER = 0;
         public static final int RIGHT_CLIMBER = 0;
+        // 0 until you make the number something
+        public static final double LIFTER_PID_P = 0.0001;
+        public static final double LIFTER_PID_I = 0;
+        public static final double LIFTER_PID_D = 0;
+        public static final double LIFTER_UP = 0;
+        public static final double LIFTER_DOWN = 0;
+    
     }
 
     public static final class DrivetrainSpecs {

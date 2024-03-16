@@ -22,8 +22,12 @@ public class ShooterControl extends Command {
 
     @Override
     public void execute() {
-        if (Operator.aButton()) {
+        if (Operator.rightBumper()) {
             motorValue = -100;
+        }
+
+          if (Operator.leftBumper()) {
+            motorValue = -60;
         }
 
         if (Operator.xButton()) {
