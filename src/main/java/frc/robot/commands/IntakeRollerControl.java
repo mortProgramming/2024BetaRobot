@@ -28,19 +28,19 @@ public class IntakeRollerControl extends Command {
     public void execute() {
         // Based on the button pressed, run the roller and conveyor motors
         if (Operator.bButton()) {
-            IntakeRoller.setMotor(-0.50);
+            intakeRoller.setMotor(-0.50);
             //intakeConveyor.setMotor(-0.50);
         } else if (Operator.yButton()) {
-            IntakeRoller.setMotor(0.50);
+            intakeRoller.setMotor(0.50);
             // intakeConveyor.setMotor(0.50);
         } else {
-            IntakeRoller.setMotor(0);
+            intakeRoller.setMotor(0);
             //intakeConveyor.setMotor(0);
         }
     }
 
     public void end() {
-        IntakeRoller.setMotor(0);
+        intakeRoller.setMotor(0);
         //  intakeConveyor.setMotor(0);
     }
 }

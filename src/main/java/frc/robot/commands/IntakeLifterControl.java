@@ -42,10 +42,10 @@ public class IntakeLifterControl extends Command {
             targetAngle = LIFTER_DOWN;
         }
 
-        if (targetAngle == LIFTER_DOWN && intakeLifter.getMotor().getEncoder().getPosition() < targetAngle) {
+        if (targetAngle == LIFTER_DOWN && intakeLifter.getLifterMotor().getEncoder().getPosition() < targetAngle) {
             intakeLifter.setMotor(0.5);
 
-        } else if (targetAngle == LIFTER_UP && intakeLifter.getMotor().getEncoder().getPosition() > targetAngle) {
+        } else if (targetAngle == LIFTER_UP && intakeLifter.getLifterMotor().getEncoder().getPosition() > targetAngle) {
             intakeLifter.setMotor(-0.5);
 
         } else {
@@ -58,7 +58,7 @@ public class IntakeLifterControl extends Command {
         // intakeLifter.setMotor(0.35 * -Operator.leftJoyStick());
         // SmartDashboard.putNumber("liftercalculation",
         // intakeLifter.getLifterPid().calculate(intakeLifter.getMotor().getEncoder().getPosition()));
-        SmartDashboard.putNumber("lifterpid", intakeLifter.getMotor().getEncoder().getPosition());
+        SmartDashboard.putNumber("lifterpid", intakeLifter.getLifterMotor().getEncoder().getPosition());
 
         // commented out for other stuff kanav s good at being a coder
         // intakeLifter.setMotor(intakeLifter.getLifterPid().calculate(intakeLifter.getMotor().getEncoder().getVelociy(),LIFTER_UP));

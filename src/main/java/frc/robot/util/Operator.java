@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.util;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -12,7 +8,6 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.IntakeConveyor;
 import frc.robot.subsystems.Climber;
 
-/** Add your docs here. */
 public class Operator {
     private static final int JOYSTICK_PORT = 0;
     private static Joystick joystick = new Joystick(JOYSTICK_PORT);
@@ -34,7 +29,7 @@ public class Operator {
     }
 
     public static double leftJoyStick() {
-         return controller.getLeftY();
+        return controller.getLeftY();
     }
 
     public static double rightJoyStick() {
@@ -53,16 +48,15 @@ public class Operator {
         return controller.getRightBumper();
     }
 
-    public static boolean leftBumper(){
+    public static boolean leftBumper() {
         return controller.getLeftBumper();
     }
 
-    public static boolean startButton(){
+    public static boolean startButton() {
         return controller.getStartButton();
     }
 
-    public static boolean backButton(){
+    public static boolean backButton() {
         return controller.getBackButton();
     }
-
 }

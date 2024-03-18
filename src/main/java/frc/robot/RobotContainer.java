@@ -19,11 +19,9 @@ import static frc.robot.util.Constants.OperatorConstants.*;
 import java.util.HashMap;
 
 import frc.robot.commands.DriveControl;
-import frc.robot.commands.DriveToAprilTag;
 import frc.robot.commands.ShooterControl;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeLifter;
-import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.IntakeRollerControl;
 import frc.robot.subsystems.IntakeRoller;
@@ -44,7 +42,6 @@ public class RobotContainer {
     private final IntakeConveyor intakeConveyor = IntakeConveyor.getInstance();
     private final Climber climber = Climber.getInstance();
     // private final Auto auto = Auto.getInstance();
-    private final Limelight limelight = Limelight.getInstance();
     // shuffle board thing for auton
     // Comment this out because taxi auton wont work
     private static SendableChooser<Command> autoChooser = new SendableChooser<Command>();
@@ -118,8 +115,8 @@ public class RobotContainer {
         // // This is just an example event map. It would be better to have a constant,
         // // global event map
         // // in your code that will be used by all path following commands.
-        HashMap<String, Command> eventMap = new HashMap<>();
-        eventMap.put("tag", new DriveToAprilTag(0));
+        // HashMap<String, Command> eventMap = new HashMap<>();
+        // eventMap.put("tag", new DriveToAprilTag(0));
 
         // // Create the AutoBuilder. This only needs to be created once when robot code
         // // starts, not every time you want to create an auto command. A good place to

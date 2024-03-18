@@ -9,26 +9,32 @@ import static frc.robot.util.Constants.DrivetrainMotors.CONVEYOR_MOTOR;
 public class IntakeConveyor extends SubsystemBase {
     private static IntakeConveyor intakeConveyor;
 
-    private static CANSparkMax conveyorMotor;
+    private CANSparkMax conveyorMotor;
 
+    // Intake constructor 
     private IntakeConveyor() {
+        // Initialize the intake motor
         conveyorMotor = new CANSparkMax(CONVEYOR_MOTOR, MotorType.kBrushless);
     }
 
+    // Set the intake motor to a specific value
     public void setMotor(double setValue) {
         conveyorMotor.set(setValue);
     }
 
+    // Get the current instance of the intake
     public static IntakeConveyor getInstance() {
+        // If the intake is equal to null, then an instance has not been created yet
+        // If this is the case, then create an instance
         if (intakeConveyor == null) {
             intakeConveyor = new IntakeConveyor();
-
         }
+
         return intakeConveyor;
     }
 
-    //removed a static below here after 
-    public IntakeConveyor getIntakeConveyor() {
-        return intakeConveyor;
+    // Get a reference to the intake motor
+    public CANSparkMax getIntakeMotor() {
+        return conveyorMotor;
     }
 }

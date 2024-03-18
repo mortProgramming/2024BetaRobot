@@ -13,6 +13,7 @@ public class Climber extends SubsystemBase {
     private TalonFX leftClimber;
     private TalonFX rightClimber;
 
+    // Climber constructor
     private Climber() {
         // Initialize the climber motors
         rightClimber = new TalonFX(RIGHT_CLIMBER);

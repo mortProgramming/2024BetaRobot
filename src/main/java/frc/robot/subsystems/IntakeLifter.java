@@ -13,43 +13,36 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static frc.robot.util.Constants.DrivetrainMotors.INTAKE_LIFTER_MOTOR;
 import static frc.robot.util.Constants.DrivetrainMotors.INTAKE_ROLLER_MOTOR;
 import static frc.robot.util.Constants.Intake.*;
-import static frc.robot.util.Constants.DrivetrainMotors.LIFTER_PID_P;
-import static frc.robot.util.Constants.DrivetrainMotors.LIFTER_PID_I;
-import static frc.robot.util.Constants.DrivetrainMotors.LIFTER_PID_D;
 
 public class IntakeLifter extends SubsystemBase {
-
-    private PIDController lifterPid;
     private static CANSparkMax liftMotor;
 
     private static IntakeLifter intakeLifter;
 
+    // Intake lifter constructor
     private IntakeLifter() {
-        lifterPid = new PIDController(LIFTER_PID_P, LIFTER_PID_I, LIFTER_PID_D);
-
+        // Initialize the intake lifter motor
         liftMotor = new CANSparkMax(INTAKE_LIFTER_MOTOR, MotorType.kBrushless);
     }
 
+    // Set the intake lifter motor to a specific value
     public void setMotor(double setValue) {
         liftMotor.set(setValue);
     }
 
-    public PIDController getLifterPid() {
-
-        return lifterPid;
-
-    }
-
+    // Get the current instance of the intake lifter
     public static IntakeLifter getInstance() {
+        // If the intake lifter is equal to null, then an instance has not been created yet
+        // If this is the case, then create an instance
         if (intakeLifter == null) {
             intakeLifter = new IntakeLifter();
-
         }
+
         return intakeLifter;
     }
 
-    public CANSparkMax getMotor() {
+    // Get a reference to the intake lifter motor
+    public CANSparkMax getLifterMotor() {
         return liftMotor;
     }
-
 }
