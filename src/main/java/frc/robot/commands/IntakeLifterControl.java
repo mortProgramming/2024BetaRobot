@@ -3,17 +3,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeLifter;
 import frc.robot.util.Operator;
-//pids import
-import edu.wpi.first.math.controller.PIDController;
-import static frc.robot.util.Constants.DrivetrainMotors.LIFTER_UP;
-import static frc.robot.util.Constants.DrivetrainMotors.LIFTER_DOWN;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import static frc.robot.util.Constants.Intake.LIFTER_UP;
+import static frc.robot.util.Constants.Intake.LIFTER_DOWN;
 
 public class IntakeLifterControl extends Command {
     private static IntakeLifter intakeLifter;
-    private static boolean oldButton;
-    private static boolean newButton;
-    private static double targetAngle;
+
+    private boolean oldButton;
+    private boolean newButton;
+    private double targetAngle;
 
     public IntakeLifterControl() {
         intakeLifter = IntakeLifter.getInstance();

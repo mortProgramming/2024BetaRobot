@@ -3,11 +3,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Climber;
 import frc.robot.util.Operator;
-import static frc.robot.util.Constants.DrivetrainMotors.LEFT_CLIMBER_MAX;
-import static frc.robot.util.Constants.DrivetrainMotors.LEFT_CLIMBER_MIN;
-import static frc.robot.util.Constants.DrivetrainMotors.RIGHT_CLIMBER_MAX;
-import static frc.robot.util.Constants.DrivetrainMotors.RIGHT_CLIMBER_MIN;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import static frc.robot.util.Constants.Climber.LEFT_CLIMBER_MAX;
+import static frc.robot.util.Constants.Climber.LEFT_CLIMBER_MIN;
+import static frc.robot.util.Constants.Climber.RIGHT_CLIMBER_MAX;
+import static frc.robot.util.Constants.Climber.RIGHT_CLIMBER_MIN;
 
 public class ClimberControl extends Command {
     private static Climber climber;

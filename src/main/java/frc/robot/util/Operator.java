@@ -2,23 +2,13 @@ package frc.robot.util;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.IntakeLifter;
-import frc.robot.subsystems.IntakeRoller;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.IntakeConveyor;
-import frc.robot.subsystems.Climber;
+
+import static frc.robot.util.Constants.Control.CONTROLLER_PORT;
+import static frc.robot.util.Constants.Control.JOYSTICK_PORT;
 
 public class Operator {
-    private static final int JOYSTICK_PORT = 0;
     private static Joystick joystick = new Joystick(JOYSTICK_PORT);
-    private static XboxController controller = new XboxController(2);
-    private static final int XboxController = 0;
-
-    private static IntakeLifter intakeLifter;
-    private static IntakeRoller intakeRoller;
-    private static Shooter shooter;
-    private static IntakeConveyor intakeConveyor;
-    private static Climber climber;
+    private static XboxController controller = new XboxController(CONTROLLER_PORT);
 
     public static boolean aButton() {
         return controller.getAButton();

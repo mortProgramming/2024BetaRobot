@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import static frc.robot.util.Constants.DrivetrainMotors.INTAKE_ROLLER_MOTOR;
+import static frc.robot.util.Constants.Intake.ROLLER_MOTOR_ID;
 
 public class IntakeRoller extends SubsystemBase {
     private static IntakeRoller intakeRoller;
@@ -19,7 +19,7 @@ public class IntakeRoller extends SubsystemBase {
     // Intake roller constructor
     private IntakeRoller() {
         // Initialize the intake roller motor
-        rollMotor = new CANSparkMax(INTAKE_ROLLER_MOTOR, MotorType.kBrushless);
+        rollMotor = new CANSparkMax(ROLLER_MOTOR_ID, MotorType.kBrushless);
     }
 
     // Set the intake roller motor to a specific value

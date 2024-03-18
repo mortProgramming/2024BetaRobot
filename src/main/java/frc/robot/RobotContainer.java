@@ -12,12 +12,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import static frc.robot.util.Constants.DrivetrainSpecs.*;
-import static frc.robot.util.Constants.OperatorConstants.*;
-
 import java.util.HashMap;
-
 import frc.robot.commands.DriveControl;
 import frc.robot.commands.ShooterControl;
 import frc.robot.subsystems.Drivetrain;
@@ -28,11 +23,15 @@ import frc.robot.subsystems.IntakeRoller;
 import frc.robot.commands.IntakeLifterControl;
 import frc.robot.subsystems.IntakeConveyor;
 import frc.robot.commands.IntakeConveyorControl;
-// //Comment this out because taxi auton wont work
 import frc.robot.commands.Auton.TaxiPoint;
 import frc.robot.commands.Auton.ShooterAut;
 import frc.robot.subsystems.Climber;
 import frc.robot.commands.ClimberControl;
+
+import static frc.robot.util.Constants.Control.CONTROLLER_PORT;
+import static frc.robot.util.Constants.Control.JOYSTICK_PORT;
+import static frc.robot.util.Constants.Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
+import static frc.robot.util.Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND;
 
 public class RobotContainer {
     private final Drivetrain drivetrain = Drivetrain.getInstance();
@@ -49,7 +48,7 @@ public class RobotContainer {
     // private final XboxController xboxController = new
     // XboxController(CONTROLLER_PORT);
     private Joystick joystick = new Joystick(JOYSTICK_PORT);
-    private XboxController controller = new XboxController(2);
+    private XboxController controller = new XboxController(CONTROLLER_PORT);
 
     private DigitalInput sensor;
 

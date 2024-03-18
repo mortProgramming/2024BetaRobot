@@ -2,10 +2,9 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix6.hardware.TalonFX;
-import edu.wpi.first.math.controller.PIDController;
 
-import static frc.robot.util.Constants.DrivetrainMotors.RIGHT_CLIMBER;
-import static frc.robot.util.Constants.DrivetrainMotors.LEFT_CLIMBER;
+import static frc.robot.util.Constants.Climber.RIGHT_CLIMBER_MOTOR_ID;
+import static frc.robot.util.Constants.Climber.LEFT_CLIMBER_MOTOR_ID;
 
 public class Climber extends SubsystemBase {
     private static Climber climber;
@@ -16,8 +15,8 @@ public class Climber extends SubsystemBase {
     // Climber constructor
     private Climber() {
         // Initialize the climber motors
-        rightClimber = new TalonFX(RIGHT_CLIMBER);
-        leftClimber = new TalonFX(LEFT_CLIMBER);
+        rightClimber = new TalonFX(RIGHT_CLIMBER_MOTOR_ID);
+        leftClimber = new TalonFX(LEFT_CLIMBER_MOTOR_ID);
     }
 
     // Set both the left and the right climber motors to a specific value

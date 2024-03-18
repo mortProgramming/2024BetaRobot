@@ -1,8 +1,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.util.Constants.DrivetrainMotors.RIGHT_SHOOTER;
-import static frc.robot.util.Constants.DrivetrainMotors.LEFT_SHOOTER;
+import static frc.robot.util.Constants.Shooter.RIGHT_SHOOTER_MOTOR_ID;
+import static frc.robot.util.Constants.Shooter.LEFT_SHOOTER_MOTOR_ID;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
@@ -15,8 +15,8 @@ public class Shooter extends SubsystemBase {
     // Shooter constructor
     private Shooter() {
         // Initialize the shooter motors
-        rightShooter = new CANSparkMax(RIGHT_SHOOTER, MotorType.kBrushless);
-        leftShooter = new CANSparkMax(LEFT_SHOOTER, MotorType.kBrushless);
+        rightShooter = new CANSparkMax(RIGHT_SHOOTER_MOTOR_ID, MotorType.kBrushless);
+        leftShooter = new CANSparkMax(LEFT_SHOOTER_MOTOR_ID, MotorType.kBrushless);
 
         // Set the right shooter motor to follow the left shooter motor
         rightShooter.follow(leftShooter, true);

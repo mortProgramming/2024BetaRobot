@@ -1,26 +1,5 @@
 package frc.robot.subsystems;
 
-import static frc.robot.util.Constants.DrivetrainMotors.BACK_LEFT_MODULE_DRIVE_MOTOR;
-import static frc.robot.util.Constants.DrivetrainMotors.BACK_LEFT_MODULE_STEER_ENCODER;
-import static frc.robot.util.Constants.DrivetrainMotors.BACK_LEFT_MODULE_STEER_MOTOR;
-import static frc.robot.util.Constants.DrivetrainMotors.BACK_LEFT_MODULE_STEER_OFFSET;
-import static frc.robot.util.Constants.DrivetrainMotors.BACK_RIGHT_MODULE_DRIVE_MOTOR;
-import static frc.robot.util.Constants.DrivetrainMotors.BACK_RIGHT_MODULE_STEER_ENCODER;
-import static frc.robot.util.Constants.DrivetrainMotors.BACK_RIGHT_MODULE_STEER_MOTOR;
-import static frc.robot.util.Constants.DrivetrainMotors.BACK_RIGHT_MODULE_STEER_OFFSET;
-import static frc.robot.util.Constants.DrivetrainMotors.FRONT_LEFT_MODULE_DRIVE_MOTOR;
-import static frc.robot.util.Constants.DrivetrainMotors.FRONT_LEFT_MODULE_STEER_ENCODER;
-import static frc.robot.util.Constants.DrivetrainMotors.FRONT_LEFT_MODULE_STEER_MOTOR;
-import static frc.robot.util.Constants.DrivetrainMotors.FRONT_LEFT_MODULE_STEER_OFFSET;
-import static frc.robot.util.Constants.DrivetrainMotors.FRONT_RIGHT_MODULE_DRIVE_MOTOR;
-import static frc.robot.util.Constants.DrivetrainMotors.FRONT_RIGHT_MODULE_STEER_ENCODER;
-import static frc.robot.util.Constants.DrivetrainMotors.FRONT_RIGHT_MODULE_STEER_MOTOR;
-import static frc.robot.util.Constants.DrivetrainMotors.FRONT_RIGHT_MODULE_STEER_OFFSET;
-import static frc.robot.util.Constants.DrivetrainSpecs.DRIVETRAIN_TRACKWIDTH_METERS;
-import static frc.robot.util.Constants.DrivetrainSpecs.DRIVETRAIN_WHEELBASE_METERS;
-import static frc.robot.util.Constants.DrivetrainSpecs.MAX_VELOCITY_METERS_PER_SECOND;
-import static frc.robot.util.Constants.DrivetrainSpecs.MAX_VOLTAGE;
-
 import com.kauailabs.navx.frc.AHRS;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
@@ -42,19 +21,39 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import static frc.robot.util.Constants.Drivetrain.BACK_LEFT_MODULE_DRIVE_MOTOR;
+import static frc.robot.util.Constants.Drivetrain.BACK_LEFT_MODULE_STEER_ENCODER;
+import static frc.robot.util.Constants.Drivetrain.BACK_LEFT_MODULE_STEER_MOTOR;
+import static frc.robot.util.Constants.Drivetrain.BACK_LEFT_MODULE_STEER_OFFSET;
+import static frc.robot.util.Constants.Drivetrain.BACK_RIGHT_MODULE_DRIVE_MOTOR;
+import static frc.robot.util.Constants.Drivetrain.BACK_RIGHT_MODULE_STEER_ENCODER;
+import static frc.robot.util.Constants.Drivetrain.BACK_RIGHT_MODULE_STEER_MOTOR;
+import static frc.robot.util.Constants.Drivetrain.BACK_RIGHT_MODULE_STEER_OFFSET;
+import static frc.robot.util.Constants.Drivetrain.FRONT_LEFT_MODULE_DRIVE_MOTOR;
+import static frc.robot.util.Constants.Drivetrain.FRONT_LEFT_MODULE_STEER_ENCODER;
+import static frc.robot.util.Constants.Drivetrain.FRONT_LEFT_MODULE_STEER_MOTOR;
+import static frc.robot.util.Constants.Drivetrain.FRONT_LEFT_MODULE_STEER_OFFSET;
+import static frc.robot.util.Constants.Drivetrain.FRONT_RIGHT_MODULE_DRIVE_MOTOR;
+import static frc.robot.util.Constants.Drivetrain.FRONT_RIGHT_MODULE_STEER_ENCODER;
+import static frc.robot.util.Constants.Drivetrain.FRONT_RIGHT_MODULE_STEER_MOTOR;
+import static frc.robot.util.Constants.Drivetrain.FRONT_RIGHT_MODULE_STEER_OFFSET;
+import static frc.robot.util.Constants.Drivetrain.DRIVETRAIN_TRACKWIDTH_METERS;
+import static frc.robot.util.Constants.Drivetrain.DRIVETRAIN_WHEELBASE_METERS;
+import static frc.robot.util.Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND;
+import static frc.robot.util.Constants.Drivetrain.MAX_VOLTAGE;
+
 public class Drivetrain extends SubsystemBase {
     private static Drivetrain drivetrain;
 
     private final AHRS navX;
     public final SwerveDriveKinematics driveKinematics;
     private SwerveDriveOdometry driveOdometry;
+    private ChassisSpeeds chassisSpeeds;
 
     private final SwerveModule frontLeftModule;
     private final SwerveModule frontRightModule;
     private final SwerveModule backLeftModule;
     private final SwerveModule backRightModule;
-
-    private ChassisSpeeds chassisSpeeds;
 
     private PIDController xController;
     private PIDController yController;

@@ -27,7 +27,7 @@ public class ShooterControl extends Command {
         }
 
         if (Operator.leftBumper()) {
-            motorValue = -60;
+            motorValue = -40;
         }
 
         if (Operator.xButton()) {
