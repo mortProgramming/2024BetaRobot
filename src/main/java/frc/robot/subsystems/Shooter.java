@@ -24,8 +24,8 @@ public class Shooter extends SubsystemBase {
 
     // Set the shooter motors to a specific value
     // Since we are using the follow method, we only need to set the left motor to set both of them
-    public void setMotor(double setValue) {
-        leftShooter.set(setValue);
+    public void setMotor(double value) {
+        leftShooter.set(value);
     }
 
     // Get an instance to the current shooter

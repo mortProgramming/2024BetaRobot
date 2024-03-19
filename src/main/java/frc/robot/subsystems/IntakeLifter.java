@@ -20,8 +20,8 @@ public class IntakeLifter extends SubsystemBase {
     }
 
     // Set the intake lifter motor to a specific value
-    public void setMotor(double setValue) {
-        liftMotor.set(setValue);
+    public void setMotor(double value) {
+        liftMotor.set(value);
     }
 
     // Get the current instance of the intake lifter

@@ -57,8 +57,7 @@ public class RobotContainer {
                 () -> -modifyAxis(joystick.getX(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND,
                 () -> -modifyAxis(-joystick.getY(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND,
                 () -> -modifyAxis(-joystick.getTwist(), joystick.getThrottle())
-                        * -MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
-                true));
+                        * -MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
         shooter.setDefaultCommand(new ShooterControl());
         intakeRoller.setDefaultCommand(new IntakeRollerControl());
         intakeLifter.setDefaultCommand(new IntakeLifterControl());

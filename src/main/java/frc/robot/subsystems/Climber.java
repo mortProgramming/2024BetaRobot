@@ -20,9 +20,9 @@ public class Climber extends SubsystemBase {
     }
 
     // Set both the left and the right climber motors to a specific value
-    public void setMotors(double setLeftValue, double setRightValue) {
-        leftClimber.set(setLeftValue);
-        rightClimber.set(setRightValue);
+    public void setMotors(double leftValue, double rightValue) {
+        leftClimber.set(leftValue);
+        rightClimber.set(rightValue);
     }
 
     // Get the current instance of the climber

@@ -6,45 +6,35 @@ import java.util.function.DoubleSupplier;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriveControl extends Command {
-    private final Drivetrain drivetrain;
+    private Drivetrain drivetrain;
 
-    private final DoubleSupplier translationXSupplier;
-    private final DoubleSupplier translationYSupplier;
-    private final DoubleSupplier rotationSupplier;
-
-    private boolean isFieldOriented;
+    private DoubleSupplier translationXSupplier;
+    private DoubleSupplier translationYSupplier;
+    private DoubleSupplier rotationSupplier;
 
     public DriveControl(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
-            DoubleSupplier rotationSupplier, boolean isFieldOriented) {
+            DoubleSupplier rotationSupplier) {
         drivetrain = Drivetrain.getInstance();
 
         this.translationXSupplier = translationXSupplier;
         this.translationYSupplier = translationYSupplier;
         this.rotationSupplier = rotationSupplier;
-        this.isFieldOriented = isFieldOriented;
 
         addRequirements(drivetrain);
     }
 
     @Override
     public void execute() {
-        if (isFieldOriented) {
-            drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(translationXSupplier.getAsDouble(),
-                    translationYSupplier.getAsDouble(), rotationSupplier.getAsDouble(),
-                    drivetrain.getGyroscopeRotation()));
-        } else {
-            drivetrain.drive(new ChassisSpeeds(translationXSupplier.getAsDouble(), translationYSupplier.getAsDouble(),
-                    rotationSupplier.getAsDouble()));
-        }
+        // Drive the drivetrain based on the inputted values
+        // The inputted values come from the joystick controls on the drive station
+        drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(translationXSupplier.getAsDouble(),
+                translationYSupplier.getAsDouble(), rotationSupplier.getAsDouble(),
+                drivetrain.getGyroscopeRotation()));
     }
 
     @Override
     public void end(boolean interrupted) {
+        // Once the command ends, stop running all the drivetrain motors (just in case)
         drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
     }
 }

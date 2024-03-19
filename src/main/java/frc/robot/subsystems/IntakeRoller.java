@@ -23,8 +23,8 @@ public class IntakeRoller extends SubsystemBase {
     }
 
     // Set the intake roller motor to a specific value
-    public void setMotor(double setValue) {
-        rollMotor.set(setValue);
+    public void setMotor(double value) {
+        rollMotor.set(value);
     }
 
     // Get an instance to the current intake roller

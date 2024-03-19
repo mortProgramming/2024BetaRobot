@@ -18,8 +18,8 @@ public class IntakeConveyor extends SubsystemBase {
     }
 
     // Set the intake motor to a specific value
-    public void setMotor(double setValue) {
-        conveyorMotor.set(setValue);
+    public void setMotor(double value) {
+        conveyorMotor.set(value);
     }
 
     // Get the current instance of the intake

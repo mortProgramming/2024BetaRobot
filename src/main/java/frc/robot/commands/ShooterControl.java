@@ -12,38 +12,35 @@ public class ShooterControl extends Command {
     public ShooterControl() {
         shooter = Shooter.getInstance();
 
+        motorValue = 0;
+
         addRequirements(shooter);
     }
 
     @Override
     public void initialize() {
-        motorValue = 0;
     }
 
     @Override
     public void execute() {
-        if (Operator.rightBumper()) {
+        // If the right bumper is pressed, set the shooter to max power
+        // If the left bumper is pressed, set the shooter to half power
+        // If the X button is pressed, stop the shooter
+        if (Operator.getRightBumper()) {
             motorValue = -100;
-        }
-
-        if (Operator.leftBumper()) {
-            motorValue = -40;
-        }
-
-        if (Operator.xButton()) {
+        } else if (Operator.getLeftBumper()) {
+            motorValue = -50;
+        } else if (Operator.getXButton()) {
             motorValue = 0;
         }
 
+        // Set the shooter motor based on the value above
         shooter.setMotor(motorValue);
     }
 
     @Override
     public void end(boolean interrupted) {
+        // Once the command ends, set the shooter motor to 0 (just in case)
         shooter.setMotor(0);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
     }
 }

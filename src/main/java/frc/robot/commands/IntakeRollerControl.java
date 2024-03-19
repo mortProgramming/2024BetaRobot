@@ -2,21 +2,15 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-//All conveyor stuff in this command is commented out
-
 import frc.robot.subsystems.IntakeRoller;
 import frc.robot.util.Operator;
-//import frc.robot.subsystems.IntakeConveyor;
 
 public class IntakeRollerControl extends Command {
-    private static IntakeRoller intakeRoller;
-    //private static IntakeConveyor intakeConveyor;
+    private IntakeRoller intakeRoller;
 
     public IntakeRollerControl() {
         intakeRoller = IntakeRoller.getInstance();
-        // intakeConveyor = IntakeConveyor.getInstance();
 
-        //removed intake conveyor add requirement in this command only in conveyor ommand now
         addRequirements(intakeRoller);
     }
 
@@ -26,21 +20,20 @@ public class IntakeRollerControl extends Command {
 
     @Override
     public void execute() {
-        // Based on the button pressed, run the roller and conveyor motors
-        if (Operator.bButton()) {
+        // Control the direction of the roller motors with the B and Y button
+        // If neither button is pressed, then set the motor to 0
+        if (Operator.getBButton()) {
             intakeRoller.setMotor(-0.50);
-            //intakeConveyor.setMotor(-0.50);
-        } else if (Operator.yButton()) {
+        } else if (Operator.getYButton()) {
             intakeRoller.setMotor(0.50);
-            // intakeConveyor.setMotor(0.50);
         } else {
             intakeRoller.setMotor(0);
-            //intakeConveyor.setMotor(0);
         }
     }
 
-    public void end() {
+    @Override
+    public void end(boolean interrupted) {
+        // Once the command ends, set the intake roller motor to 0 (just in case)
         intakeRoller.setMotor(0);
-        //  intakeConveyor.setMotor(0);
     }
 }
