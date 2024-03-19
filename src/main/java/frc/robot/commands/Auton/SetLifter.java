@@ -32,7 +32,6 @@ public class SetLifter extends Command {
 
         // If the target encoder value is the lifter's down position AND the encoder value is not equal to the target encoder value, move the intake position
         // If the target encoder value is the lifter's up position AND the encoder value is not equal to the target encoder value, move the intake position
-        // If the current encoder value is at the target encoder value, then stop moving the motor
         if (targetEncoderValue == LIFTER_DOWN && motorEncoderValue < targetEncoderValue) {
             motorValue = 0.5;
         } else if (targetEncoderValue == LIFTER_UP && motorEncoderValue > targetEncoderValue) {

@@ -12,6 +12,3 @@ public class RightSubAuto extends SequentialCommandGroup {
                         new TimedConveyor(3, -0.5)));
     }
 }
-
-// IMPORTANT all of the auton stuf fin robot container is commented out make
-// sure to find it line 29, 38, 38 and 68 i nrobot

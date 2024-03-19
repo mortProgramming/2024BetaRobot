@@ -15,7 +15,7 @@ public class TimedDrive extends Command {
     private double y;
     private double omega;
 
-    public TimedDrive(double time, double x, double y, double omega) {
+    public TimedDrive(double time, double xMetersPerSecond, double yMetersPerSecond, double omegaMetersPerSecond) {
         // Get a reference to the drivetrain
         drivetrain = Drivetrain.getInstance();
 
@@ -24,9 +24,9 @@ public class TimedDrive extends Command {
 
         // Set the time and the horizontal, vertial, and rotational values
         this.time = time;
-        this.x = x;
-        this.y = -y;
-        this.omega = omega;
+        this.x = xMetersPerSecond;
+        this.y = -yMetersPerSecond;
+        this.omega = omegaMetersPerSecond;
 
         addRequirements(drivetrain);
     }
