@@ -3,7 +3,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeLifter;
 import frc.robot.util.Operator;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static frc.robot.util.Constants.Intake.LIFTER_UP;
 import static frc.robot.util.Constants.Intake.LIFTER_DOWN;

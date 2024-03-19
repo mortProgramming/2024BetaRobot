@@ -23,8 +23,8 @@ import frc.robot.subsystems.IntakeRoller;
 import frc.robot.commands.IntakeLifterControl;
 import frc.robot.subsystems.IntakeConveyor;
 import frc.robot.commands.IntakeConveyorControl;
-import frc.robot.commands.Auton.TaxiPoint;
-import frc.robot.commands.Auton.ShooterAut;
+import frc.robot.commands.Auton.Taxi;
+import frc.robot.commands.Auton.SpeakerOneNote;
 import frc.robot.subsystems.Climber;
 import frc.robot.commands.ClimberControl;
 
@@ -72,8 +72,8 @@ public class RobotContainer {
 
         // //comment these two out because taxi auton wont work
         autoChooser.setDefaultOption("nothing", null);
-        autoChooser.addOption("TaxiPoint", new TaxiPoint());
-        autoChooser.addOption("Shoot Auton", new ShooterAut());
+        autoChooser.addOption("TaxiPoint", new Taxi());
+        autoChooser.addOption("Shoot Auton", new SpeakerOneNote());
         SmartDashboard.putData(autoChooser);
 
     }
