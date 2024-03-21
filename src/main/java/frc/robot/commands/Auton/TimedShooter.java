@@ -43,7 +43,7 @@ public class TimedShooter extends Command {
     public void end(boolean interrupted) {
         // The command will end once the specified time has elapsed
         // Stop the shooter motor
-        shooter.setMotor(0);
+        // shooter.setMotor(0);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.DoubleSupplier;
 import frc.robot.subsystems.Drivetrain;
@@ -30,6 +31,8 @@ public class DriveControl extends Command {
         drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(translationXSupplier.getAsDouble(),
                 translationYSupplier.getAsDouble(), rotationSupplier.getAsDouble(),
                 drivetrain.getGyroscopeRotation()));
+
+        SmartDashboard.putNumber("Drive Encoder Value:", drivetrain.getFrontLeftSwerveModule().getDriveDistance());
     }
 
     @Override

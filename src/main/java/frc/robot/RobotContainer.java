@@ -22,6 +22,7 @@ import frc.robot.commands.IntakeLifterControl;
 import frc.robot.subsystems.IntakeConveyor;
 import frc.robot.commands.IntakeConveyorControl;
 import frc.robot.commands.Auton.Taxi;
+import frc.robot.commands.Auton.RightSubAuto;
 import frc.robot.commands.Auton.SpeakerOneNote;
 import frc.robot.subsystems.Climber;
 import frc.robot.commands.ClimberControl;
@@ -70,12 +71,13 @@ public class RobotContainer {
         sensor = new DigitalInput(0);
 
         // Zero the drivetrain gyroscope
-        drivetrain.zeroGyroscope();
+        // drivetrain.zeroGyroscope();
 
         // Add the autonomous mode options to smart dashboard
         autoChooser.setDefaultOption("None", null);
         autoChooser.addOption("Taxi", new Taxi());
         autoChooser.addOption("One Note Speaker", new SpeakerOneNote());
+        autoChooser.addOption("Right Sub", new RightSubAuto());
 
         SmartDashboard.putData(autoChooser);
     }

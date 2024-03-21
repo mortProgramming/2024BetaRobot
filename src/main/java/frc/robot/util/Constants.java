@@ -3,6 +3,7 @@ package frc.robot.util;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.Unit;
 
 public final class Constants {
     // Class that contains all constants relating to the controllers
@@ -39,6 +40,8 @@ public final class Constants {
         public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 13;
         public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(207.3 + 90);
 
+        public static final double DRIVETRAIN_WHEEL_CIRCUMFERENCE = Math.PI * 4; // 2 * PI * RADIUS || PI * DIAMETER
+
         // The left-to-right distance between the drivetrain wheels measured from center to center.
         public static final double DRIVETRAIN_TRACKWIDTH_METERS = Units.inchesToMeters(22.625);
 
@@ -50,8 +53,8 @@ public final class Constants {
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 5636 / 60.0
                 * SdsModuleConfigurations.MK4I_L2.getDriveReduction()
                 * SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI;
-        public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND
-                / Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
+        public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = 0.9 * (MAX_VELOCITY_METERS_PER_SECOND
+                / Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0));
     }
 
     // Class containing all constants relating to the climber

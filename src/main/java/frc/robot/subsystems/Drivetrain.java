@@ -215,10 +215,14 @@ public class Drivetrain extends SubsystemBase {
         return rotateToAngleController;
     }
 
+    // Get a reference to the front left swerve module
+    public SwerveModule getFrontLeftSwerveModule() {
+        return frontLeftModule;
+    }
+
     @Override
     public void periodic() {
         driveOdometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()), getModulePositions());
-
         setModuleStates(driveKinematics.toSwerveModuleStates(chassisSpeeds));
     }
 
