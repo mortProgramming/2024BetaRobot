@@ -10,6 +10,7 @@ public final class Constants {
     public static final class Control {
         public static final int JOYSTICK_PORT = 0;
         public static final int CONTROLLER_PORT = 2;
+        public static final int PS5_CONTROLLER_PORT = 3;
 
         public static final int RESET_GYRO_BUTTON = 1; // on joystick 0
     }
@@ -38,7 +39,7 @@ public final class Constants {
         public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 6;
         public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 5;
         public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 13;
-        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(207.3 + 90);
+        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(162.3);
 
         public static final double DRIVETRAIN_WHEEL_CIRCUMFERENCE = Math.PI * 4; // 2 * PI * RADIUS || PI * DIAMETER
 
@@ -92,7 +93,7 @@ public final class Constants {
         public static final double LIFTER_PID_D = 0;
 
         // Intake encoder position values
-        public static final double LIFTER_UP = -24;
+        public static final double LIFTER_UP = -25;
         public static final double LIFTER_DOWN = 0;
     }
 

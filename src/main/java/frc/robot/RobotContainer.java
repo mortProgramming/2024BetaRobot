@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,13 +25,18 @@ import frc.robot.commands.IntakeConveyorControl;
 import frc.robot.commands.Auton.Taxi;
 import frc.robot.commands.Auton.RightSubAuto;
 import frc.robot.commands.Auton.SpeakerOneNote;
+import frc.robot.commands.Auton.SpeakerTwoNote;
 import frc.robot.subsystems.Climber;
 import frc.robot.commands.ClimberControl;
 
+
 import static frc.robot.util.Constants.Control.CONTROLLER_PORT;
 import static frc.robot.util.Constants.Control.JOYSTICK_PORT;
+import static frc.robot.util.Constants.Control.PS5_CONTROLLER_PORT;
 import static frc.robot.util.Constants.Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
 import static frc.robot.util.Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND;
+
+import java.security.CodeSource;
 
 public class RobotContainer {
     private final Drivetrain drivetrain = Drivetrain.getInstance();
@@ -44,15 +50,16 @@ public class RobotContainer {
 
     private Joystick joystick = new Joystick(JOYSTICK_PORT);
     private XboxController controller = new XboxController(CONTROLLER_PORT);
+    private PS5Controller psController = new PS5Controller(PS5_CONTROLLER_PORT);
 
     private DigitalInput sensor;
-
+//fix the constructor might just redo it completely
     public RobotContainer() {
         // Set the subsystem control commands
         drivetrain.setDefaultCommand(new DriveControl(
-                () -> -modifyAxis(joystick.getX(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND,
-                () -> -modifyAxis(-joystick.getY(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND,
-                () -> -modifyAxis(-joystick.getTwist(), joystick.getThrottle())
+                () -> -modifyAxis(psController.getLeftX(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND,
+                () -> -modifyAxis(-psController.getLeftY(),joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND,
+                () -> -modifyAxis(joystick.getThrottle())
                         * -MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
         shooter.setDefaultCommand(new ShooterControl());
         intakeRoller.setDefaultCommand(new IntakeRollerControl());
@@ -76,8 +83,9 @@ public class RobotContainer {
         // Add the autonomous mode options to smart dashboard
         autoChooser.setDefaultOption("None", null);
         autoChooser.addOption("Taxi", new Taxi());
-        autoChooser.addOption("One Note Speaker", new SpeakerOneNote());
+        autoChooser.addOption("Center Speaker One Note", new SpeakerOneNote());
         autoChooser.addOption("Right Sub", new RightSubAuto());
+        autoChooser.addOption("Center Speaker Two Note", new SpeakerTwoNote());
 
         SmartDashboard.putData(autoChooser);
     }

@@ -19,8 +19,8 @@ public class Shooter extends SubsystemBase {
         leftShooter = new CANSparkMax(LEFT_SHOOTER_MOTOR_ID, MotorType.kBrushless);
 
         // Set the right shooter motor to follow the left shooter motor
-        rightShooter.follow(leftShooter, true);
-    }
+       rightShooter.follow(leftShooter, true);
+    }           
 
     // Set the shooter motors to a specific value
     // Since we are using the follow method, we only need to set the left motor to set both of them

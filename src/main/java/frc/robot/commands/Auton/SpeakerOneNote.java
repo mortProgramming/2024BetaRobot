@@ -7,10 +7,12 @@ public class SpeakerOneNote extends SequentialCommandGroup {
     public SpeakerOneNote() {
         addCommands(
                 new ParallelCommandGroup(
-                        new TimedDrive(1.1, 0, 1, 0),
-                        new TimedShooter(3, -0.88)),
+                        new TimedDrive(1, 0, 0.8, 0),
+                        new TimedShooter(2, -0.85)),
                 new ParallelCommandGroup(
-                        new TimedShooter(2, -1),
-                        new TimedConveyor(3, -0.5)));
+                        new TimedShooter(1, -0.85),
+                        new TimedConveyor(1, -0.5)),
+                new ParallelCommandGroup(
+                    new TimedDrive(1, 0, 0.5, 0)));
     }
 }

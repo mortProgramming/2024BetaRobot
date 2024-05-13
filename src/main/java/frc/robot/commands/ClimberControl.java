@@ -27,8 +27,21 @@ public class ClimberControl extends Command {
     @Override
     public void execute() {
         // Get the initial left and right motor values based on the controller joystick values
-        double leftMotorValue = 0.7 * -Operator.getLeftJoystickY();
-        double rightMotorValue = 0.7 * Operator.getRightJoystickY();
+    double leftMotorValue = 0;
+    double rightMotorValue = 0;
+       
+
+        if (Operator.getLeftJoystickY() < 0.05 && Operator.getLeftJoystickY() > -0.05) {
+            leftMotorValue = 0;
+        }        else{
+             leftMotorValue = 0.7 * -Operator.getLeftJoystickY();
+        }
+
+        if (Operator.getRightJoystickY() < 0.05 && Operator.getRightJoystickY() > -0.05) {
+             rightMotorValue = 0;
+        }        else{
+             rightMotorValue = 0.7 * Operator.getRightJoystickY();
+        }
 
         // Get the left and right climber motor encoder values
         // double leftMotorEncoderValue = climber.getLeftClimberMotor().getPosition().getValueAsDouble();
