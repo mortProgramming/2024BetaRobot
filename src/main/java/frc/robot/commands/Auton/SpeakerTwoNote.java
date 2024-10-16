@@ -11,9 +11,9 @@ public class SpeakerTwoNote extends SequentialCommandGroup {
         addCommands(
                 new ParallelCommandGroup(
                         new TimedDrive(1, 0, 0.8, 0),
-                        new TimedShooter(1.75, -0.85)),
+                        new TimedShooter(1.75, 0.85)),
                 new ParallelCommandGroup(
-                        new TimedShooter(1, -0.85),
+                        new TimedShooter(1, 0.85),
                         new TimedConveyor(1, -0.5)),
                         new TimedShooter(1, 0),
                        
@@ -24,9 +24,9 @@ public class SpeakerTwoNote extends SequentialCommandGroup {
                         
                 new ParallelCommandGroup(
                      new TimedDrive(1, 0, -0.5, 0),
-                     new TimedShooter(1, -0.85)),
+                     new TimedShooter(1, 0.85)),
                 new ParallelCommandGroup(
-                        new TimedShooter(1, -0.85),
+                        new TimedShooter(1, 0.85),
                         new TimedConveyor(1, -0.5)));
     }
 }

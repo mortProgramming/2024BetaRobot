@@ -27,9 +27,9 @@ public class ShooterControl extends Command {
         // If the left bumper is pressed, set the shooter to half power
         // If the X button is pressed, stop the shooter
         if (Operator.getRightBumper()) {
-            motorValue = -0.90;
+            motorValue = 0.90;
         } else if (Operator.getLeftBumper()) {
-            motorValue = -0.80;
+            motorValue = 0.80;
         } else if (Operator.getXButton()) {
             motorValue = 0;
         }

@@ -28,11 +28,11 @@ import frc.robot.commands.Auton.SpeakerOneNote;
 import frc.robot.commands.Auton.SpeakerTwoNote;
 import frc.robot.subsystems.Climber;
 import frc.robot.commands.ClimberControl;
-
+import frc.robot.commands.ControllerDriveControl;
 
 import static frc.robot.util.Constants.Control.CONTROLLER_PORT;
 import static frc.robot.util.Constants.Control.JOYSTICK_PORT;
-import static frc.robot.util.Constants.Control.PS5_CONTROLLER_PORT;
+import static frc.robot.util.Constants.Control.OTHER_CONTROLLER_PORT;
 import static frc.robot.util.Constants.Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
 import static frc.robot.util.Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND;
 
@@ -49,18 +49,23 @@ public class RobotContainer {
     private SendableChooser<Command> autoChooser = new SendableChooser<Command>();
 
     private Joystick joystick = new Joystick(JOYSTICK_PORT);
-    private XboxController controller = new XboxController(CONTROLLER_PORT);
-    private PS5Controller psController = new PS5Controller(PS5_CONTROLLER_PORT);
+    private PS5Controller psController = new PS5Controller(OTHER_CONTROLLER_PORT);
 
     private DigitalInput sensor;
+    
 //fix the constructor might just redo it completely
     public RobotContainer() {
         // Set the subsystem control commands
         drivetrain.setDefaultCommand(new DriveControl(
-                () -> -modifyAxis(psController.getLeftX(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND,
-                () -> -modifyAxis(-psController.getLeftY(),joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND,
-                () -> -modifyAxis(joystick.getThrottle())
-                        * -MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
+                (() -> -modifyAxis(joystick.getX(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND),
+                (() -> -modifyAxis(joystick.getY(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND),
+                (() -> modifyAxis(joystick.getTwist(), joystick.getThrottle()) * MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND)));
+        // drivetrain.setDefaultCommand(new ControllerDriveControl());
+        // drivetrain.setDefaultCommand(new DriveControl(
+        //     () -> -modifyAxis(psController.getLeftX(), 1),
+        //     () -> -modifyAxis(psController.getLeftY(), 1),
+        //     () -> -modifyAxis(psController.getRightX(), 1)
+        // ));
         shooter.setDefaultCommand(new ShooterControl());
         intakeRoller.setDefaultCommand(new IntakeRollerControl());
         intakeLifter.setDefaultCommand(new IntakeLifterControl());

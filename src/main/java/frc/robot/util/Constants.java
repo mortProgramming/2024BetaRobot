@@ -10,7 +10,7 @@ public final class Constants {
     public static final class Control {
         public static final int JOYSTICK_PORT = 0;
         public static final int CONTROLLER_PORT = 2;
-        public static final int PS5_CONTROLLER_PORT = 3;
+        public static final int OTHER_CONTROLLER_PORT = 3;
 
         public static final int RESET_GYRO_BUTTON = 1; // on joystick 0
     }

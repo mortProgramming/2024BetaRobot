@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix6.hardware.TalonFX;
-
 import static frc.robot.util.Constants.Climber.RIGHT_CLIMBER_MOTOR_ID;
 import static frc.robot.util.Constants.Climber.LEFT_CLIMBER_MOTOR_ID;
 
