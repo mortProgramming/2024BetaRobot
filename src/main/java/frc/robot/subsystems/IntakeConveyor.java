@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -9,12 +11,12 @@ import static frc.robot.util.Constants.Intake.CONVEYOR_MOTOR_ID;
 public class IntakeConveyor extends SubsystemBase {
     private static IntakeConveyor intakeConveyor;
 
-    private CANSparkMax conveyorMotor;
+    private CANSparkFlex conveyorMotor;
 
     // Intake constructor 
     private IntakeConveyor() {
         // Initialize the intake motor
-        conveyorMotor = new CANSparkMax(CONVEYOR_MOTOR_ID, MotorType.kBrushless);
+        conveyorMotor = new CANSparkFlex(CONVEYOR_MOTOR_ID, MotorType.kBrushless);
     }
 
     // Set the intake motor to a specific value
@@ -34,7 +36,7 @@ public class IntakeConveyor extends SubsystemBase {
     }
 
     // Get a reference to the intake motor
-    public CANSparkMax getIntakeMotor() {
+    public CANSparkFlex getIntakeMotor() {
         return conveyorMotor;
     }
 }
