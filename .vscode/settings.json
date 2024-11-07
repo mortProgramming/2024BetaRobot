@@ -1,3 +1,4 @@
 {
-    "wpilib.autoSaveOnDeploy": true
+    "wpilib.autoSaveOnDeploy": true,
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
