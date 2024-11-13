@@ -31,11 +31,11 @@ public class IO {
         //     new Drive(Inputs::getLeftControllerXSwerve, Inputs::getLeftControllerYSwerve, Inputs::getRightControllerXSwerve)
         // );
 
-      joystick.button(0).whileTrue(drivetrain.setGyroscopeZero(IMU_TO_ROBOT_FRONT_ANGLE));
+      // joystick.button(0).whileTrue(drivetrain.setGyroscopeZero(IMU_TO_ROBOT_FRONT_ANGLE));
 
-      joystick.button(1).whileTrue(new InstantCommand(() -> drivetrain.getSwerveDrive().resetPosition(
-        new Pose2d(0, 0, Rotation2d.fromDegrees(0))
-      )));
+      // joystick.button(1).whileTrue(new InstantCommand(() -> drivetrain.getSwerveDrive().resetPosition(
+      //   new Pose2d(0, 0, Rotation2d.fromDegrees(0))
+      // )));
     }
 
     public static Boolean getIsBlue () {

@@ -49,29 +49,29 @@ public class Drivetrain extends SubsystemBase {
 
   public void configureSwerve () {
     frontLeftModule = new SwerveModule(
-      FALCON, FRONT_LEFT_DRIVE_MOTOR, 
-      FALCON, FRONT_LEFT_STEER_MOTOR, 
+      KRAKEN, FRONT_LEFT_DRIVE_MOTOR, 
+      KRAKEN, FRONT_LEFT_STEER_MOTOR, 
       CANCODER, FRONT_LEFT_ENCODER, 
       MK4i
     );
 
     frontRightModule = new SwerveModule(
-      FALCON, FRONT_RIGHT_DRIVE_MOTOR, 
-      FALCON, FRONT_RIGHT_STEER_MOTOR, 
+      KRAKEN, FRONT_RIGHT_DRIVE_MOTOR, 
+      KRAKEN, FRONT_RIGHT_STEER_MOTOR, 
       CANCODER, FRONT_RIGHT_ENCODER, 
       MK4i
     );
 
     backLeftModule = new SwerveModule(
-      FALCON, BACK_LEFT_DRIVE_MOTOR, 
-      FALCON, BACK_LEFT_STEER_MOTOR, 
+      KRAKEN, BACK_LEFT_DRIVE_MOTOR, 
+      KRAKEN, BACK_LEFT_STEER_MOTOR, 
       CANCODER, BACK_LEFT_ENCODER, 
       MK4i
     );
 
     backRightModule = new SwerveModule(
-      FALCON, BACK_RIGHT_DRIVE_MOTOR, 
-      FALCON, BACK_RIGHT_STEER_MOTOR, 
+      KRAKEN, BACK_RIGHT_DRIVE_MOTOR, 
+      KRAKEN, BACK_RIGHT_STEER_MOTOR, 
       CANCODER, BACK_RIGHT_ENCODER, 
       MK4i
     );
@@ -101,8 +101,6 @@ public class Drivetrain extends SubsystemBase {
     );
 
     swerveDrive.setOffsets(FRONT_LEFT_OFFSET, FRONT_RIGHT_OFFSET, BACK_LEFT_OFFSET, BACK_RIGHT_OFFSET);
-
-    swerveDrive.setCanivore(CANIVORE_NAME);
   }
 
   @Override

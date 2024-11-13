@@ -25,7 +25,7 @@ public class Auto {
 		drivetrain = Drivetrain.getInstance();
 
         autoChooser = new SendableChooser<Command>();
-		configure();
+		configureAutoBuilder();
 		addAutoOptions();
 		SmartDashboard.putData(autoChooser);
 	}
