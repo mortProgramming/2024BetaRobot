@@ -92,7 +92,7 @@ public class Drivetrain extends SubsystemBase {
 			new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
     );
 
-    imu = new IMU(PIGEON2, IMU_ID);
+    imu = new IMU(NAVX2, IMU_ID);
 
     swerveDrive = new OdometeredSwerveDrive(
       frontLeftModule, frontRightModule, 
@@ -107,13 +107,13 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     if (IO.getIsBlue()) {
 			speeds = new ChassisSpeeds(
-				speeds.vyMetersPerSecond, -speeds.vxMetersPerSecond,
+				-speeds.vyMetersPerSecond, -speeds.vxMetersPerSecond,
 				speeds.omegaRadiansPerSecond
 			);
 		}
 		else {
 			speeds = new ChassisSpeeds(
-				-speeds.vyMetersPerSecond, speeds.vxMetersPerSecond,
+				speeds.vyMetersPerSecond, speeds.vxMetersPerSecond,
 				speeds.omegaRadiansPerSecond
 			);
 		}

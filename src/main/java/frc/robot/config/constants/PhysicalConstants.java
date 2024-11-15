@@ -16,9 +16,9 @@ public final class PhysicalConstants {
 		);
 
 		public static final int FRONT_LEFT_OFFSET = 270;
-		public static final int FRONT_RIGHT_OFFSET = 88;
-		public static final int BACK_LEFT_OFFSET = 268;
-		public static final int BACK_RIGHT_OFFSET = 332;
+		public static final int FRONT_RIGHT_OFFSET = 87;
+		public static final int BACK_LEFT_OFFSET = 272;
+		public static final int BACK_RIGHT_OFFSET = 74;
 
 		public static final int IMU_TO_ROBOT_FRONT_ANGLE = 0;
     }

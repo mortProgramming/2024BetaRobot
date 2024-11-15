@@ -78,7 +78,8 @@ public class Inputs {
     }
 
     public static double getThrottle() {
-        return (joystick.getThrottle() + 1 ) / 2;
+        return 1 - ((joystick.getThrottle() + 1 ) / 2);
+        // return -joystick.getThrottle();
         // return throttle.getThrottle();
     }
 
@@ -103,7 +104,7 @@ public class Inputs {
      * @return
      */
 	public static double getJoystickTwist() {
-		return modifyAxisTwist(joystick.getTwist(), getThrottle())
+		return -modifyAxisTwist(joystick.getTwist(), getThrottle())
 			    * drivetrain.getMaxSpeedMeters() / 
                 DRIVEBASE_RADIUS_METERS;
     }

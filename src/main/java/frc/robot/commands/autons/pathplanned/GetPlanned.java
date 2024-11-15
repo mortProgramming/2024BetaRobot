@@ -8,10 +8,21 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class GetPlanned {
 
-    public static Command getCircle () {
+    public static Command square() {
         Rest.setCommands();
 
-        return new PathPlannerAuto("Circle");
+        return new PathPlannerAuto("Square");
     }
 
+    public static Command oval() {
+        Rest.setCommands();
+
+        return new PathPlannerAuto("Oval");
+    }
+
+    public static Command t() {
+        Rest.setCommands();
+
+        return new PathPlannerAuto("T");
+    }
 }

@@ -1,6 +1,6 @@
 package frc.robot.config;
 
-// import frc.robot.commands.autons.pathPlanner.GetPlanned;
+import frc.robot.commands.autons.pathplanned.GetPlanned;
 import frc.robot.commands.autons.timed.Taxi;
 import com.MORTlib.swerve.PathPlanner;
 import frc.robot.subsystems.Drivetrain;
@@ -45,7 +45,9 @@ public class Auto {
 		autoChooser.setDefaultOption("nothing", null);
 
 		autoChooser.addOption("Forward", new Taxi());
-		// autoChooser.addOption("Circle", GetPlanned.getCircle());
+		autoChooser.addOption("Oval", GetPlanned.oval());
+		autoChooser.addOption("Square", GetPlanned.square());
+		autoChooser.addOption("T", GetPlanned.t());
 	}
 
 	public static Command getAutonomousCommand () {
