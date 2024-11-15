@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
-import com.MORTlib.hardware.camera.TagCamera;
-import com.MORTlib.hardware.camera.TagCameraTypeEnum;
+import frc.robot.mortlib.hardware.camera.TagCamera;
+import frc.robot.mortlib.hardware.camera.TagCameraTypeEnum;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;

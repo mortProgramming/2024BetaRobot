@@ -15,15 +15,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.config.constants.PhysicalConstants.Drivetrain.*;
 import static frc.robot.config.constants.PortConstants.Drivetrain.*;
-import static com.MORTlib.hardware.encoder.EncoderTypeEnum.*;
-import static com.MORTlib.hardware.imu.IMUTypeEnum.*;
-import static com.MORTlib.hardware.motor.MotorTypeEnum.*;
-import static com.MORTlib.swerve.ModuleTypeEnum.*;
+import static frc.robot.mortlib.hardware.encoder.EncoderTypeEnum.*;
+import static frc.robot.mortlib.hardware.imu.IMUTypeEnum.*;
+import static frc.robot.mortlib.hardware.motor.MotorTypeEnum.*;
+import static frc.robot.mortlib.swerve.ModuleTypeEnum.*;
 
 import frc.robot.config.IO;
-import com.MORTlib.hardware.imu.IMU;
-import com.MORTlib.swerve.SwerveModule;
-import com.MORTlib.swerve.swervedrives.OdometeredSwerveDrive;
+import frc.robot.mortlib.hardware.imu.IMU;
+import frc.robot.mortlib.swerve.SwerveModule;
+import frc.robot.mortlib.swerve.swervedrives.OdometeredSwerveDrive;
 
 public class Drivetrain extends SubsystemBase {
   private static Drivetrain drivetrain;
@@ -92,7 +92,7 @@ public class Drivetrain extends SubsystemBase {
 			new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
     );
 
-    imu = new IMU(NAVX2, IMU_ID);
+    imu = new IMU(NAVX, IMU_ID);
 
     swerveDrive = new OdometeredSwerveDrive(
       frontLeftModule, frontRightModule, 
@@ -135,7 +135,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public Command setGyroscopeZero(double angle) {
-		return new InstantCommand(() -> swerveDrive.zeroIMU(angle));
+		return new InstantCommand(() -> swerveDrive.zeroIMU(angle), drivetrain);
 	}
 
 

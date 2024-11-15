@@ -1,6 +1,6 @@
 package frc.robot.commands.actions.drivetrain;
 
-import com.MORTlib.swerve.autons.BasicTimedDrive;
+import frc.robot.mortlib.swerve.autons.BasicTimedDrive;
 import frc.robot.subsystems.Drivetrain;
 
 public class TimedDrive extends BasicTimedDrive {
