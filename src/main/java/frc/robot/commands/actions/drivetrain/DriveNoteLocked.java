@@ -1,0 +1,54 @@
+package frc.robot.commands.actions.drivetrain;
+
+import static frc.robot.config.constants.PortConstants.Vision.*;
+
+import java.util.function.DoubleSupplier;
+
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Vision;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj2.command.Command;
+
+public class DriveNoteLocked extends Command {
+    private Drivetrain drivetrain;
+	private Vision vision;
+
+	private DoubleSupplier translationXSupplier;
+	private DoubleSupplier translationYSupplier;
+
+	public DriveNoteLocked(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier) {
+		drivetrain = Drivetrain.getInstance();
+		vision = Vision.getInstance();
+
+		this.translationXSupplier = translationXSupplier;
+		this.translationYSupplier = translationYSupplier;
+		
+		addRequirements(drivetrain);
+	}
+
+    @Override
+	public void execute() {
+		drivetrain.setDrive(
+			ChassisSpeeds.fromFieldRelativeSpeeds(
+				translationXSupplier.getAsDouble(),
+				translationYSupplier.getAsDouble(), 
+				0,
+                Rotation2d.fromDegrees(0)
+            )
+        );
+
+        drivetrain.setAngleController(drivetrain.getIMURotation().getDegrees() + vision.getNoteCamera().getPicturePosition()[0]);
+	}
+
+    @Override
+	public boolean isFinished() {
+		return false;
+	}
+
+    @Override
+	public void end(boolean interrupted) {
+		drivetrain.setDrive(new ChassisSpeeds(0.0, 0.0, 0.0));
+	}
+}

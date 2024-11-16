@@ -50,6 +50,10 @@ public static final class Controller {
     public static final int IMU_ID = 0;
 
     public static final String CANIVORE_NAME = "Drivetrain";
-
   }
+
+  public static final class Vision {
+		public static final String TAG_CAMERA = "taglite";
+		public static final String NOTE_CAMERA = "notelite";
+    }
 }

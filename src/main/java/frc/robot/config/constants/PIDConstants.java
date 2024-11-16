@@ -1,8 +1,22 @@
 package frc.robot.config.constants;
 
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+
 public final class PIDConstants {
     
     public final class Drivetrain {
+		public final static double TO_POS_KP = 0.5;
+		public final static double TO_POS_KI = 0;
+		public final static double TO_POS_KD = 0;
+		public static final Constraints TO_POS_CONSTRAINTS = new Constraints(10, 10);
+		public final static double TO_POS_POS_TOLERANCE = 0.05;
+		
+		public final static double TO_ANGLE_KP = 0.07;
+		public final static double TO_ANGLE_KI = 0;
+		public final static double TO_ANGLE_KD = 0.001;
+		public static final Constraints TO_ANGLE_CONSTRAINTS = new Constraints(300, 300);
+		public final static double TO_ANGLE_POS_TOLERANCE = 3;
+		public final static double TO_ANGLE_VEL_TOLERANCE = 30;
 
 		//0.1, 0, 0
 

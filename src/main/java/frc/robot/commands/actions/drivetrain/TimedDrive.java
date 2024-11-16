@@ -1,15 +1,66 @@
 package frc.robot.commands.actions.drivetrain;
 
-import frc.robot.mortlib.swerve.autons.BasicTimedDrive;
 import frc.robot.subsystems.Drivetrain;
 
-public class TimedDrive extends BasicTimedDrive {
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.Timer;
 
+public class TimedDrive extends Command{
+  private Drivetrain drivetrain;
+
+  private Timer timer;
+  private double time;
+
+  private double x;
+  private double y;
+  private double omega;
+  /**
+   * Moves the drivetrain a certain amount of time given movement parameters.
+   * @param time
+   * The amount of time to drive for
+   * @param x
+   * The velocity in the x direction
+   * @param y
+   * The velocity in the y direction
+   * @param omega
+   * The angular velocity
+   */
   public TimedDrive(double time, double x, double y, double omega) {
-    super(Drivetrain.getInstance(), Drivetrain.getInstance().getSwerveDrive(), time, x, y, omega);
+    drivetrain = Drivetrain.getInstance();
+    
+    timer  = new Timer();
+    this.time = time;
+
+    this.x = x;
+    this.y = y;
+    this.omega = omega;
+
+    addRequirements(drivetrain);
   }
 
-  public TimedDrive(double time, double x, double y, double omega, boolean fieldOriented) {
-    super(Drivetrain.getInstance(), Drivetrain.getInstance().getSwerveDrive(), time, x, y, omega, fieldOriented);
+  @Override
+  public void initialize() {
+    timer.reset();
+    timer.start();
+    
+  }
+
+  @Override
+  public void execute() {
+    drivetrain.setDrive(ChassisSpeeds.fromFieldRelativeSpeeds(
+      -y, x, omega,
+		  drivetrain.getIMURotation()
+    ));
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    drivetrain.setDrive(new ChassisSpeeds(0, 0, 0));
+  }
+
+  @Override
+  public boolean isFinished() {
+    return timer.get() > time;
   }
 }

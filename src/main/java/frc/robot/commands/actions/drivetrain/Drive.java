@@ -1,62 +1,68 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands.actions.drivetrain;
 
-import java.util.function.DoubleSupplier;
-
 import frc.robot.subsystems.Drivetrain;
-
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 
-/** An example command that uses an example subsystem. */
+import java.util.function.DoubleSupplier;
+
 public class Drive extends Command {
-  private Drivetrain drivetrain;
+	private Drivetrain drivetrain;
 
-  private DoubleSupplier wantedX;
-  private DoubleSupplier wantedY;
-  private DoubleSupplier wantedTheta;
+	private DoubleSupplier translationXSupplier;
+	private DoubleSupplier translationYSupplier;
+	private DoubleSupplier rotationSupplier;
 
-  public Drive(DoubleSupplier wantedX, DoubleSupplier wantedY, DoubleSupplier wantedTheta) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    drivetrain =  Drivetrain.getInstance();
+	private boolean fieldOriented;
 
-    this.wantedX = wantedX;
-    this.wantedY = wantedY;
-    this.wantedTheta = wantedTheta;
+	public Drive(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
+			DoubleSupplier rotationSupplier, boolean fieldOriented) {
+		drivetrain = Drivetrain.getInstance();
 
-    addRequirements(drivetrain);
-  }
+		this.translationXSupplier = translationXSupplier;
+		this.translationYSupplier = translationYSupplier;
+		this.rotationSupplier = rotationSupplier;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+		this.fieldOriented = fieldOriented;
+		
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    drivetrain.setDrive(
-      new ChassisSpeeds(
-        wantedX.getAsDouble(),
-				wantedY.getAsDouble(), 
-        wantedTheta.getAsDouble()
-      )
-    );
-  }
+		addRequirements(drivetrain);
+	}
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    drivetrain.setDrive(
-      new ChassisSpeeds(0, 0, 0)
-    );
-  }
+	public Drive(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
+			DoubleSupplier rotationSupplier) {
+		this(translationXSupplier, translationYSupplier, rotationSupplier, false);
+	}
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    @Override
+	public void execute() {
+		if (fieldOriented) {
+			drivetrain.setDrive(
+				new ChassisSpeeds(
+					translationXSupplier.getAsDouble(),
+					translationYSupplier.getAsDouble(), 
+					rotationSupplier.getAsDouble()
+				)
+			);
+		} else {
+			drivetrain.setUnorientedDrive(new ChassisSpeeds(
+					translationXSupplier.getAsDouble(),
+					translationYSupplier.getAsDouble(), 
+					rotationSupplier.getAsDouble()
+				)
+			);
+		}
+	}
+
+    @Override
+	public boolean isFinished() {
+		return false;
+	}
+
+    @Override
+	public void end(boolean interrupted) {
+		drivetrain.setDrive(new ChassisSpeeds(0.0, 0.0, 0.0));
+	}
 }
+

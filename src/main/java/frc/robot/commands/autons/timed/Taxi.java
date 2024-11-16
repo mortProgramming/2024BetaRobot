@@ -13,7 +13,7 @@ public class Taxi extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new TimedDrive(5, 0, 0.5, 0, true)
+      new TimedDrive(5, 0, 0.5, 0)
     );
   }
 }

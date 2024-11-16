@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -14,7 +15,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.config.constants.PhysicalConstants.Drivetrain.*;
+import static frc.robot.config.constants.PIDConstants.Drivetrain.*;
 import static frc.robot.config.constants.PortConstants.Drivetrain.*;
+
 import static frc.robot.mortlib.hardware.encoder.EncoderTypeEnum.*;
 import static frc.robot.mortlib.hardware.imu.IMUTypeEnum.*;
 import static frc.robot.mortlib.hardware.motor.MotorTypeEnum.*;
@@ -22,6 +25,7 @@ import static frc.robot.mortlib.swerve.ModuleTypeEnum.*;
 
 import frc.robot.config.IO;
 import frc.robot.mortlib.hardware.imu.IMU;
+import frc.robot.mortlib.swerve.Odometer;
 import frc.robot.mortlib.swerve.SwerveModule;
 import frc.robot.mortlib.swerve.swervedrives.OdometeredSwerveDrive;
 
@@ -41,10 +45,30 @@ public class Drivetrain extends SubsystemBase {
 
   private IMU imu;
 
+  private ProfiledPIDController xToPosController;
+	private ProfiledPIDController yToPosController;
+  private ProfiledPIDController rotateToAngleController;
+
   private Drivetrain() {
     configureSwerve();
     
     speeds = new ChassisSpeeds(0, 0, 0);
+
+    xToPosController = new ProfiledPIDController(
+			TO_POS_KP, TO_POS_KI, TO_POS_KD, TO_POS_CONSTRAINTS
+		);
+		yToPosController = new ProfiledPIDController(
+			TO_POS_KP, TO_POS_KI, TO_POS_KD, TO_POS_CONSTRAINTS
+		);
+    rotateToAngleController = new ProfiledPIDController(
+			TO_ANGLE_KP, TO_ANGLE_KI, TO_ANGLE_KD, TO_ANGLE_CONSTRAINTS
+		);
+
+    xToPosController.setTolerance(TO_POS_POS_TOLERANCE);
+		yToPosController.setTolerance(TO_POS_POS_TOLERANCE);
+    rotateToAngleController.setTolerance(TO_ANGLE_POS_TOLERANCE, TO_ANGLE_VEL_TOLERANCE);
+
+    rotateToAngleController.enableContinuousInput(-180, 180);
   }
 
   public void configureSwerve () {
@@ -52,28 +76,28 @@ public class Drivetrain extends SubsystemBase {
       KRAKEN, FRONT_LEFT_DRIVE_MOTOR, 
       KRAKEN, FRONT_LEFT_STEER_MOTOR, 
       CANCODER, FRONT_LEFT_ENCODER, 
-      MK4i
+      MK4i_L3
     );
 
     frontRightModule = new SwerveModule(
       KRAKEN, FRONT_RIGHT_DRIVE_MOTOR, 
       KRAKEN, FRONT_RIGHT_STEER_MOTOR, 
       CANCODER, FRONT_RIGHT_ENCODER, 
-      MK4i
+      MK4i_L3
     );
 
     backLeftModule = new SwerveModule(
       KRAKEN, BACK_LEFT_DRIVE_MOTOR, 
       KRAKEN, BACK_LEFT_STEER_MOTOR, 
       CANCODER, BACK_LEFT_ENCODER, 
-      MK4i
+      MK4i_L3
     );
 
     backRightModule = new SwerveModule(
       KRAKEN, BACK_RIGHT_DRIVE_MOTOR, 
       KRAKEN, BACK_RIGHT_STEER_MOTOR, 
       CANCODER, BACK_RIGHT_ENCODER, 
-      MK4i
+      MK4i_L3
     );
 
     frontLeftModule.steerMotor.setDirectionFlip(true);
@@ -134,15 +158,50 @@ public class Drivetrain extends SubsystemBase {
     this.speeds = speeds;
   }
 
+  public void setUnorientedDrive(ChassisSpeeds speeds) {
+    this.speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+      speeds, Rotation2d.fromDegrees(-getIMURotation().getDegrees())
+    );
+  }
+
+  public void setPosController(double poseX, double poseY, double wantedX, double wantedY) {
+		speeds = new ChassisSpeeds(
+			xToPosController.calculate(swerveDrive.getPosition().getX(), wantedX), 
+        	yToPosController.calculate(swerveDrive.getPosition().getY(), wantedY), 
+        	0
+		);
+	}
+
+  public void setAngleController(double wantedAngle) {
+		speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+			speeds.vxMetersPerSecond, 
+        	speeds.vyMetersPerSecond,
+			rotateToAngleController.calculate(drivetrain.getIMURotation().getDegrees(), wantedAngle),
+			drivetrain.getIMURotation()
+		);
+	}
+
   public Command setGyroscopeZero(double angle) {
 		return new InstantCommand(() -> swerveDrive.zeroIMU(angle), drivetrain);
 	}
 
 
 
+  public boolean getXControllerAtSetpoint() {
+		return xToPosController.atSetpoint();
+	}
+
+	public boolean getYControllerAtSetpoint() {
+		return yToPosController.atSetpoint();
+	}
+
+	public boolean getRotateControllerAtSetpoint() {
+		return rotateToAngleController.atSetpoint();
+	}
+  
 	public ChassisSpeeds getChassisSpeeds() {
-        return speeds;
-    }
+    return speeds;
+  }
 
 	public double getMaxSpeedMeters() {
 		return frontLeftModule.maxSpeed;
@@ -156,8 +215,8 @@ public class Drivetrain extends SubsystemBase {
 		return kinematics;
 	}
 
-	public Rotation2d getRotation2d() {
-		return imu.getRotation2d();
+	public Rotation2d getIMURotation() {
+		return swerveDrive.getFieldRelativeAngle2d();
 	}
 
   public static Drivetrain getInstance() {
