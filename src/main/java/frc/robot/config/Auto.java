@@ -48,6 +48,7 @@ public class Auto {
 		autoChooser.addOption("Oval", GetPlanned.oval());
 		autoChooser.addOption("Square", GetPlanned.square());
 		autoChooser.addOption("T", GetPlanned.t());
+		autoChooser.addOption("TablesMoved", GetPlanned.tables());
 	}
 
 	public static Command getAutonomousCommand () {

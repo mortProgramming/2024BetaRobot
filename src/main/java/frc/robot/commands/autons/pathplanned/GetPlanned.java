@@ -25,4 +25,10 @@ public class GetPlanned {
 
         return new PathPlannerAuto("T");
     }
+
+    public static Command tables() {
+        Rest.setCommands();
+
+        return new PathPlannerAuto("TablesMoved");
+    }
 }

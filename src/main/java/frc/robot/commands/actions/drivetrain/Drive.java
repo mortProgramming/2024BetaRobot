@@ -32,7 +32,7 @@ public class Drive extends Command {
 
 	public Drive(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
 			DoubleSupplier rotationSupplier) {
-		this(translationXSupplier, translationYSupplier, rotationSupplier, false);
+		this(translationXSupplier, translationYSupplier, rotationSupplier, true);
 	}
 
     @Override
