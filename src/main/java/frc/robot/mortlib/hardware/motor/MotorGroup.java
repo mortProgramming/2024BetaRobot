@@ -115,7 +115,15 @@ public class MotorGroup implements MotorIntf {
         return motors[motorNumber].getVelocityRPM();
     }
 
-    public MotorIntf getMotor (int motorNumber) {
+    public double getOutputVoltage() {
+        return motors[0].getOutputVoltage();
+    }
+
+    public double getOutputVoltage(int motorNumber) {
+        return motors[motorNumber].getOutputVoltage();
+    }
+
+    public MotorIntf getMotor(int motorNumber) {
         return motors[motorNumber];
     }
 

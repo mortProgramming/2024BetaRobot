@@ -1,22 +1,20 @@
 package frc.robot.config;
 
-import frc.robot.commands.autons.pathplanned.GetPlanned;
+import frc.robot.commands.autons.pathplanned.BasicCommands;
 import frc.robot.commands.autons.timed.Taxi;
 import frc.robot.mortlib.swerve.PathPlanner;
 import frc.robot.subsystems.Drivetrain;
 import static frc.robot.config.constants.PIDConstants.Drivetrain.*;
 import static frc.robot.config.constants.PhysicalConstants.Drivetrain.*;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.util.PIDConstants;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class Auto {
-
 	private static Drivetrain drivetrain;
 
 	private static SendableChooser<Command> autoChooser;
@@ -41,14 +39,21 @@ public class Auto {
 		);
 	}
 	
-	public static void addAutoOptions () {
+	public static void addAutoOptions() {
 		autoChooser.setDefaultOption("nothing", null);
 
 		autoChooser.addOption("Forward", new Taxi());
-		autoChooser.addOption("Oval", GetPlanned.oval());
-		autoChooser.addOption("Square", GetPlanned.square());
-		autoChooser.addOption("T", GetPlanned.t());
-		autoChooser.addOption("TablesMoved", GetPlanned.tables());
+
+		autoChooser.addOption("Oval", getPlanned("Oval"));
+		autoChooser.addOption("Square", getPlanned("Square"));
+		autoChooser.addOption("T", getPlanned("T"));
+		autoChooser.addOption("Lab", getPlanned("Lab"));
+	}
+
+	public static Command getPlanned(String plan) {
+		BasicCommands.setCommands();
+
+		return new PathPlannerAuto(plan);
 	}
 
 	public static Command getAutonomousCommand () {

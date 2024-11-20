@@ -25,7 +25,6 @@ import static frc.robot.mortlib.swerve.ModuleTypeEnum.*;
 
 import frc.robot.config.IO;
 import frc.robot.mortlib.hardware.imu.IMU;
-import frc.robot.mortlib.swerve.Odometer;
 import frc.robot.mortlib.swerve.SwerveModule;
 import frc.robot.mortlib.swerve.swervedrives.OdometeredSwerveDrive;
 
@@ -129,7 +128,7 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (IO.getIsBlue()) {
+    if(IO.getIsBlue()) {
 			speeds = new ChassisSpeeds(
 				-speeds.vyMetersPerSecond, -speeds.vxMetersPerSecond,
 				speeds.omegaRadiansPerSecond
@@ -160,7 +159,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void setUnorientedDrive(ChassisSpeeds speeds) {
     this.speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-      speeds, Rotation2d.fromDegrees(-getIMURotation().getDegrees())
+      speeds, Rotation2d.fromDegrees(getIMURotation().getDegrees())
     );
   }
 

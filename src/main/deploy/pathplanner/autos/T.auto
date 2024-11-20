@@ -12,9 +12,22 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "T"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "T"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "LifterUp"
+                }
+              }
+            ]
           }
         }
       ]

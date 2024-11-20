@@ -115,7 +115,7 @@ public class OrientedSwerveDrive extends SwerveDrive {
     }
 
     public void setOrientedVelocity (ChassisSpeeds velocity) {
-        velocity = ChassisSpeeds.fromFieldRelativeSpeeds(velocity, Rotation2d.fromDegrees(getFieldRelativeAngle()));
+        velocity = ChassisSpeeds.fromFieldRelativeSpeeds(velocity, getFieldRelativeAngle2d());
         setVelocity(velocity);
     }
 

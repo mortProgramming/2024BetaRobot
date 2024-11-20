@@ -16,7 +16,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 
 public class OdometeredSwerveDrive extends OrientedSwerveDrive {
-    
     public Odometer odometer;
 
     public ProfiledPIDController xController, yController, rotationController;

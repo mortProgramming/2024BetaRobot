@@ -2,6 +2,7 @@ package frc.robot.mortlib.hardware.motor;
 
 import frc.robot.mortlib.hardware.brands.ctre.TalonFXMotor;
 import frc.robot.mortlib.hardware.brands.rev.CANSparkMaxMotor;
+import frc.robot.mortlib.hardware.brands.rev.CANSparkFlexMotor;
 
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -32,6 +33,9 @@ public class Motor implements MotorIntf {
             case NEO550:
                 motor = new CANSparkMaxMotor(ID, brushType);
                 break;
+
+            case VORTEX:
+                motor = new CANSparkFlexMotor(ID, brushType);
 
             case FALCON:
                 motor = new TalonFXMotor(ID);
@@ -79,6 +83,10 @@ public class Motor implements MotorIntf {
 
     public double getVelocityRPM() {
         return motor.getVelocityRPM();
+    }
+
+    public double getOutputVoltage() {
+        return motor.getOutputVoltage();
     }
 
     public MotorTypeEnum getMotorType() {

@@ -22,4 +22,13 @@ public final class PhysicalConstants {
 
 		public static final int IMU_TO_ROBOT_FRONT_ANGLE = 0;
     }
+
+	public static final class Lifter {
+		public static final double LIFTER_ARM_OFFSET_DEG = -5;
+
+		public static final double LIFTER_GEAR_RATIO = 100;
+
+		public static final double LIFTER_UP = 60;
+		public static final double LIFTER_DOWN = -2;
+	}
 }
