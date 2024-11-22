@@ -48,6 +48,7 @@ public class Auto {
 		autoChooser.addOption("Square", getPlanned("Square"));
 		autoChooser.addOption("T", getPlanned("T"));
 		autoChooser.addOption("Lab", getPlanned("Lab"));
+		autoChooser.addOption("L", getPlanned("L"));
 	}
 
 	public static Command getPlanned(String plan) {

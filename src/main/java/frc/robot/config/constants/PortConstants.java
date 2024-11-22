@@ -19,15 +19,19 @@ public static final class Controller {
 
     public static final int JOYSTICK_X_CHANNEL = 0;
     public static final int JOYSTICK_Y_CHANNEL = 1;
-    public static final int JOYSTICK_TWIST_CHANNEL = 3;
-    public static final int THROTTLE_CHANNEL = 2;
+    public static final int JOYSTICK_TWIST_CHANNEL = 2;
+    public static final int THROTTLE_CHANNEL = 3;
 
     public static final double DEAD_BAND = 0;
 
     public static final double MAX_THROTTLE = 1;
     public static final double MIN_THROTTLE = 0.1;
     public static final double MAX_ROTATE = 0.3;
-    public static final double MIN_ROTATE = 0.05;
+    public static final double MIN_ROTATE = 0.15;
+  }
+
+  public static final class Conveyor {
+    public static final int CONVEYOR_MOTOR = 18;
   }
   
   public static final class Drivetrain {
@@ -52,8 +56,17 @@ public static final class Controller {
     public static final String CANIVORE_NAME = "Drivetrain";
   }
 
+  public static final class Intake {
+    public static final int INTAKE_MOTOR = 12;
+  }
+
   public static final class Lifter {
     public static final int LIFTER_MOTOR = 19;
+  }
+
+  public static final class Shooter {
+    public static final int TOP_SHOOTER_MOTOR = 17;
+    public static final int BOTTOM_SHOOTER_MOTOR = 16;
   }
 
   public static final class Vision {

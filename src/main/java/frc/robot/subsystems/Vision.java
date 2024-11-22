@@ -1,14 +1,15 @@
 package frc.robot.subsystems;
 
 import frc.robot.mortlib.hardware.camera.NoteCamera;
-import frc.robot.mortlib.hardware.camera.NoteCameraTypeEnum;
 import frc.robot.mortlib.hardware.camera.TagCamera;
-import frc.robot.mortlib.hardware.camera.TagCameraTypeEnum;
+
+import static frc.robot.mortlib.hardware.camera.TagCameraTypeEnum.*;
+import static frc.robot.mortlib.hardware.camera.NoteCameraTypeEnum.*;
 
 import static frc.robot.config.constants.PortConstants.Vision.*;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
+// import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -22,15 +23,15 @@ public class Vision extends SubsystemBase {
 	private AprilTagFieldLayout tagLayout;
 
     private Vision() {
-		noteCamera = new NoteCamera(NoteCameraTypeEnum.LimeLight, NOTE_CAMERA);
-		tagCamera = new TagCamera(TagCameraTypeEnum.LimeLight, TAG_CAMERA);
+		noteCamera = new NoteCamera(CORALLIMELIGHT, NOTE_CAMERA);
+		tagCamera = new TagCamera(LIMELIGHT, TAG_CAMERA);
 
-		tagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
+		// tagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
 	}
 
-	public Pose2d getTagPosition(int tagID) {
-		return tagLayout.getTagPose(tagID).get().toPose2d();
-	}
+	// public Pose2d getTagPosition(int tagID) {
+	// 	return tagLayout.getTagPose(tagID).get().toPose2d();
+	// }
 
 	public NoteCamera getNoteCamera() {
 		return noteCamera;

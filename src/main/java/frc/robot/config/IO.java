@@ -1,14 +1,23 @@
 package frc.robot.config;
 
-import frc.robot.commands.actions.Lift;
 import frc.robot.commands.actions.drivetrain.Drive;
 import frc.robot.commands.actions.drivetrain.Orient;
+import frc.robot.commands.actions.endeffector.Convey;
+import frc.robot.commands.actions.endeffector.Intake;
+import frc.robot.commands.actions.endeffector.Lift;
+import frc.robot.commands.actions.endeffector.Shoot;
 import frc.robot.mortlib.commands.FlipOrFlop;
+import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Lifter;
+import frc.robot.subsystems.Shooter;
 
 import static frc.robot.config.Inputs.*;
 import static frc.robot.config.constants.PhysicalConstants.Lifter.*;
+import static frc.robot.config.constants.PhysicalConstants.Shooter.*;
+import static frc.robot.config.constants.PhysicalConstants.Convey.*;
+import static frc.robot.config.constants.PhysicalConstants.Intake.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -19,12 +28,18 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 public class IO {
 	private static Drivetrain drivetrain;
   private static Lifter lifter;
+  private static Intaker intaker;
+  private static Shooter shooter;
+  private static Conveyor conveyor;
 
   public static FlipOrFlop lifterFlip;
 
     public static void init() {
 		  drivetrain = Drivetrain.getInstance();
       lifter = Lifter.getInstance();
+      intaker = Intaker.getInstance();
+      shooter = Shooter.getInstance();
+      conveyor = Conveyor.getInstance();
 
       lifterFlip = new FlipOrFlop();
     }
@@ -46,9 +61,18 @@ public class IO {
       // xboxController.a().onTrue(lifterFlip.FlipFlop(new Lift(LIFTER_DOWN), new Lift(LIFTER_UP), xboxController.a()));
       xboxController.a().onTrue(new Lift(LIFTER_DOWN));
       xboxController.b().onTrue(new Lift(LIFTER_UP));
+
+      xboxController.y().onTrue(new Convey(CONVEY_SPEED));
+      xboxController.x().onTrue(new Convey(0));
+
+      xboxController.y().onTrue(new Intake(INTAKE_SPEED));
+      xboxController.x().onTrue(new Intake(0));
+
+      xboxController.rightBumper().onTrue(new Shoot(SHOOTER_SPEED));
+      xboxController.leftBumper().onTrue(new Shoot(0));
     }
 
-    public static Boolean getIsBlue () {
-		return DriverStation.getAlliance().isPresent() ? DriverStation.getAlliance().get() == Alliance.Blue : true;
-	}
+    public static Boolean getIsBlue() {
+		  return DriverStation.getAlliance().isPresent() ? DriverStation.getAlliance().get() == Alliance.Blue : true;
+	  }
 }

@@ -37,7 +37,7 @@ public final class PIDConstants {
 		public static final double TO_POS_KP = 0.04;
 		public static final double TO_POS_KI = 0;
 		public static final double TO_POS_KD = 0;
-		public static final Constraints TO_POS_CONSTRAINTS = new Constraints(10, 10);
+		public static final Constraints TO_POS_CONSTRAINTS = new Constraints(30, 30);
 
 		public static final double TO_POS_KG = 0.3;
 	}

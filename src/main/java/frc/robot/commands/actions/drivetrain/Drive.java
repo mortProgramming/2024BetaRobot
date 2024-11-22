@@ -26,7 +26,6 @@ public class Drive extends Command {
 
 		this.fieldOriented = fieldOriented;
 		
-
 		addRequirements(drivetrain);
 	}
 
@@ -37,7 +36,7 @@ public class Drive extends Command {
 
     @Override
 	public void execute() {
-		if (fieldOriented) {
+		if(fieldOriented) {
 			drivetrain.setDrive(
 				new ChassisSpeeds(
 					translationXSupplier.getAsDouble(),
@@ -65,4 +64,3 @@ public class Drive extends Command {
 		drivetrain.setDrive(new ChassisSpeeds(0.0, 0.0, 0.0));
 	}
 }
-

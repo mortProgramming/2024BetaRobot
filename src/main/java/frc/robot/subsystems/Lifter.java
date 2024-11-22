@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import static frc.robot.mortlib.hardware.motor.MotorTypeEnum.*;
 
+import static frc.robot.config.constants.PhysicalConstants.VOLTAGE;
 import static frc.robot.config.constants.PhysicalConstants.Lifter.*;
 import static frc.robot.config.constants.PIDConstants.Lifter.*;
 import static frc.robot.config.constants.PortConstants.Lifter.*;
@@ -17,9 +18,10 @@ import frc.robot.mortlib.arm.PIDArm;
 public class Lifter extends SubsystemBase {
     private static Lifter lifter;
 
-    private static PIDArm liftArm;
+    private PIDArm liftArm;
 
     private double lifterSpeed;
+    private double lifterLastPosition;
 
     private ShuffleboardTab tab;
 
@@ -40,11 +42,12 @@ public class Lifter extends SubsystemBase {
         layout.addNumber("ActualSpeeds", () -> liftArm.motor.getOutputVoltage());
         layout.addNumber("LifterPosRot", () -> getPositionRot());
         layout.addNumber("LifterPosDeg", () -> getPositionDeg());
+        layout.addNumber("LifterWantedPosDeg", () -> lifterLastPosition);
     }
 
     @Override
     public void periodic() {
-        liftArm.setHeldVoltage(lifterSpeed * 12, getPositionRot());
+        liftArm.setHeldVoltage(lifterSpeed * VOLTAGE, getPositionRot());
     }
 
     public void setSpeeds(double lifterSpeed) {
@@ -52,6 +55,7 @@ public class Lifter extends SubsystemBase {
     }
 
     public void setPIDPosition(double lifterPosition) {
+        lifterLastPosition = lifterPosition;
         lifterSpeed = liftArm.getPIDCalculation(getPositionDeg(), lifterPosition);
     }
 

@@ -36,6 +36,7 @@ public class Motor implements MotorIntf {
 
             case VORTEX:
                 motor = new CANSparkFlexMotor(ID, brushType);
+                break;
 
             case FALCON:
                 motor = new TalonFXMotor(ID);

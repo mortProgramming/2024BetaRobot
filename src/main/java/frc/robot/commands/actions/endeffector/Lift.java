@@ -1,4 +1,4 @@
-package frc.robot.commands.actions;
+package frc.robot.commands.actions.endeffector;
 
 import java.util.function.DoubleSupplier;
 
@@ -25,8 +25,6 @@ public class Lift extends Command {
     @Override
     public void execute() {
         lifter.setPIDPosition(armPosition);
-
-        System.out.println(armPosition);
     }
 
     @Override
