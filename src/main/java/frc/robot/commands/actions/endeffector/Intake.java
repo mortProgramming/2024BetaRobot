@@ -6,20 +6,20 @@ import frc.robot.subsystems.Intaker;
 
 public class Intake extends Command {
     private Intaker intake;
-    private double shooterSpeed;
+    private double intakeSpeed;
 
     private Timer timer;
     private double time;
 
-    public Intake(double shooterSpeed) {
-        this(0, shooterSpeed);
+    public Intake(double intakeSpeed) {
+        this(0, intakeSpeed);
     }
 
-    public Intake(double time, double shooterSpeed) {
+    public Intake(double time, double intakeSpeed) {
         intake = Intaker.getInstance();
         timer = new Timer();
 
-        this.shooterSpeed = shooterSpeed;
+        this.intakeSpeed = intakeSpeed;
         this.time = time;
 
         addRequirements(intake);
@@ -33,7 +33,7 @@ public class Intake extends Command {
     
     @Override
     public void execute() {
-        intake.setSpeed(shooterSpeed);
+        intake.setSpeed(intakeSpeed);
     }
 
     @Override

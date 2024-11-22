@@ -44,7 +44,7 @@ public class Auto {
 
 		autoChooser.addOption("Forward", new Taxi());
 
-		autoChooser.addOption("Oval", getPlanned("Oval"));
+		autoChooser.addOption("LabSpin", getPlanned("LabSpin"));
 		autoChooser.addOption("Square", getPlanned("Square"));
 		autoChooser.addOption("T", getPlanned("T"));
 		autoChooser.addOption("Lab", getPlanned("Lab"));

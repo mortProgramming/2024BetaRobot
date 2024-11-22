@@ -3,7 +3,8 @@
   "robotLength": 0.71,
   "holonomicMode": true,
   "pathFolders": [
-    "L"
+    "L",
+    "LabSpin"
   ],
   "autoFolders": [],
   "defaultMaxVel": 0.5,
