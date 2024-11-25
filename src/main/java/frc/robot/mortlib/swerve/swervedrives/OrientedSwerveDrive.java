@@ -1,7 +1,7 @@
 package frc.robot.mortlib.swerve.swervedrives;
 
 import frc.robot.mortlib.hardware.imu.IMU;
-import frc.robot.mortlib.swerve.ModuleTypeEnum;
+import frc.robot.mortlib.swerve.ModuleConfigEnum;
 import frc.robot.mortlib.swerve.SwerveModule;
 import frc.robot.mortlib.hardware.encoder.EncoderTypeEnum;
 import frc.robot.mortlib.hardware.imu.IMUTypeEnum;
@@ -23,22 +23,22 @@ public class OrientedSwerveDrive extends SwerveDrive {
             MotorTypeEnum frontLeftDriveMotorType, int frontLeftDriveMotorID, 
             MotorTypeEnum frontLeftSteerMotorType, int frontLeftSteerMotorID,
             EncoderTypeEnum frontLeftEncoderType, int frontLeftEncoderID,
-            ModuleTypeEnum frontLeftModuleType,
+            ModuleConfigEnum frontLeftModuleType,
 
             MotorTypeEnum frontRightDriveMotorType, int frontRightDriveMotorID, 
             MotorTypeEnum frontRightSteerMotorType, int frontRightSteerMotorID,
             EncoderTypeEnum frontRightEncoderType, int frontRightEncoderID,
-            ModuleTypeEnum frontRightModuleType,
+            ModuleConfigEnum frontRightModuleType,
 
             MotorTypeEnum backLeftDriveMotorType, int backLeftDriveMotorID, 
             MotorTypeEnum backLeftSteerMotorType, int backLeftSteerMotorID,
             EncoderTypeEnum backLeftEncoderType, int backLeftEncoderID,
-            ModuleTypeEnum backLeftModuleType,
+            ModuleConfigEnum backLeftModuleType,
 
             MotorTypeEnum backRightDriveMotorType, int backRightDriveMotorID, 
             MotorTypeEnum backRightSteerMotorType, int backRightSteerMotorID,
             EncoderTypeEnum backRightEncoderType, int backRightEncoderID,
-            ModuleTypeEnum backRightModuleType,
+            ModuleConfigEnum backRightModuleType,
 
             double robotLength,
             double robotWidth,
