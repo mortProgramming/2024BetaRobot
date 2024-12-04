@@ -38,8 +38,8 @@ public final class PhysicalConstants {
 
 		public static final double LIFTER_GEAR_RATIO = 100;
 
-		public static final double LIFTER_UP = 80;
-		public static final double LIFTER_DOWN = -2;
+		public static final double LIFTER_UP = 70;
+		public static final double LIFTER_DOWN = 5;
 	}
 
 	public static final class Shooter {

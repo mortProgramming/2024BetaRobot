@@ -12,11 +12,11 @@ import frc.robot.commands.actions.endeffector.MoveNote;
 public class BasicCommands {
     
     public static void setCommands () {
-        NamedCommands.registerCommand("LifterUp", new Lift(LIFTER_UP));
+        NamedCommands.registerCommand("LifterUp", new Lift(LIFTER_UP).withTimeout(0.05));
 
-        NamedCommands.registerCommand("LifterDown", new Lift(LIFTER_DOWN));
+        NamedCommands.registerCommand("LifterDown", new Lift(LIFTER_DOWN).withTimeout(0.05));
 
-        NamedCommands.registerCommand("MoveNoteIn", new MoveNote(INTAKE_SPEED, CONVEY_SPEED));
+        NamedCommands.registerCommand("MoveNoteIn", new MoveNote(1, INTAKE_SPEED, CONVEY_SPEED));
 
         NamedCommands.registerCommand("MoveNoteStop", new MoveNote(0, 0));
     }

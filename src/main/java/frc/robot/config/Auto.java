@@ -50,6 +50,7 @@ public class Auto {
 		autoChooser.addOption("T", getPlanned("T"));
 		autoChooser.addOption("Lab", getPlanned("Lab"));
 		autoChooser.addOption("L", getPlanned("L"));
+		autoChooser.addOption("PickUp", getPlanned("PickUp"));
 	}
 
 	public static Command getPlanned(String plan) {

@@ -7,6 +7,7 @@ import static frc.robot.config.constants.PhysicalConstants.Lifter.*;
 import static frc.robot.config.constants.PIDConstants.Lifter.*;
 import static frc.robot.config.constants.PortConstants.Lifter.*;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -47,6 +48,7 @@ public class Lifter extends SubsystemBase {
 
     @Override
     public void periodic() {
+        lifterSpeed = MathUtil.clamp(lifterSpeed, -0.2, 0.2);
         liftArm.setHeldVoltage(lifterSpeed * VOLTAGE, getPositionRot());
     }
 

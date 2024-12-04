@@ -1,0 +1,55 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 2.0,
+      "y": 6.0
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "LifterDown"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "MoveNoteStart"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "PickUp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "MoveNoteStop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "LifterUp"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
