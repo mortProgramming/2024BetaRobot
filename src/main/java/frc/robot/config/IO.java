@@ -5,6 +5,7 @@ import frc.robot.commands.actions.drivetrain.Orient;
 import frc.robot.commands.actions.endeffector.Convey;
 import frc.robot.commands.actions.endeffector.Intake;
 import frc.robot.commands.actions.endeffector.Lift;
+import frc.robot.commands.actions.endeffector.MoveNote;
 import frc.robot.commands.actions.endeffector.Shoot;
 import frc.robot.mortlib.commands.FlipOrFlop;
 import frc.robot.subsystems.Conveyor;
@@ -50,6 +51,7 @@ public class IO {
 
 		  drivetrain.setDefaultCommand(
 			  new Drive(Inputs::getJoystickX, Inputs::getJoystickY, Inputs::getJoystickTwist)
+        //  new Drive(Inputs::getLeftControllerXSwerve, Inputs::getLeftControllerYSwerve, Inputs::getRightControllerXSwerve)
       );
 
       joystick.button(1).whileTrue(new Orient());
@@ -62,11 +64,14 @@ public class IO {
       xboxController.a().onTrue(new Lift(LIFTER_DOWN));
       xboxController.b().onTrue(new Lift(LIFTER_UP));
 
-      xboxController.y().onTrue(new Convey(CONVEY_SPEED));
-      xboxController.x().onTrue(new Convey(0));
+      // xboxController.y().onTrue(new Convey(CONVEY_SPEED));
+      // xboxController.x().onTrue(new Convey(0));
 
-      xboxController.y().onTrue(new Intake(INTAKE_SPEED));
-      xboxController.x().onTrue(new Intake(0));
+      // xboxController.y().onTrue(new Intake(INTAKE_SPEED));
+      // xboxController.x().onTrue(new Intake(0));
+
+      xboxController.y().onTrue(new MoveNote(INTAKE_SPEED, CONVEY_SPEED));
+      xboxController.x().onTrue(new MoveNote(0, 0));
 
       xboxController.rightBumper().onTrue(new Shoot(SHOOTER_SPEED));
       xboxController.leftBumper().onTrue(new Shoot(0));

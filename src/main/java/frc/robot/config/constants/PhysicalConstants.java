@@ -30,7 +30,7 @@ public final class PhysicalConstants {
     }
 
 	public static final class Intake {
-		public static final double INTAKE_SPEED = 0.2;
+		public static final double INTAKE_SPEED = 0.45;
 	}
 
 	public static final class Lifter {
@@ -38,11 +38,11 @@ public final class PhysicalConstants {
 
 		public static final double LIFTER_GEAR_RATIO = 100;
 
-		public static final double LIFTER_UP = 60;
+		public static final double LIFTER_UP = 80;
 		public static final double LIFTER_DOWN = -2;
 	}
 
 	public static final class Shooter {
-		public static final double SHOOTER_SPEED = 0.2;
+		public static final double SHOOTER_SPEED = 0.45;
 	}
 }

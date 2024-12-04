@@ -12,9 +12,9 @@ import frc.robot.commands.actions.endeffector.MoveNote;
 public class BasicCommands {
     
     public static void setCommands () {
-        NamedCommands.registerCommand("LifterUp", new Lift(LIFTER_UP).withTimeout(0.05));
+        NamedCommands.registerCommand("LifterUp", new Lift(LIFTER_UP));
 
-        NamedCommands.registerCommand("LifterDown", new Lift(LIFTER_DOWN).withTimeout(0.05));
+        NamedCommands.registerCommand("LifterDown", new Lift(LIFTER_DOWN));
 
         NamedCommands.registerCommand("MoveNoteIn", new MoveNote(INTAKE_SPEED, CONVEY_SPEED));
 

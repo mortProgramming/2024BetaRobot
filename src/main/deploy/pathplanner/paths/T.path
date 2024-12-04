@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 0.0,
-        "y": 0.0
+        "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
         "x": 1.0000000000000013,
-        "y": 0.0
+        "y": 4.0
       },
       "isLocked": false,
       "linkedName": null
@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 2.0,
-        "y": 0.0
+        "y": 4.0
       },
       "prevControl": {
         "x": 1.0000263177777697,
-        "y": 0.0072549888291083735
+        "y": 4.007254988829108
       },
       "nextControl": {
         "x": 3.0382407490702388,
-        "y": -0.007532623278335154
+        "y": 3.992467376721665
       },
       "isLocked": false,
       "linkedName": null
@@ -33,15 +33,15 @@
     {
       "anchor": {
         "x": 2.0,
-        "y": -1.0
+        "y": 3.0
       },
       "prevControl": {
         "x": 2.69,
-        "y": -1.0
+        "y": 3.0
       },
       "nextControl": {
         "x": 1.2400261758074036,
-        "y": -1.0
+        "y": 3.0
       },
       "isLocked": false,
       "linkedName": null
@@ -49,15 +49,15 @@
     {
       "anchor": {
         "x": 2.0,
-        "y": 0.02000430193979141
+        "y": 4.0
       },
       "prevControl": {
         "x": 1.05558213336455,
-        "y": 0.02000430193980065
+        "y": 4.000000000000009
       },
       "nextControl": {
         "x": 2.7716719306679622,
-        "y": 0.02000430193978386
+        "y": 3.9999999999999925
       },
       "isLocked": false,
       "linkedName": null
@@ -65,18 +65,24 @@
     {
       "anchor": {
         "x": 4.0,
-        "y": 0.0
+        "y": 4.0
       },
       "prevControl": {
         "x": 2.9136057344882698,
-        "y": 3.469446951953614e-18
+        "y": 4.0
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.85,
+      "rotationDegrees": 180.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
@@ -85,7 +91,20 @@
       "command": {
         "type": "parallel",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "LifterDown"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "MoveNoteIn"
+              }
+            }
+          ]
         }
       }
     },
@@ -95,7 +114,20 @@
       "command": {
         "type": "parallel",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "LifterDown"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "MoveNoteStop"
+              }
+            }
+          ]
         }
       }
     }

@@ -29,7 +29,7 @@ public class Auto {
 	}
 
 	public static void configureAutoBuilder() {
-		drivetrain.setGyroscopeZero(0);
+		// drivetrain.setGyroscopeZero(0);
 
 		PathPlanner.configure(
 			drivetrain, drivetrain.getSwerveDrive(),
@@ -38,6 +38,7 @@ public class Auto {
 			DRIVEBASE_RADIUS_METERS
 		);
 	}
+	
 	
 	public static void addAutoOptions() {
 		autoChooser.setDefaultOption("nothing", null);
@@ -56,6 +57,8 @@ public class Auto {
 
 		return new PathPlannerAuto(plan);
 	}
+	
+
 
 	public static Command getAutonomousCommand () {
 		return autoChooser.getSelected();
