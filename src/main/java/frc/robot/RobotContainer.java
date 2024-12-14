@@ -127,8 +127,9 @@ public class RobotContainer {
         // Square the axis
         value = Math.copySign(value * value, value);
 
+        throttleValue = 1;
+
         // takes the throttle value and takes it from [-1, 1] to [0.2, 1], and multiplies it by the value
         return value * (throttleValue * -0.4 + 0.6);
     }
-
 }
