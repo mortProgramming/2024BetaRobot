@@ -38,7 +38,7 @@ public class Intake extends Command {
 
     @Override
 	public boolean isFinished() {
-		if(timer.get() >= time) {
+		if(timer.get() >= (time + 0.02)) {
             return true;
         }
 

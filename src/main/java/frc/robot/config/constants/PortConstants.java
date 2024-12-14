@@ -22,7 +22,7 @@ public static final class Controller {
     public static final int JOYSTICK_TWIST_CHANNEL = 2;
     public static final int THROTTLE_CHANNEL = 3;
 
-    public static final double DEAD_BAND = 0.1;
+    public static final double DEAD_BAND = 0.2;
 
     public static final double MAX_THROTTLE = 1;
     public static final double MIN_THROTTLE = 0.1;

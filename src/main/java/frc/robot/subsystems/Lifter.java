@@ -21,8 +21,7 @@ public class Lifter extends SubsystemBase {
 
     private PIDArm liftArm;
 
-    private double lifterSpeed;
-    private double lifterLastPosition;
+    private double lifterPosition;
 
     private ShuffleboardTab tab;
 
@@ -34,31 +33,35 @@ public class Lifter extends SubsystemBase {
         liftArm.setG(TO_POS_KG);
         liftArm.offset = Rotation2d.fromDegrees(LIFTER_ARM_OFFSET_DEG);
 
-        lifterSpeed = 0;
+        lifterPosition = LIFTER_UP;
 
         tab = Shuffleboard.getTab("Lifter");
         ShuffleboardLayout layout = tab.getLayout("Overall", BuiltInLayouts.kList);
         layout.withSize(2, 4).withPosition(0, 5);
-        layout.addNumber("lifterSpeeds", () -> lifterSpeed);
+        layout.addNumber("LifterPosition", () -> lifterPosition);
         layout.addNumber("ActualSpeeds", () -> liftArm.motor.getOutputVoltage());
         layout.addNumber("LifterPosRot", () -> getPositionRot());
         layout.addNumber("LifterPosDeg", () -> getPositionDeg());
-        layout.addNumber("LifterWantedPosDeg", () -> lifterLastPosition);
     }
 
     @Override
     public void periodic() {
-        lifterSpeed = MathUtil.clamp(lifterSpeed, -0.2, 0.2);
-        liftArm.setHeldVoltage(lifterSpeed * VOLTAGE, getPositionRot());
+        // liftArm.setHeldVoltage(
+        //     (MathUtil.clamp(
+        //         liftArm.getPIDCalculation(
+        //             getPositionDeg(), lifterPosition), -0.5, 0.5) * VOLTAGE), getPositionRot());
+
+        liftArm.setHeldVoltage(
+                liftArm.getPIDCalculation(
+                    getPositionDeg(), lifterPosition) * VOLTAGE, getPositionRot());
     }
 
     public void setSpeeds(double lifterSpeed) {
-        this.lifterSpeed = lifterSpeed;
+        this.lifterPosition = lifterPosition + lifterSpeed * 0.02;
     }
 
     public void setPIDPosition(double lifterPosition) {
-        lifterLastPosition = lifterPosition;
-        lifterSpeed = liftArm.getPIDCalculation(getPositionDeg(), lifterPosition);
+        this.lifterPosition = lifterPosition;
     }
 
 

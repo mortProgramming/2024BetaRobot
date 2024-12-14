@@ -8,8 +8,56 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.0000000000000013,
+        "x": 0.5,
         "y": 4.0
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.0,
+        "y": 4.0
+      },
+      "prevControl": {
+        "x": 0.500013158888884,
+        "y": 4.0036274944145545
+      },
+      "nextControl": {
+        "x": 1.499986841111116,
+        "y": 3.996372505585446
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.0,
+        "y": 3.5
+      },
+      "prevControl": {
+        "x": 1.69,
+        "y": 3.5
+      },
+      "nextControl": {
+        "x": 0.2400261758074036,
+        "y": 3.5
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.0,
+        "y": 4.0
+      },
+      "prevControl": {
+        "x": 0.4020640259799504,
+        "y": 4.0497249532196316
+      },
+      "nextControl": {
+        "x": 1.2793320963931365,
+        "y": 3.976770463679403
       },
       "isLocked": false,
       "linkedName": null
@@ -20,55 +68,7 @@
         "y": 4.0
       },
       "prevControl": {
-        "x": 1.0000263177777697,
-        "y": 4.007254988829108
-      },
-      "nextControl": {
-        "x": 3.0382407490702388,
-        "y": 3.992467376721665
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.0,
-        "y": 3.0
-      },
-      "prevControl": {
-        "x": 2.69,
-        "y": 3.0
-      },
-      "nextControl": {
-        "x": 1.2400261758074036,
-        "y": 3.0
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.0,
-        "y": 4.0
-      },
-      "prevControl": {
-        "x": 1.05558213336455,
-        "y": 4.000000000000009
-      },
-      "nextControl": {
-        "x": 2.7716719306679622,
-        "y": 3.9999999999999925
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 4.0,
-        "y": 4.0
-      },
-      "prevControl": {
-        "x": 2.9136057344882698,
+        "x": 0.9136057344882698,
         "y": 4.0
       },
       "nextControl": null,
@@ -86,8 +86,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Start",
-      "waypointRelativePos": 1.5,
+      "name": "PickUp",
+      "waypointRelativePos": 1.4,
       "command": {
         "type": "parallel",
         "data": {
@@ -95,13 +95,13 @@
             {
               "type": "named",
               "data": {
-                "name": "LifterDown"
+                "name": "MoveNoteIn"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "MoveNoteIn"
+                "name": "LifterDown"
               }
             }
           ]
@@ -109,8 +109,8 @@
       }
     },
     {
-      "name": "End",
-      "waypointRelativePos": 2.45,
+      "name": "Stop",
+      "waypointRelativePos": 2.1,
       "command": {
         "type": "parallel",
         "data": {
@@ -118,13 +118,74 @@
             {
               "type": "named",
               "data": {
-                "name": "LifterDown"
+                "name": "LifterUp"
               }
             },
             {
               "type": "named",
               "data": {
                 "name": "MoveNoteStop"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Shoot",
+      "waypointRelativePos": 3.95,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "sequential",
+              "data": {
+                "commands": [
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "ShooterStart"
+                    }
+                  },
+                  {
+                    "type": "wait",
+                    "data": {
+                      "waitTime": 0.5
+                    }
+                  },
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "MoveNoteIn"
+                    }
+                  },
+                  {
+                    "type": "wait",
+                    "data": {
+                      "waitTime": 0.5
+                    }
+                  },
+                  {
+                    "type": "parallel",
+                    "data": {
+                      "commands": [
+                        {
+                          "type": "named",
+                          "data": {
+                            "name": "MoveNoteStop"
+                          }
+                        },
+                        {
+                          "type": "named",
+                          "data": {
+                            "name": "ShooterStop"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
               }
             }
           ]

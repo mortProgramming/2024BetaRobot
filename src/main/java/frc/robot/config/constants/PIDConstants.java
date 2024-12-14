@@ -34,10 +34,10 @@ public final class PIDConstants {
     }
 
 	public static final class Lifter {
-		public static final double TO_POS_KP = 0.04;
+		public static final double TO_POS_KP = 0.07;
 		public static final double TO_POS_KI = 0;
 		public static final double TO_POS_KD = 0;
-		public static final Constraints TO_POS_CONSTRAINTS = new Constraints(50, 20);
+		public static final Constraints TO_POS_CONSTRAINTS = new Constraints(150, 150);
 
 		public static final double TO_POS_KG = 0.3;
 	}

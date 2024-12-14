@@ -7,7 +7,8 @@ public final class PhysicalConstants {
 	public final static double VOLTAGE = 12;
 
 	public static final class Convey {
-		public static final double CONVEY_SPEED = 0.2;
+		public static final double CONVEY_SPEED = 0.3;
+		public static final double BACKWARD_SPEED = -0.2;
 	}
     public final static class Drivetrain {
         // The left-to-right distance between the drivetrain wheels measured from center
@@ -26,11 +27,12 @@ public final class PhysicalConstants {
 		public static final int BACK_LEFT_OFFSET = 272;
 		public static final int BACK_RIGHT_OFFSET = 74;
 
-		public static final int IMU_TO_ROBOT_FRONT_ANGLE = 0;
+		public static final int IMU_TO_ROBOT_FRONT_ANGLE = 180;
     }
 
 	public static final class Intake {
 		public static final double INTAKE_SPEED = 0.45;
+		public static final double OUTAKE_SPEED = -0.3;
 	}
 
 	public static final class Lifter {
@@ -43,6 +45,7 @@ public final class PhysicalConstants {
 	}
 
 	public static final class Shooter {
-		public static final double SHOOTER_SPEED = 0.45;
+		public static final double SLOW_SHOOT = 0.45;
+		public static final double FAST_SHOOT = 0.75;
 	}
 }

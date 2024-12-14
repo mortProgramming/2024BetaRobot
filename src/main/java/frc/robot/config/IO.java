@@ -73,8 +73,10 @@ public class IO {
       xboxController.y().onTrue(new MoveNote(INTAKE_SPEED, CONVEY_SPEED));
       xboxController.x().onTrue(new MoveNote(0, 0));
 
-      xboxController.rightBumper().onTrue(new Shoot(SHOOTER_SPEED));
+      xboxController.rightBumper().onTrue(new Shoot(SLOW_SHOOT));
       xboxController.leftBumper().onTrue(new Shoot(0));
+
+      xboxController.start().onTrue(new MoveNote(OUTAKE_SPEED, BACKWARD_SPEED));
     }
 
     public static Boolean getIsBlue() {

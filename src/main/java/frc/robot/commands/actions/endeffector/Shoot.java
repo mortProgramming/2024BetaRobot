@@ -38,11 +38,7 @@ public class Shoot extends Command {
 
     @Override
 	public boolean isFinished() {
-		if(time == 0) {
-            return true;
-        }
-
-        if(timer.get() >= time) {
+		if(timer.get() >= (time + 0.02)) {
             return true;
         }
 
