@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.mortlib.arm.PIDArm;
+import frc.robot.mortlib.subsystems.arm.PIDArm;
 
 public class Lifter extends SubsystemBase {
     private static Lifter lifter;
@@ -30,7 +30,7 @@ public class Lifter extends SubsystemBase {
         liftArm.motor.setDirectionFlip(true);
 
         liftArm.setPIDConstants(TO_POS_KP, TO_POS_KI, TO_POS_KD, TO_POS_CONSTRAINTS);
-        liftArm.setG(TO_POS_KG);
+        liftArm.setFeedforward(0, TO_POS_KG, 0, 0);
         liftArm.offset = Rotation2d.fromDegrees(LIFTER_ARM_OFFSET_DEG);
 
         lifterPosition = LIFTER_UP;
@@ -46,14 +46,11 @@ public class Lifter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // liftArm.setHeldVoltage(
-        //     (MathUtil.clamp(
-        //         liftArm.getPIDCalculation(
-        //             getPositionDeg(), lifterPosition), -0.5, 0.5) * VOLTAGE), getPositionRot());
-
-        liftArm.setHeldVoltage(
-                liftArm.getPIDCalculation(
-                    getPositionDeg(), lifterPosition) * VOLTAGE, getPositionRot());
+        liftArm.setFeededVoltage(
+            liftArm.getPIDCalculation(
+                getPositionDeg(), lifterPosition
+            ) * VOLTAGE, getPositionRot()
+        );
     }
 
     public void setSpeeds(double lifterSpeed) {

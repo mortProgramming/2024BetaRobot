@@ -1,9 +1,9 @@
-package frc.robot.mortlib.swerve.swervedrives;
+package frc.robot.mortlib.subsystems.swerve.swervedrives;
 
-import frc.robot.mortlib.swerve.ModuleConfigEnum;
-import frc.robot.mortlib.swerve.SwerveModule;
 import frc.robot.mortlib.hardware.encoder.EncoderTypeEnum;
 import frc.robot.mortlib.hardware.motor.MotorTypeEnum;
+import frc.robot.mortlib.subsystems.swerve.ModuleConfigEnum;
+import frc.robot.mortlib.subsystems.swerve.SwerveModule;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;

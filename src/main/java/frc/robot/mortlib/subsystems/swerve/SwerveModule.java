@@ -1,6 +1,6 @@
-package frc.robot.mortlib.swerve;
+package frc.robot.mortlib.subsystems.swerve;
 
-import static frc.robot.mortlib.swerve.ModuleConfig.*;
+import static frc.robot.mortlib.subsystems.swerve.ModuleConfig.*;
 
 import frc.robot.mortlib.hardware.brands.ctre.CTREUtility.Falcon500;
 import frc.robot.mortlib.hardware.brands.ctre.CTREUtility.Krakenx60;

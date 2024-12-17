@@ -2,7 +2,7 @@ package frc.robot.config;
 
 import frc.robot.commands.autons.pathplanned.BasicCommands;
 import frc.robot.commands.autons.timed.Taxi;
-import frc.robot.mortlib.swerve.PathPlanner;
+import frc.robot.mortlib.subsystems.swerve.PathPlanner;
 import frc.robot.subsystems.Drivetrain;
 import static frc.robot.config.constants.PIDConstants.Drivetrain.*;
 import static frc.robot.config.constants.PhysicalConstants.Drivetrain.*;

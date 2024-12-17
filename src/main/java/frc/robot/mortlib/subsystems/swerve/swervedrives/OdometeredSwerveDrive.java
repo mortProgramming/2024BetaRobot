@@ -1,25 +1,26 @@
-package frc.robot.mortlib.swerve.swervedrives;
+package frc.robot.mortlib.subsystems.swerve.swervedrives;
 
 import frc.robot.mortlib.hardware.imu.IMU;
-import frc.robot.mortlib.swerve.ModuleConfigEnum;
-import frc.robot.mortlib.swerve.SwerveModule;
 import frc.robot.mortlib.hardware.encoder.EncoderTypeEnum;
 import frc.robot.mortlib.hardware.imu.IMUTypeEnum;
 import frc.robot.mortlib.hardware.motor.MotorTypeEnum;
+import frc.robot.mortlib.subsystems.swerve.ModuleConfigEnum;
+import frc.robot.mortlib.subsystems.swerve.Odometer;
+import frc.robot.mortlib.subsystems.swerve.SwerveModule;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 
-public class OrientedSwerveDrive extends SwerveDrive {
+public class OdometeredSwerveDrive extends OrientedSwerveDrive {
+    public Odometer odometer;
 
-    public IMU imu;
-
-    public double fieldOrientationOffset;
+    public ProfiledPIDController xController, yController, rotationController;
     
-    public OrientedSwerveDrive (
+    public OdometeredSwerveDrive (
             MotorTypeEnum frontLeftDriveMotorType, int frontLeftDriveMotorID, 
             MotorTypeEnum frontLeftSteerMotorType, int frontLeftSteerMotorID,
             EncoderTypeEnum frontLeftEncoderType, int frontLeftEncoderID,
@@ -85,43 +86,61 @@ public class OrientedSwerveDrive extends SwerveDrive {
         );
     }
     
-    public OrientedSwerveDrive (
+    public OdometeredSwerveDrive (
             SwerveModule frontLeftModule, SwerveModule frontRightModule, 
             SwerveModule backLeftModule, SwerveModule backRightModule, 
             SwerveDriveKinematics kinematics, IMU imu
         ) {
-            super(frontLeftModule, frontRightModule, 
+        super(frontLeftModule, frontRightModule, 
             backLeftModule, backRightModule, 
-            kinematics);
+            kinematics, imu
+        );
 
-            this.imu = imu;
-            fieldOrientationOffset = 0;
+        odometer = new Odometer(getKinematics(), getModulePositions());
     }
 
-    public void zeroIMU (double angle) {
-        fieldOrientationOffset = imu.getAngle() + angle;
+    public void setProfiledPIDValues (
+            double translationalP, double translationalI, double translationalD, double translationalV, double translationalA,
+            double rotationalP, double rotationalI, double rotationalD, double rotationalV, double rotationalA
+        ) {
+        xController = new ProfiledPIDController(translationalP, translationalI, translationalD, new Constraints(translationalV, translationalA));
+        yController = new ProfiledPIDController(translationalP, translationalI, translationalD, new Constraints(translationalV, translationalA));
+        rotationController = new ProfiledPIDController(rotationalP, rotationalI, rotationalD, new Constraints(rotationalV, rotationalA));
+        rotationController.enableContinuousInput(-180, 180);
     }
 
-    public double getFieldRelativeAngle () {
-        return imu.getAngle() - fieldOrientationOffset;
+    public void moveToPosition (Pose2d position) {
+        setOrientedVelocity(new ChassisSpeeds(
+            xController.calculate(getPosition().getX(), position.getX()),
+            yController.calculate(getPosition().getY(), position.getY()),
+            rotationController.calculate(getFieldRelativeAngle2d().getDegrees(), position.getRotation().getDegrees())
+        ));
     }
 
-    public Rotation2d getFieldRelativeAngle2d () {
-        return Rotation2d.fromDegrees(imu.getAngle() - fieldOrientationOffset);
+    public void resetPosition(Pose2d position) {
+        odometer.resetPosition(getFieldRelativeAngle2d(), getModulePositions(), position);
     }
 
-    public Rotation3d getRobotRotations () {
-        return imu.getRotation3d();
+    public void setMaxCamError(double error) {
+        odometer.setMaxCamError(error);
     }
 
-    public void setOrientedVelocity (ChassisSpeeds velocity) {
-        velocity = ChassisSpeeds.fromFieldRelativeSpeeds(velocity, getFieldRelativeAngle2d());
-        setVelocity(velocity);
+    public Pose2d getPosition() {
+        return odometer.getPosition();
     }
 
-    @Override
-    public void setCanivore(String canivore) {
-        super.setCanivore(canivore);
-        imu.setCanivore(canivore);
+    public void update() {
+        odometer.update(getFieldRelativeAngle2d(), getModulePositions());
     }
+
+    public void update(
+            Pose2d camPose, double timeStamp
+        ) {
+        odometer.update(
+            getFieldRelativeAngle2d(), getModulePositions(),
+            camPose, timeStamp
+        );
+    }
+
+
 }

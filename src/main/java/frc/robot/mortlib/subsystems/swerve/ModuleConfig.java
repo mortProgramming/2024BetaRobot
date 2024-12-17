@@ -1,4 +1,4 @@
-package frc.robot.mortlib.swerve;
+package frc.robot.mortlib.subsystems.swerve;
 
 public class ModuleConfig {
 

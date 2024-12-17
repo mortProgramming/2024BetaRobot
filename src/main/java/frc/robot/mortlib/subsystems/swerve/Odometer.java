@@ -1,6 +1,6 @@
-package frc.robot.mortlib.swerve;
+package frc.robot.mortlib.subsystems.swerve;
 
-import frc.robot.mortlib.swerve.swervedrives.SwerveDrive;
+import frc.robot.mortlib.subsystems.swerve.swervedrives.SwerveDrive;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;

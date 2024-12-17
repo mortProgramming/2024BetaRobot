@@ -21,12 +21,14 @@ import static frc.robot.config.constants.PortConstants.Drivetrain.*;
 import static frc.robot.mortlib.hardware.encoder.EncoderTypeEnum.*;
 import static frc.robot.mortlib.hardware.imu.IMUTypeEnum.*;
 import static frc.robot.mortlib.hardware.motor.MotorTypeEnum.*;
-import static frc.robot.mortlib.swerve.ModuleConfigEnum.*;
+import static frc.robot.mortlib.subsystems.swerve.ModuleConfigEnum.*;
 
 import frc.robot.config.IO;
 import frc.robot.mortlib.hardware.imu.IMU;
-import frc.robot.mortlib.swerve.SwerveModule;
-import frc.robot.mortlib.swerve.swervedrives.OdometeredSwerveDrive;
+import frc.robot.mortlib.subsystems.swerve.SwerveModule;
+import frc.robot.mortlib.subsystems.swerve.swervedrives.OdometeredSwerveDrive;
+import frc.robot.mortlib.logger.LoggerGroup;
+import static frc.robot.mortlib.logger.LoggerTypeEnum.*;
 
 public class Drivetrain extends SubsystemBase {
   private static Drivetrain drivetrain;
@@ -48,6 +50,8 @@ public class Drivetrain extends SubsystemBase {
 	private ProfiledPIDController yToPosController;
   private ProfiledPIDController rotateToAngleController;
 
+  private LoggerGroup loggers;
+
   private Drivetrain() {
     configureSwerve();
     
@@ -68,6 +72,8 @@ public class Drivetrain extends SubsystemBase {
     rotateToAngleController.setTolerance(TO_ANGLE_POS_TOLERANCE, TO_ANGLE_VEL_TOLERANCE);
 
     rotateToAngleController.enableContinuousInput(-180, 180);
+
+    loggers = new LoggerGroup(SMARTDASHBOARD, SHUFFLEBOARD);
   }
 
   public void configureSwerve () {
@@ -145,12 +151,12 @@ public class Drivetrain extends SubsystemBase {
 
     swerveDrive.update();
 
-    SmartDashboard.putNumber("XPose", swerveDrive.getPosition().getX());
-    SmartDashboard.putNumber("YPose", swerveDrive.getPosition().getY());
+    loggers.putDouble("XPose", () -> swerveDrive.getPosition().getX());
+    loggers.putDouble("YPose", () -> swerveDrive.getPosition().getY());
 
-    SmartDashboard.putNumber("Yaw", Math.toDegrees(swerveDrive.getRobotRotations().getZ()));
-    SmartDashboard.putNumber("Pitch", Math.toDegrees(swerveDrive.getRobotRotations().getY()));
-    SmartDashboard.putNumber("Roll", Math.toDegrees(swerveDrive.getRobotRotations().getX()));
+    loggers.putDouble("Yaw", () -> Math.toDegrees(swerveDrive.getRobotRotations().getZ()));
+    loggers.putDouble("Pitch", () -> Math.toDegrees(swerveDrive.getRobotRotations().getY()));
+    loggers.putDouble("Roll", () -> Math.toDegrees(swerveDrive.getRobotRotations().getX()));
   }
 
   public void setDrive(ChassisSpeeds speeds) {

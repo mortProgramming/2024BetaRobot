@@ -1,10 +1,10 @@
-package frc.robot.mortlib.swerve;
+package frc.robot.mortlib.subsystems.swerve;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import frc.robot.mortlib.swerve.swervedrives.OdometeredSwerveDrive;
-import frc.robot.mortlib.swerve.swervedrives.SwerveDrive;
+import frc.robot.mortlib.subsystems.swerve.swervedrives.OdometeredSwerveDrive;
+import frc.robot.mortlib.subsystems.swerve.swervedrives.SwerveDrive;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
