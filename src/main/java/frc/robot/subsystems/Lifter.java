@@ -31,7 +31,7 @@ public class Lifter extends SubsystemBase {
     private double lifterPosition;
     private ShuffleboardTab tab;
     private CANSparkLowLevel.MotorType brushType;
-    private CANSparkMax Liftmotor;
+    private CANSparkMax iftmotor;
     private SparkPIDController control;
     private RelativeEncoder encoder;
 
@@ -45,8 +45,8 @@ public class Lifter extends SubsystemBase {
         liftArm = new PIDArm(NEO, LIFTER_MOTOR);
         liftArm.motor.setDirectionFlip(true);
 
-        Liftmotor = new CANSparkMax(ID, brushType);
-        control = Liftmotor.getPIDController();
+        iftmotor = new CANSparkMax(ID, brushType);
+        control = iftmotor.getPIDController();
         encoder = ((CANSparkMax) encoder).getEncoder();
 
         control.setP(TO_POS_KP);
