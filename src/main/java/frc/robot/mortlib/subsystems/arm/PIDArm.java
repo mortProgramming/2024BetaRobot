@@ -7,6 +7,10 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 
+import frc.robot.mortlib.hardware.motor.MotorIntf;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.TalonFX;
+
 public class PIDArm extends Arm {
 
     public ProfiledPIDController controller;

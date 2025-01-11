@@ -1,13 +1,21 @@
 package frc.robot.subsystems;
 
-import static frc.robot.mortlib.hardware.motor.MotorTypeEnum.*;
+import static frc.robot.config.constants.PIDConstants.Lifter.TO_POS_CONSTRAINTS;
+import static frc.robot.config.constants.PIDConstants.Lifter.TO_POS_KD;
+import static frc.robot.config.constants.PIDConstants.Lifter.TO_POS_KG;
+import static frc.robot.config.constants.PIDConstants.Lifter.TO_POS_KI;
+import static frc.robot.config.constants.PIDConstants.Lifter.TO_POS_KP;
+import static frc.robot.config.constants.PhysicalConstants.Lifter.LIFTER_ARM_OFFSET_DEG;
+import static frc.robot.config.constants.PhysicalConstants.Lifter.LIFTER_GEAR_RATIO;
+import static frc.robot.config.constants.PhysicalConstants.Lifter.LIFTER_UP;
+import static frc.robot.config.constants.PortConstants.Lifter.LIFTER_MOTOR;
+import static frc.robot.mortlib.hardware.motor.MotorTypeEnum.NEO;
 
-import static frc.robot.config.constants.PhysicalConstants.VOLTAGE;
-import static frc.robot.config.constants.PhysicalConstants.Lifter.*;
-import static frc.robot.config.constants.PIDConstants.Lifter.*;
-import static frc.robot.config.constants.PortConstants.Lifter.*;
+import com.revrobotics.CANSparkLowLevel;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -20,14 +28,33 @@ public class Lifter extends SubsystemBase {
     private static Lifter lifter;
 
     private PIDArm liftArm;
-
     private double lifterPosition;
-
     private ShuffleboardTab tab;
+    private CANSparkLowLevel.MotorType brushType;
+    private CANSparkMax Liftmotor;
+    private SparkPIDController control;
+    private RelativeEncoder encoder;
+
+    public int ID;
+    private static final double MAX_VELOCITY = 5000;
+    private static final double MAX_ACCELERATION = 3000;
+    private static final double kSmartMotionCruiseVelocity = MAX_VELOCITY;
+    private static final double kSmartMotionMaxAccel = MAX_ACCELERATION;
 
     private Lifter() {
         liftArm = new PIDArm(NEO, LIFTER_MOTOR);
         liftArm.motor.setDirectionFlip(true);
+
+        Liftmotor = new CANSparkMax(ID, brushType);
+        control = Liftmotor.getPIDController();
+        encoder = ((CANSparkMax) encoder).getEncoder();
+
+        control.setP(TO_POS_KP);
+        control.setI(TO_POS_KI);
+        control.setD(TO_POS_KD);
+
+        control.setSmartMotionMaxVelocity(kSmartMotionCruiseVelocity, 0);
+        control.setSmartMotionMaxAccel(kSmartMotionMaxAccel, 0);
 
         liftArm.setPIDConstants(TO_POS_KP, TO_POS_KI, TO_POS_KD, TO_POS_CONSTRAINTS);
         liftArm.setFeedforward(0, TO_POS_KG, 0, 0);
@@ -46,11 +73,7 @@ public class Lifter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        liftArm.setFeededVoltage(
-            liftArm.getPIDCalculation(
-                getPositionDeg(), lifterPosition
-            ) * VOLTAGE, getPositionRot()
-        );
+        control.setReference(0.0, CANSparkMax.ControlType.kSmartMotion);
     }
 
     public void setSpeeds(double lifterSpeed) {
@@ -60,8 +83,6 @@ public class Lifter extends SubsystemBase {
     public void setPIDPosition(double lifterPosition) {
         this.lifterPosition = lifterPosition;
     }
-
-
     
     public double getPositionRot() {
         return liftArm.motor.getPositionRotations() / LIFTER_GEAR_RATIO;
