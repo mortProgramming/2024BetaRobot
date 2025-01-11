@@ -73,7 +73,7 @@ public class Drivetrain extends SubsystemBase {
 
     rotateToAngleController.enableContinuousInput(-180, 180);
 
-    loggers = new LoggerGroup(SMARTDASHBOARD, SHUFFLEBOARD);
+    // loggers = new LoggerGroup(SMARTDASHBOARD, SHUFFLEBOARD);
   }
 
   public void configureSwerve () {
