@@ -37,7 +37,7 @@ public class Lifter extends SubsystemBase {
 
     public int ID;
     private static final double MAX_VELOCITY = 5000;
-    private static final double MAX_ACCELERATION = 3000;
+    private static final double MAX_ACCELERATION = 2000;
     private static final double kSmartMotionCruiseVelocity = MAX_VELOCITY;
     private static final double kSmartMotionMaxAccel = MAX_ACCELERATION;
 
@@ -52,7 +52,7 @@ public class Lifter extends SubsystemBase {
         control.setP(TO_POS_KP);
         control.setI(TO_POS_KI);
         control.setD(TO_POS_KD);
-
+        
         control.setSmartMotionMaxVelocity(kSmartMotionCruiseVelocity, 0);
         control.setSmartMotionMaxAccel(kSmartMotionMaxAccel, 0);
 
@@ -73,7 +73,7 @@ public class Lifter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        control.setReference(0.0, CANSparkMax.ControlType.kSmartMotion);
+        control.setReference(1000, CANSparkMax.ControlType.kSmartMotion);
     }
 
     public void setSpeeds(double lifterSpeed) {
