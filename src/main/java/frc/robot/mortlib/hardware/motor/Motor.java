@@ -2,7 +2,7 @@ package frc.robot.mortlib.hardware.motor;
 
 import frc.robot.mortlib.hardware.brands.ctre.TalonFXMotor;
 import frc.robot.mortlib.hardware.brands.rev.CANSparkMaxMotor;
-import frc.robot.mortlib.hardware.brands.rev.CANSparkFlexMotor;
+// import frc.robot.mortlib.hardware.brands.rev.CANSparkFlexMotor;
 
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -35,8 +35,8 @@ public class Motor implements MotorIntf {
                 break;
 
             case VORTEX:
-                motor = new CANSparkFlexMotor(ID, brushType);
-                break;
+                // motor = new CANSparkFlexMotor(ID, brushType);
+                // break;
 
             case FALCON:
                 motor = new TalonFXMotor(ID);

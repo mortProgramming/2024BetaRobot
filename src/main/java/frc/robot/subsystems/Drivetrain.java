@@ -151,12 +151,12 @@ public class Drivetrain extends SubsystemBase {
 
     swerveDrive.update();
 
-    loggers.putDouble("XPose", () -> swerveDrive.getPosition().getX());
-    loggers.putDouble("YPose", () -> swerveDrive.getPosition().getY());
+    // loggers.putDouble("XPose", () -> swerveDrive.getPosition().getX());
+  //   loggers.putDouble("YPose", () -> swerveDrive.getPosition().getY());
 
-    loggers.putDouble("Yaw", () -> Math.toDegrees(swerveDrive.getRobotRotations().getZ()));
-    loggers.putDouble("Pitch", () -> Math.toDegrees(swerveDrive.getRobotRotations().getY()));
-    loggers.putDouble("Roll", () -> Math.toDegrees(swerveDrive.getRobotRotations().getX()));
+  //   loggers.putDouble("Yaw", () -> Math.toDegrees(swerveDrive.getRobotRotations().getZ()));
+  //   loggers.putDouble("Pitch", () -> Math.toDegrees(swerveDrive.getRobotRotations().getY()));
+  //   loggers.putDouble("Roll", () -> Math.toDegrees(swerveDrive.getRobotRotations().getX()));
   }
 
   public void setDrive(ChassisSpeeds speeds) {

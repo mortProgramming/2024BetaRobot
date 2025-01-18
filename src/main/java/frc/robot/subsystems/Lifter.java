@@ -31,7 +31,6 @@ public class Lifter extends SubsystemBase {
     private CANSparkLowLevel.MotorType brushType;
     private CANSparkMax iftmotor;
     private SparkPIDController control;
-    private RelativeEncoder encoder;
 
     // public int ID;
     private static final double MAX_VELOCITY = 2000;
@@ -45,7 +44,7 @@ public class Lifter extends SubsystemBase {
         liftArm = new PIDArm(NEO, LIFTER_MOTOR);
         liftArm.motor.setDirectionFlip(true);
 
-        CANSparkMax iftmotor = new CANSparkMax(LIFTER_MOTOR, MotorType.kBrushless);
+        CANSparkMax iftmotor = new CANSparkMax(18, MotorType.kBrushless);
         SparkPIDController control = iftmotor.getPIDController();
 
         control.setP(TO_POS_KP);
@@ -74,10 +73,9 @@ public class Lifter extends SubsystemBase {
         layout.addNumber("LifterPosRot", () -> getPositionRot());
         layout.addNumber("LifterPosDeg", () -> getPositionDeg());
     }
-
     @Override
     public void periodic() {
-        control.setReference(1000, CANSparkMax.ControlType.kSmartMotion);
+        // control.setReference(1000, CANSparkMax.ControlType.kSmartMotion);
     }
 
     public void setSpeeds(double lifterSpeed) {
