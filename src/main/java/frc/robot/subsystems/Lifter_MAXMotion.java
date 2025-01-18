@@ -14,6 +14,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+// import com.revrobotics.spark.config.MAXMotionConfig;
 
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -22,8 +23,8 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.mortlib.subsystems.arm.PIDArm;
 
-public class Lifter extends SubsystemBase {
-    private static Lifter lifter;
+public class Lifter_MAXMotion extends SubsystemBase {
+    private static Lifter_MAXMotion lifter;
 
     private PIDArm liftArm;
     private double lifterPosition;
@@ -33,21 +34,23 @@ public class Lifter extends SubsystemBase {
     private SparkPIDController control;
     private RelativeEncoder encoder;
 
-    // public int ID;
+    // Constants
     private static final double MAX_VELOCITY = 2000;
     private static final double MAX_ACCELERATION = 1500;
     private static final double kSmartMotionCruiseVelocity = MAX_VELOCITY;
     private static final double kSmartMotionMaxAccel = MAX_ACCELERATION;
-    private static final double kSmartMotionMinOutputVelocity = 500;
-    private static final double kSmartMotionAllowedError = 0.01;
 
-    private Lifter() {
+    // Create MAXMotionConfig object
+    // private MAXMotionConfig maxMotionConfig;
+
+    private Lifter_MAXMotion() {
         liftArm = new PIDArm(NEO, LIFTER_MOTOR);
         liftArm.motor.setDirectionFlip(true);
 
-        CANSparkMax iftmotor = new CANSparkMax(LIFTER_MOTOR, MotorType.kBrushless);
-        SparkPIDController control = iftmotor.getPIDController();
+        iftmotor = new CANSparkMax(LIFTER_MOTOR, MotorType.kBrushless);
+        control = iftmotor.getPIDController();
 
+        // PID coefficients
         control.setP(TO_POS_KP);
         control.setI(TO_POS_KI);
         control.setD(TO_POS_KD);
@@ -55,17 +58,16 @@ public class Lifter extends SubsystemBase {
         control.setFF(0.0);
         control.setOutputRange(-1, 1);
 
-        control.setSmartMotionMaxVelocity(kSmartMotionCruiseVelocity, 0);
-        control.setSmartMotionMinOutputVelocity(kSmartMotionMinOutputVelocity, 0);
-        control.setSmartMotionMaxAccel(kSmartMotionMaxAccel, 0);
-        control.setSmartMotionAllowedClosedLoopError(kSmartMotionAllowedError, 0);
+        // Initialize MAXMotionConfig
+        // maxMotionConfig = new MAXMotionConfig()
+        //     .maxVelocity(kSmartMotionCruiseVelocity)
+        //     .maxAcceleration(kSmartMotionMaxAccel)
+        //     .allowedClosedLoopError(0.01);  // Example of allowed error (tune this as needed)
 
-        // liftArm.setPIDConstants(TO_POS_KP, TO_POS_KI, TO_POS_KD, TO_POS_CONSTRAINTS);
-        // liftArm.setFeedforward(0, TO_POS_KG, 0, 0);
-        // liftArm.offset = Rotation2d.fromDegrees(LIFTER_ARM_OFFSET_DEG);
+        // Apply the MAXMotionConfig to the motor
+        applyMAXMotionConfig();
 
-        lifterPosition = LIFTER_UP;
-
+        // Shuffleboard setup
         tab = Shuffleboard.getTab("Lifter");
         ShuffleboardLayout layout = tab.getLayout("Overall", BuiltInLayouts.kList);
         layout.withSize(2, 4).withPosition(0, 5);
@@ -75,9 +77,15 @@ public class Lifter extends SubsystemBase {
         layout.addNumber("LifterPosDeg", () -> getPositionDeg());
     }
 
+    private void applyMAXMotionConfig() {
+        // Apply MAXMotionConfig to the SparkPIDController
+        // control.configMotion(maxMotionConfig);
+    }
+
     @Override
     public void periodic() {
-        control.setReference(1000, CANSparkMax.ControlType.kSmartMotion);
+        // Set the reference for MAX Motion control
+        control.setReference(1000, CANSparkMax.ControlType.kPosition);  // Example reference (position)
     }
 
     public void setSpeeds(double lifterSpeed) {
@@ -96,9 +104,9 @@ public class Lifter extends SubsystemBase {
         return getPositionRot() * 360 + LIFTER_ARM_OFFSET_DEG;
     }
 
-    public static Lifter getInstance() {
+    public static Lifter_MAXMotion getInstance() {
         if (lifter == null) {
-            lifter = new Lifter();
+            lifter = new Lifter_MAXMotion();
         }
         return lifter;
     }
