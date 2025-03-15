@@ -30,6 +30,10 @@ public final class PIDConstants {
 		public static final double AUTON_ROTATION_KI = 0;
 		public static final double AUTON_ROTATION_KD = 0;
 
+		public static final Constraints ANGLE_CONSTRAINTS = new Constraints(100, 180);
+		public static final Constraints POS_CONSTRAINTS = new Constraints(1, 3);
+
+
 		//ks 0.667, kv 2, ka 0.2
     }
 

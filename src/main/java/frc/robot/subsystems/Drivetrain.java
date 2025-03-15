@@ -5,10 +5,12 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -50,7 +52,9 @@ public class Drivetrain extends SubsystemBase {
 	private ProfiledPIDController yToPosController;
   private ProfiledPIDController rotateToAngleController;
 
-  private LoggerGroup loggers;
+  private SwerveDriveOdometry odometer;
+
+  // private LoggerGroup loggers;
 
   private Drivetrain() {
     configureSwerve();
@@ -73,7 +77,9 @@ public class Drivetrain extends SubsystemBase {
 
     rotateToAngleController.enableContinuousInput(-180, 180);
 
-    loggers = new LoggerGroup(SMARTDASHBOARD, SHUFFLEBOARD);
+    // loggers = new LoggerGroup(SMARTDASHBOARD, SHUFFLEBOARD);
+
+    odometer = new SwerveDriveOdometry(kinematics, Rotation2d.fromDegrees(0), swerveDrive.getModulePositions());
   }
 
   public void configureSwerve () {
@@ -151,12 +157,14 @@ public class Drivetrain extends SubsystemBase {
 
     swerveDrive.update();
 
-    loggers.putDouble("XPose", () -> swerveDrive.getPosition().getX());
-    loggers.putDouble("YPose", () -> swerveDrive.getPosition().getY());
+    // loggers.putDouble("XPose", () -> swerveDrive.getPosition().getX());
+    // loggers.putDouble("YPose", () -> swerveDrive.getPosition().getY());
 
-    loggers.putDouble("Yaw", () -> Math.toDegrees(swerveDrive.getRobotRotations().getZ()));
-    loggers.putDouble("Pitch", () -> Math.toDegrees(swerveDrive.getRobotRotations().getY()));
-    loggers.putDouble("Roll", () -> Math.toDegrees(swerveDrive.getRobotRotations().getX()));
+    // loggers.putDouble("Yaw", () -> Math.toDegrees(swerveDrive.getRobotRotations().getZ()));
+    // loggers.putDouble("Pitch", () -> Math.toDegrees(swerveDrive.getRobotRotations().getY()));
+    // loggers.putDouble("Roll", () -> Math.toDegrees(swerveDrive.getRobotRotations().getX()));
+
+    odometer.update(getIMURotation(), swerveDrive.getModulePositions());
   }
 
   public void setDrive(ChassisSpeeds speeds) {
@@ -190,6 +198,10 @@ public class Drivetrain extends SubsystemBase {
 		return new InstantCommand(() -> swerveDrive.zeroIMU(angle), drivetrain);
 	}
 
+  public void setRobotPosition(Pose2d pose) {
+		odometer.resetPosition(Rotation2d.fromDegrees(0), swerveDrive.getModulePositions(), pose);
+	}
+
 
 
   public boolean getXControllerAtSetpoint() {
@@ -211,6 +223,18 @@ public class Drivetrain extends SubsystemBase {
 	public double getMaxSpeedMeters() {
 		return frontLeftModule.maxSpeed;
 	}
+
+  public ProfiledPIDController getXController() {
+		return xToPosController;
+	}
+
+	public ProfiledPIDController getYController() {
+		return yToPosController;
+	}
+
+	public ProfiledPIDController getRotateController() {
+		return rotateToAngleController;
+	}
 	
 	public OdometeredSwerveDrive getSwerveDrive() {
 		return swerveDrive;
@@ -222,6 +246,10 @@ public class Drivetrain extends SubsystemBase {
 
 	public Rotation2d getIMURotation() {
 		return swerveDrive.getFieldRelativeAngle2d();
+	}
+
+  public Pose2d getPose() {
+		return odometer.getPoseMeters();
 	}
 
   public static Drivetrain getInstance() {

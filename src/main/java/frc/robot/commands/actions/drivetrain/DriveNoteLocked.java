@@ -39,7 +39,7 @@ public class DriveNoteLocked extends Command {
             )
         );
 
-        drivetrain.setAngleController(drivetrain.getIMURotation().getDegrees() + vision.getNoteCamera().getPicturePosition()[0]);
+        drivetrain.setAngleController(drivetrain.getIMURotation().getDegrees() + vision.getPicturePosition()[0]);
 	}
 
     @Override

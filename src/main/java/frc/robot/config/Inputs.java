@@ -25,6 +25,7 @@ public class Inputs {
         joystick.setTwistChannel(JOYSTICK_TWIST_CHANNEL);
         joystick.setThrottleChannel(THROTTLE_CHANNEL);
 
+        
         // throttle.setThrottleChannel(THROTTLE_CHANNEL);
 
 		drivetrain = Drivetrain.getInstance();
@@ -111,15 +112,15 @@ public class Inputs {
     }
     
     public static double getLeftControllerXSwerve() {
-        return xboxController.getLeftX() * drivetrain.getMaxSpeedMeters();
+        return xboxController.getLeftX() * drivetrain.getMaxSpeedMeters() * 1;
     }
 
     public static double getLeftControllerYSwerve() {
-        return xboxController.getLeftY() * drivetrain.getMaxSpeedMeters();
+        return xboxController.getLeftY() * drivetrain.getMaxSpeedMeters() * 1;
     }
     
     public static double getRightControllerXSwerve(){
-        return xboxController.getRightX() * drivetrain.getMaxSpeedMeters() / 
+        return -xboxController.getRightX() * drivetrain.getMaxSpeedMeters()* 0.2 / 
                 DRIVEBASE_RADIUS_METERS;
     }
 }
